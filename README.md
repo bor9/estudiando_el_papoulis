@@ -4,7 +4,7 @@ Este documento consiste en apuntes sobre el libro "Probability, random variables
 
 ## Contenido del repositorio
 
-El repositorio contiene el código fuente en Latex del documento, el código Python de las figuras y los archivos SVG de dibujos y diagramas, realizadoe en Inkscape.
+El repositorio contiene el código fuente en Latex del documento, el código Python de las figuras y los archivos SVG de dibujos y diagramas, realizados en Inkscape.
 
 ## Compilación
 
