@@ -7585,7 +7585,7 @@ En este caso, \(\x_i\sim N(\eta,\,\sigma^2)\), por lo que el momento cuarto de \
 \end{align*}
 coincidiendo con el resultado obtenido antes.
 
-\section{Estimación cuadrática media}
+\section{Estimación cuadrática media}\label{sec:mean_square_estimation}
 
 En esta sección, se explican las ideas principales para estimar una variable aleatoria \(\y\) en función de otra variable aleatoria \(\x\). El criterio de estimación óptima es que el error cuadrático medio de la estimación sea mínimo.
 
@@ -8630,9 +8630,9 @@ La ley débil de los grandes números indica que
 \[
  \bar{\x}_n\overset{p}{\longrightarrow}\eta.
 \]
-La demostración puede realizarse a partir de la inecuación de Chebyshev de forma idéntica al caso de variables aleatorias binarias visto previamente\footnote{ver \url{https://en.wikipedia.org/wiki/Law_of_large_numbers}, por ejemplo.}. Se incluye a continuación otra demostración empleando las funciones características, que tiene interés por la similitud a la demostración del teorema central de límite, el que se verá mas adelante. La demostración desarrollada a contiuación está basada en \cite{polyanskiy18lec17}.
+La demostración puede realizarse a partir de la inecuación de Chebyshev de forma idéntica al caso de variables aleatorias binarias visto previamente\footnote{ver \url{https://en.wikipedia.org/wiki/Law_of_large_numbers}, por ejemplo.}. Se incluye a continuación otra demostración empleando las funciones características, que tiene interés por la similitud a la demostración del teorema central del límite, el que se verá mas adelante. La demostración desarrollada a contiuación está basada en \cite{polyanskiy18lec17}.
 
-Para la prueba, se tendrá en cuenta las siguientes tres consideraciones:
+Para la prueba, se tendrán en cuenta las siguientes tres consideraciones:
 \begin{enumerate}
  \item \emph{Desarrollo de Taylor de primer orden}: sea \(g:\mathbb{R}\to\mathbb{R}\) una función que tiene derivada en cero, y sea la expansión de Taylor de primer orden en torno a cero
  \[
@@ -8798,7 +8798,7 @@ El teorema puede ser formulado como un límite. Si \(\z=(\x-\eta)/\sigma\), se c
 \]
 para el caso general y el caso continuo respectivamente.
 
-El CLT es consecuencia de una propiedad del producto convolución: la convolución de una cantidad grande de funciones positivas (ver la ecuación \ref{eq:densities_convolution_random_vector}) tiende a una función normal. El siguiente ejemplo es una ilustración.
+El CLT es consecuencia de una propiedad del producto convolución: la convolución de una cantidad grande de funciones positivas (ver la ecuación \ref{eq:densities_convolution_random_vector}) tiende a una función normal. El siguiente ejemplo es una ilustración de esto.
 
 \paragraph{Ejemplo 7-15}\label{sec:example_7_15} Sean la variables \(\x_i\) i.i.d. con distribución uniforme en el intervalo \((0,\,T)\). Se comparará la densidad \(f_n(x)\) de su suma con la densidad normal para el caso \(n=2\) y \(n=3\). Es fácil ver que la media es \(\eta_i=T/2\) y la varianza es
 \begin{align*}
@@ -8813,7 +8813,7 @@ donde en \((a)\) se consideró que \(f(x)=1/T\) en \((0,\,T)\) y 0 en otro caso,
 \[
  \eta_i=\frac{T}{2},\qquad\sigma_i^2=\frac{T^2}{12},\qquad\eta_n=n\frac{T}{2},\qquad\sigma_n^2=n\frac{T^2}{12}.
 \]
-Se calculará la densidad \(f_n(x)\) de la suma de \(n=2\) y \(n=3\) variables aleatorias \(\x_i\) para compararla con la densidad normal con la misma media y varianza. De la ecuación \ref{eq:pdf_of_sum_of_two_independents_rv}, la densidad de la suma de variables aleatorias i.i.d. es la convolución de las densidades.
+De la ecuación \ref{eq:pdf_of_sum_of_two_independents_rv}, la densidad de la suma de variables aleatorias i.i.d. es la convolución de las densidades.
 \begin{itemize}
  \item Caso \(n=2\): la densidad es
 \[
@@ -8879,11 +8879,10 @@ y se distinguen los siguientes casos (ver la figura \ref{fig:joint_distribution_
  \end{array} \right.
 \end{equation}
 \end{itemize}
-
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=0.95\columnwidth]{figuras/example_7_15.pdf}
-\caption{\label{fig:example_7_15} Ilustración del teorema central de límite. Se comparan las densidades de \(\x_1+\x_2\) y \(\x_1+\x_2+\x_3\), donde \(\x_i\sim U(0,\,T)\), con las correspondientes aproximaciones gaussianas.}
+\caption{\label{fig:example_7_15} Ilustración del teorema central del límite. Se comparan las densidades de \(\x_1+\x_2\) y \(\x_1+\x_2+\x_3\), donde \(\x_i\sim U(0,\,T)\), con las correspondientes aproximaciones gaussianas.}
 \end{center}
 \end{figure}
 En la figura \ref{fig:example_7_15} se muestra la comparación de las densidades \(f_2(x)\) y \(f_3(x)\) de las variables aleatorias \(\x_1+\x_2\) y \(\x_1+\x_2+\x_3\) respectivamente con su correspondiente aproximación gaussiana, \(N(T,\,T^2/6)\) y \(N(3T/2,\,T^2/4)\). Como se aprecia en la figura, el error es pequeño incluso para los valores chicos de \(n\) empleados.
@@ -9134,6 +9133,74 @@ lo que muestra que
  \Phi_z(\omega)\xrightarrow[n\to\infty]{}e^{-\omega^2/2},
 \]
 obteniendo el resultado de la ecuación \ref{eq:central_limit_theorem_density_normalized}. Observar que lo que permite concluir que se cumple la ecuación \ref{eq:central_limit_theorem_density_normalized} a partir de la convergencia de la función característica, es el teorema de continuidad de Levy, como en la demostración de la ley débil de los grandes números de la sección \ref{sec:lln}.
+
+\chapter{Estadística}
+
+\section{Introducción}
+
+Probabilidad es una disciplina matemática desarrollada como un modelo abstracto y sus conclusiones son deducciones basadas en axiomas. La estadística trata con las aplicaciones de la teoría de probabilidad en problemas reales y sus conclusiones son inferencias basadas en observaciones. La conexión entre los conceptos probabilísticos y la realidad reside en la aproximación
+\[
+ p\approx\frac{n_A}{n},
+\]
+que relaciona la probabilidad \(p=P(A)\) de un evento \(A\) con el número \(n_A\) de ocurrencias de \(A\) en \(n\) ensayos del experimento físico subyacente. Esta fórmula empírica se emplea para brindar la interpretación de frecuencia relativa de todos los conceptos probabilísticos.
+
+En una investigación estadística se trata con dos clases generales de problemas. En la primera clase, se asume que el modelo probabilístico es conocido y el objetivo es realizar predicciones vinculadas a observaciones futuras. Por ejemplo, se conoce la distribución de probabilidad \(F(x)\) de una variable aleatoria \(\x\) y se desea predecir el promedio \(\bar{x}\) de \(n\)  muestras futuras, o se conoce la probabilidad \(p\) de un evento \(A\) y se quiere predecir la cantidad de ocurrencias \(n_A\) de \(A\) en \(n\) ensayos. En ambos casos, se parte del modelo para inferir sobre las observaciones. En la segunda clase, uno o mas parámetros \(\theta_i\) del modelo son desconocidos y el objetivo es estimar sus valores (estimación de parámetros) o decidir si \(\theta_i\) es un conjunto de constantes conocidas \(\theta_{0i}\) (test de hipótesis). Por ejemplo, se observan los valores \(x_i\) de una variable aleatoria \(\x\) y se desea estimar su media \(\eta\), o decidir si aceptar la hipótesis de que \(\eta=5.3\). Una moneda es lanzada al aire 1000 veces, y se obtiene cara 465 veces. Con esta información, se quiere estimar la probabilidad \(p\) de la cara, o decidir si la moneda es justa. En ambos casos, se parte de las observaciones para realizar inferencias sobre el modelo. Este capítulo se concentra en los problemas de estimación de parámetros y test de hipótesis. Como preparación, a continuación se comenta brevemente sobre el problema de predicción.
+
+\paragraph{Predicción} Sea una variable aleatoria \(\x\) con distribución conocida de la cual se quiere predecir su valor en un ensayo futuro. Una \emph{predicción puntual} de \(\x\) es la determinación de una constante \(c\) elegida de forma de minimizar el error \(\x-c\) en algún sentido. En un ensayo específico, \(\x\) puede tomar muchos valores, por lo que el valor que tomará no puede predecirse, solo puede estimarse. Si el criterio para la elección de \(c\) es la minimización del error MS \(E\{(\x-c)^2\}\), se cumple que \(c=E\{\x\}\), como se mostró en la sección \ref{sec:mean_square_estimation}. 
+
+Un \emph{intervalo de predicción} de \(\x\) es la determinación de dos constantes \(c_1\) y \(c_2\) de forma de que
+\begin{equation}\label{eq:statistics_interval_prediction}
+  P[c_1<\x<c_2]=\gamma=1-\delta,
+\end{equation}
+donde \(\gamma\) es una constante dada llamada \emph{coeficiente de confianza}. Esta ecuación indica que si se predice que el valor \(x\) que tomará \(\x\) en el próximo ensayo va a estar en el intervalo \((c_1,\,c_2)\), la predicción va a ser correcta el \(100\gamma\) \% de los casos. El problema en intervalo de predicción es encontrar \(c_1\) y \(c_2\) de forma de minimizar la diferencia \(c_2-c_1\) sujeta a la restricción dada por la ecuación \ref{eq:statistics_interval_prediction}. La elección de \(\gamma\) se rige por dos requerimientos en conflicto. Si \(\gamma\) es cercano a 1, la predicción de que \(x\) estará en el intervalo \((c_1,\,c_2)\) es confiable, pero la diferencia \(c_2-c_1\) es grande y brinda poca información sobre \(x\). Si se reduce \(\gamma\), se reduce \(c_2-c_1\), pero la estimación es menos confiable. Se mostrará a continuación que si la densidad de probabilidad \(f(x)\) de \(\x\) es unimodal, \(c_2-c_1\) es mínimo para un \(\gamma\) dado si \(f(c_1)=f(c_2)\) (teorema 9.3.2 en \cite{casella2001statistical}):
+\begin{itemize}
+ \item[] \emph{Teorema:} Sea \(f(x)\) una densidad unimodal. Si el intervalo \((c_1,\,c_2)\) satisface que 
+ \begin{enumerate}
+  \item \(\displaystyle P[c_1<\x<c_2]=\int_{c_1}^{c_2}f(x)\,dx=\gamma\),
+  \item \(f(c_1)=f(c_2)>0\), y
+  \item \(c_1\leq x^*\leq c_2\), donde \(x^*\) es la moda de \(f(x)\) (ubicación del máximo),
+ \end{enumerate}
+ \item[] el intervalo \((c_1,\,c_2)\) es el mas corto entre todos los intervalos que cumplen 1.
+ \item[] \emph{Demostración:} Sea \((c'_1,\,c'_2)\) cualquier intervalo tal que \(c'_2-c'_1<c_2-c_1\). Se demostrará que esto implica que
+ \[
+  P[c'_1<\x<c'_2]=\int_{c'_1}^{c'_2}f(x)\,dx<\gamma.
+ \]
+ El caso en que \((c'_1,\,c'_2)\subset(c_1,\,c_2)\) es trivial, ya que inmediatamente se observa que se cumple que
+ \[
+  \int_{c'_1}^{c'_2}f(x)\,dx<\int_{c_1}^{c_2}f(x)\,dx=\gamma.
+ \]
+ La prueba se realizará únicamente para el caso en que \(c'_1\leq c_1\), dado que la prueba para el caso en que \(c'_1>c_1\) es análoga. Asumiendo entonces que \(c'_1\leq c_1\), hay que distinguir dos casos, \(c'_2\leq c_1\) y \(c'_2>c_1\).
+ \begin{itemize}
+  \item Caso \(c'_2\leq c_1\): se cumple que \(c'_1\leq c'_2\leq c_1\leq x^*\). Por lo tanto,
+  \[
+   \int_{c'_1}^{c'_2}f(x)\,dx\overset{(a)}{\leq} f(c'_2)(c'_2-c'_1)
+     \overset{(b)}{\leq}f(c_1)(c'_2-c'_1)
+     \overset{(c)}{<}f(c_1)(c_2-c_1)
+     \overset{(d)}{\leq}\int_{c_1}^{c_2}f(x)\,dx=\gamma,
+  \]
+  donde en \((a)\) se empleó que como \(x\leq c'_2\leq x^*\), \(f(x)\leq f(c'_2)\) para todo \(x\in(c'_1,\,c'_2)\), en \((b)\) se empleó que \(c'_2\leq c_1\leq x^*\) y por lo tanto, \(f(c'_2)\leq f(c_1)\), en \((c)\) se tuvo en cuenta que \(c'_2-c'_1<c_2-c_1\) y \(f(c_1)>0\) y en \((d)\) se consideró que por 2., 3. y la unimodalidad, \(f(x)\geq f(c_1)\) para todo \(x\in(c_1,\,c_2)\), completando la prueba para este caso.
+  \item Caso \(c'_2>c_1\): se cumple que \(c'_1\leq c_1<c'_2<c_2\). No puede ocurrir que \(c'_2\geq c_2\) por la condición de que \(c'_2-c'_1>c_2-c_1\). En este caso, se tiene que 
+  \begin{align*}
+   \int_{c'_1}^{c'_2}f(x)\,dx&=\int_{c_1}^{c_2}f(x)\,dx+\left[\int_{c'_1}^{c_1}f(x)\,dx-\int_{c'_2}^{c_2}f(x)\,dx\right]\\
+    &=\gamma+\left[\int_{c'_1}^{c_1}f(x)\,dx-\int_{c'_2}^{c_2}f(x)\,dx\right],
+  \end{align*}
+  por lo que la demostración del teorema se completa demostrando que el término entre paréntesis rectos es negativo. Considerando 3., la unimodalidad y el orden \(c'_1\leq c_1<c'_2<c_2\), se deduce que
+  \[
+   \int_{c'_1}^{c_1}f(x)\,dx\leq f(c_1)(c_1-c'_1)
+   \qquad\textrm{y}\qquad
+   \int_{c'_2}^{c_2}f(x)\,dx\geq f(c_2)(c_2-c'_2),
+  \]
+  y por lo tanto,
+  \begin{align*}
+   \int_{c'_1}^{c_1}f(x)\,dx-\int_{c'_2}^{c_2}f(x)\,dx&\leq f(c_1)(c_1-c'_1)-f(c_2)(c_2-c'_2)\\
+    &\overset{(a)}{\leq} f(c_1)\left[(c_1-c'_1)-(c_2-c'_2)\right]\\
+    &=f(c_1)\left[(c'_2-c'_1)-(c_2-c_1)\right]\\
+    &\overset{(b)}{<}0,
+  \end{align*}
+  donde en \(a\) se tuvo en cuenta 2. y en \((b)\) que \(c'_2-c'_1<c_2-c_1\) y \(f(c_1)\), concluyendo la prueba.  
+ \end{itemize}
+\end{itemize}
+
 
 
 \bibliographystyle{ieeetr}
