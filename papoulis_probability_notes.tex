@@ -26,7 +26,7 @@
 
 \decimalpoint
 
-% That follow if for listings configuration
+% That follow is for listings configuration
 \usepackage{listings}
 \usepackage{color}
 \usepackage{textcomp}
@@ -36,23 +36,30 @@
     backgroundcolor=\color{lbcolor},
     tabsize=4,
     rulecolor=,
-    language=matlab,
-        basicstyle=\scriptsize,
-        upquote=true,
-        aboveskip={1.5\baselineskip},
-        columns=fixed,
-        showstringspaces=false,
-        extendedchars=true,
-        breaklines=true,
-        prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
-        frame=single,
-        showtabs=false,
-        showspaces=false,
-        showstringspaces=false,
-        identifierstyle=\ttfamily,
-        keywordstyle=\color[rgb]{0,0,1},
-        commentstyle=\color[rgb]{0.133,0.545,0.133},
-        stringstyle=\color[rgb]{0.627,0.126,0.941},
+    language=python,
+    basicstyle=\scriptsize,
+    upquote=true,
+    aboveskip={1.5\baselineskip},
+    columns=fixed,
+    showstringspaces=false,
+    extendedchars=true,
+    breaklines=true,
+    prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    frame=single,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    identifierstyle=\ttfamily,
+    keywordstyle=\color[rgb]{0,0,1},
+    commentstyle=\color[rgb]{0.133,0.545,0.133},
+    stringstyle=\color[rgb]{0.627,0.126,0.941},
+    literate=%
+        {á}{{\'{a}}}1
+        {é}{{\'{e}}}1
+        {í}{{\'{i}}}1
+        {ó}{{\'{o}}}1
+        {ú}{{\'{u}}}1
+        {ñ}{{\~n}}1
 }
 
 \newcommand{\X}{\mathbf{X}}
@@ -685,7 +692,7 @@ Esta expresión es equivalente a la de la ecuación \ref{eq:example_2-8_result}.
 Si el espacio muestral \(\Omega\) consiste en una cantidad infinita no contable de elementos, la probabilidad de los eventos no puede expresarse en función de la probabilidad de los resultados elementales.
 Considérese que \(\Omega\) es el conjunto de todos los números reales. Sus subconjuntos son conjuntos arbitrarios de puntos en el eje real. Puede demostrarse que no es posible asignar probabilidades a todos los subconjuntos de \(\Omega\) de forma de satisfacer las propiedades de una medida de probabilidad. 
 
-Para construir una medida de probabilidad sobre el eje real, se considerarán como eventos todos los intervalos \(x_1\leq x\leq x_2\), y sus uniones e intersecciones contables. Puede demostrarse que estos eventos forman un \(\sigma\)-álgebra de eventos. Este \(\sigma\)-álgebra incluye todas las semirectas \(x\leq x_i\), donde \(x_i\) es cualquier número real. También contiene todos los intervalos abiertos y cerrados, todos los puntos individuales del eje real, y en general, todos los conjuntos de puntos de interés práctico en las aplicaciones. Sin embargo, es posible demostrar que existen conjuntos de puntos en el eje real que no son uniones e intersecciones contables de intervalos, y por lo tanto, el \(\sigma\)-álgebra generado por intervalos no contiene todos los subconjuntos de \(\Omega\). 
+Para construir una medida de probabilidad sobre el eje real, se considerarán como eventos todos los intervalos \(x_1\leq x\leq x_2\), y sus uniones e intersecciones contables. Puede demostrarse que estos eventos forman un \(\sigma\)-álgebra de eventos. Este \(\sigma\)-álgebra incluye todas las semirrectas \(x\leq x_i\), donde \(x_i\) es cualquier número real. También contiene todos los intervalos abiertos y cerrados, todos los puntos individuales del eje real, y en general, todos los conjuntos de puntos de interés práctico en las aplicaciones. Sin embargo, es posible demostrar que existen conjuntos de puntos en el eje real que no son uniones e intersecciones contables de intervalos, y por lo tanto, el \(\sigma\)-álgebra generado por intervalos no contiene todos los subconjuntos de \(\Omega\). 
 
 Para obtener una especificación completa de un espacio de probabilidad sobre el eje real, alcanza con asignar probabilidades a los eventos \(\{x\leq x_i\}\). El resto de las probabilidades surgen de las propiedades de la medida de probabilidad. Supóngase que \(\alpha(x)\) es una función que cumple que
 \[
@@ -1105,7 +1112,7 @@ que es la ocurrencia de \(n\) resultados \(h\) sucesivos entre el experimento \(
 \[
  \sum_{k=0}^{\infty}P(B_{kn+1})=\sum_{k=0}^{\infty}p^n=\infty.
 \]
-Por lo tanto, por el segundo lema de Borel-Cantelli, el patrón ``\(hh\cdots h\)'', así como cualquier otro patrón arbitrario, ocurrira infinitamente a menudo con probabilidad 1.
+Por lo tanto, por el segundo lema de Borel-Cantelli, el patrón ``\(hh\cdots h\)'', así como cualquier otro patrón arbitrario, ocurrirá infinitamente a menudo con probabilidad 1.
 
 
 \chapter{Ensayos repetidos}\label{ch:repeated_trials}
@@ -1604,14 +1611,9 @@ Formalmente, una variable aleatoria \(\x\) es el proceso de asignación de un n�
  Esta condición indica que si bien se permite que \(\x(\zeta)=-\infty\) o \(\x(\zeta)=\infty\) para algunos elementos \(\zeta\) del espacio muestral, se exige que el conjunto de estos elementos tenga probabilidad nula.
 \end{enumerate}
 
-
-
-
-
-
 \section{Distribución y densidad de probabilidad}
 
-\subsection{La función distribución de probabilidad}
+\subsection{La función distribución de probabilidad}\label{sec:distribution_function}
 
 Los elementos del espacio muestral \(S\) contenidos en el evento \(\{\x\leq x\}\) cambian al cambiar el número \(x\). Por lo tanto, la probabilidad \(P\{\x\leq x\}\) del evento \(\{\x\leq x\}\) es un número que depende de \(x\). Este número se denota como \(F_x(x)\) y se llama \emph{función de distribución (acumulada)} de la variable aleatoria \(\x\). Es decir, la función de distribución de una variable aleatoria \(\x\) se define como
 \[
@@ -1619,7 +1621,7 @@ Los elementos del espacio muestral \(S\) contenidos en el evento \(\{\x\leq x\}\
 \]
 para todo \(x\) desde \(-\infty\) a \(\infty\).
 
-\paragraph{Variables aletorias continuas y discretas}
+\paragraph{Variables aleatorias continuas y discretas}
 
 Se dice que una variable aleatoria \(\x\) es \emph{continua} si su distribución de probabilidad \(F_x(x)\) es continua. En este caso, se puede demostrar que se cumple que \(P\{\x=x\}=0\) para todo \(x\).
 
@@ -2479,7 +2481,7 @@ Como caso particular, si una variable aleatoria toma solo valores positivos, se 
 \begin{figure}[!htb]
 \begin{center}
 \includegraphics[width=1\columnwidth]{figuras/mean_and_distribution.pdf}
-\caption{\label{fig:mean_and_distribution} Deducción de la media de \(\x\) en función de la ditribución de probabilidad. La media de \(\x\) esta dada por \((1BD)-(0AB)\), donde \((1BD)\) y \((0AB)\) son las áreas coloreadas en la figura de la derecha.}
+\caption{\label{fig:mean_and_distribution} Deducción de la media de \(\x\) en función de la distribución de probabilidad. La media de \(\x\) esta dada por \((1BD)-(0AB)\), donde \((1BD)\) y \((0AB)\) son las áreas coloreadas en la figura de la derecha.}
 \end{center}
 \end{figure}
 
@@ -3550,7 +3552,7 @@ Sustituyendo estos resultados en la ecuación \ref{eq:runs_probability_phi_deriv
  &\overset{(c)}{=}\frac{z\phi(z)-\sum_{k=0}^{r-1}z^{k+1}-\phi(z)+\sum_{k=0}^{r-1}z^k+(1-p^r)z^r]}{z^{r+1}}\\
  &\overset{(d)}{=}\frac{(z-1)\phi(z)-\sum_{n=1}^{r}z^{n}+\sum_{k=0}^{r-1}z^k+(1-p^r)z^r}{z^{r+1}},
 \end{align*}
-donde en \((a)\) se separó la sumatoria que va de 0 a \(r\) en una sumatoria que va de 0 a \(r-1\) mas el término \(r\), en \((b)\) se sutituyó \(q_k\) por su valores correspondientes dados por las condiciones iniciales de la ecuación \ref{eq:runs_probability_difference_equation_ic}, en \((c)\) se sacó denominador común y en \((d)\) se reagruparon términos y se realizó el cambio de variable \(n=k+1\) en la primer sumatoria. Observando que entre las sumatorias se cancelan todos los términos desde 1 a \(r-1\) se obtiene que
+donde en \((a)\) se separó la sumatoria que va de 0 a \(r\) en una sumatoria que va de 0 a \(r-1\) mas el término \(r\), en \((b)\) se sustituyó \(q_k\) por su valores correspondientes dados por las condiciones iniciales de la ecuación \ref{eq:runs_probability_difference_equation_ic}, en \((c)\) se sacó denominador común y en \((d)\) se reagruparon términos y se realizó el cambio de variable \(n=k+1\) en la primer sumatoria. Observando que entre las sumatorias se cancelan todos los términos desde 1 a \(r-1\) se obtiene que
 \begin{align*}
  qp^r\phi(z)&=\frac{(z-1)\phi(z)+1-z^r+(1-p^r)z^r}{z^{r+1}}\\
    &=\frac{(z-1)\phi(z)+1-p^rz^r}{z^{r+1}}.
@@ -3671,7 +3673,7 @@ El lado derecho de la igualdad es una serie geométrica de converge a \(1/(1-z)\
  &\overset{(b)}{=} \sum_{k=0}^{\infty}p_k(0)z^k\sum_{i=0}^{\infty}\frac{z^{i}}{i!}\nonumber\\
  &\overset{(c)}{=}\phi(z)e^z,
 \end{align}
-donde en \((a)\) se intercambió el orden de las sumatorias mateniendo la suma sobre los mismos pares de valores \((n,\,k)\) en la mitad del cuadrante de la sumatoria original, como se ilustra en la figura \ref{fig:montmort_matching_double_summation}, en \((b)\) se realizó el cambio de variable \(i=n-k\) y en \((c)\) se notó que el primer factor es la función generadora de momentos definida en la ecuación \ref{eq:generating_moments_function} y el segundo factor es la representación en serie de potencias de la función exponencial.
+donde en \((a)\) se intercambió el orden de las sumatorias manteniendo la suma sobre los mismos pares de valores \((n,\,k)\) en la mitad del cuadrante de la sumatoria original, como se ilustra en la figura \ref{fig:montmort_matching_double_summation}, en \((b)\) se realizó el cambio de variable \(i=n-k\) y en \((c)\) se notó que el primer factor es la función generadora de momentos definida en la ecuación \ref{eq:generating_moments_function} y el segundo factor es la representación en serie de potencias de la función exponencial.
 \begin{figure}[!htb]
   \begin{minipage}[c]{0.4\textwidth}
     \includegraphics[width=\textwidth]{figuras/montmort_matching_double_summation.pdf}
@@ -4055,7 +4057,7 @@ por lo que el valor de \(\pi\) puede estimarse como
 \[
  \pi\approx\frac{2ln}{dh}.
 \]
-En 1901, el matemático italiano Mario Lazzarini realizó el experimento de la aguja de Buffon. Lazzarini arrojo una aguja \(n=3408\) veces y obtuvo la estimación de \(\pi\) de \(355/113=3,14159292\), correcta hasta 6 digitos después de la coma. Esta estimación es demasiado precisa para la baja cantidad \(n\) de veces que repitió el experimento debido a que concía el valor de \(\pi\) y realizó el experimento de forma sesgada para obtener un buen resultado\footnote{Ver \url{https://en.wikipedia.org/wiki/Buffon\%27s_needle_problem\#Estimating_\%CF\%80}}. De todas formas, el experimento realizado por Lazzarini es considerado la primer aplicación de la técnica de integración de Montecarlo.
+En 1901, el matemático italiano Mario Lazzarini realizó el experimento de la aguja de Buffon. Lazzarini arrojo una aguja \(n=3408\) veces y obtuvo la estimación de \(\pi\) de \(355/113=3,14159292\), correcta hasta 6 dígitos después de la coma. Esta estimación es demasiado precisa para la baja cantidad \(n\) de veces que repitió el experimento debido a que conocía el valor de \(\pi\) y realizó el experimento de forma sesgada para obtener un buen resultado\footnote{Ver \url{https://en.wikipedia.org/wiki/Buffon\%27s_needle_problem\#Estimating_\%CF\%80}}. De todas formas, el experimento realizado por Lazzarini es considerado la primer aplicación de la técnica de integración de Montecarlo.
 
 Se calculará a continuación la probabilidad de intersección para el caso en que la aguja es mas larga que la separación de los renglones en el plano, es decir, \(l>d\). Para hacerlo, se comienza considerando el caso límite en que los extremos de la aguja tocan sin cortar dos rectas sucesivas, como se muestra en la figura \ref{fig:buffon_needle_long}. En ese caso, \(z=d/2\) y
 \[
@@ -7646,7 +7648,7 @@ Se considera ahora el caso en que se desea estimar \(\y\) a partir de la observa
 \[
  e=E\{[\y-c(\x)]^2\}=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}[y-c(x)]^2f(x,\,y)\,dx\,dy.
 \]
-Para minimziar \(e\), se considera que \(f(x,\,y)=f(y\,|\,x)f(x)\) (ver sección \ref{sec:joint_conditional_distributions}) y por lo tanto
+Para minimizar \(e\), se considera que \(f(x,\,y)=f(y\,|\,x)f(x)\) (ver sección \ref{sec:joint_conditional_distributions}) y por lo tanto
 \begin{align*}
   e&=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}[y-c(x)]^2f(y\,|\,x)f(x)\,dx\,dy\\
    &=\int_{-\infty}^{\infty}f(x)\int_{-\infty}^{\infty}[y-c(x)]^2f(y\,|\,x)\,dy\,dx.
@@ -8630,7 +8632,7 @@ La ley débil de los grandes números indica que
 \[
  \bar{\x}_n\overset{p}{\longrightarrow}\eta.
 \]
-La demostración puede realizarse a partir de la inecuación de Chebyshev de forma idéntica al caso de variables aleatorias binarias visto previamente\footnote{ver \url{https://en.wikipedia.org/wiki/Law_of_large_numbers}, por ejemplo.}. Se incluye a continuación otra demostración empleando las funciones características, que tiene interés por la similitud a la demostración del teorema central del límite, el que se verá mas adelante. La demostración desarrollada a contiuación está basada en \cite{polyanskiy18lec17}.
+La demostración puede realizarse a partir de la inecuación de Chebyshev de forma idéntica al caso de variables aleatorias binarias visto previamente\footnote{ver \url{https://en.wikipedia.org/wiki/Law_of_large_numbers}, por ejemplo.}. Se incluye a continuación otra demostración empleando las funciones características, que tiene interés por la similitud a la demostración del teorema central del límite, el que se verá mas adelante. La demostración desarrollada a continuación está basada en \cite{polyanskiy18lec17}.
 
 Para la prueba, se tendrán en cuenta las siguientes tres consideraciones:
 \begin{enumerate}
@@ -9150,26 +9152,26 @@ En una investigación estadística se trata con dos clases generales de problema
 
 Un \emph{intervalo de predicción} de \(\x\) es la determinación de dos constantes \(c_1\) y \(c_2\) de forma de que
 \begin{equation}\label{eq:statistics_interval_prediction}
-  P[c_1<\x<c_2]=\gamma=1-\delta,
+  P\{c_1<\x<c_2\}=\gamma=1-\delta,
 \end{equation}
 donde \(\gamma\) es una constante dada llamada \emph{coeficiente de confianza}. Esta ecuación indica que si se predice que el valor \(x\) que tomará \(\x\) en el próximo ensayo va a estar en el intervalo \((c_1,\,c_2)\), la predicción va a ser correcta el \(100\gamma\) \% de los casos. El problema en intervalo de predicción es encontrar \(c_1\) y \(c_2\) de forma de minimizar la diferencia \(c_2-c_1\) sujeta a la restricción dada por la ecuación \ref{eq:statistics_interval_prediction}. La elección de \(\gamma\) se rige por dos requerimientos en conflicto. Si \(\gamma\) es cercano a 1, la predicción de que \(x\) estará en el intervalo \((c_1,\,c_2)\) es confiable, pero la diferencia \(c_2-c_1\) es grande y brinda poca información sobre \(x\). Si se reduce \(\gamma\), se reduce \(c_2-c_1\), pero la estimación es menos confiable. Se mostrará a continuación que si la densidad de probabilidad \(f(x)\) de \(\x\) es unimodal, \(c_2-c_1\) es mínimo para un \(\gamma\) dado si \(f(c_1)=f(c_2)\) (teorema 9.3.2 en \cite{casella2001statistical}):
 \begin{itemize}
  \item[] \emph{Teorema:} Sea \(f(x)\) una densidad unimodal. Si el intervalo \((c_1,\,c_2)\) satisface que 
  \begin{enumerate}
-  \item \(\displaystyle P[c_1<\x<c_2]=\int_{c_1}^{c_2}f(x)\,dx=\gamma\),
+  \item \(\displaystyle P\{c_1<\x<c_2\}=\int_{c_1}^{c_2}f(x)\,dx=\gamma\),
   \item \(f(c_1)=f(c_2)>0\), y
   \item \(c_1\leq x^*\leq c_2\), donde \(x^*\) es la moda de \(f(x)\) (ubicación del máximo),
  \end{enumerate}
  \item[] el intervalo \((c_1,\,c_2)\) es el mas corto entre todos los intervalos que cumplen 1.
  \item[] \emph{Demostración:} Sea \((c'_1,\,c'_2)\) cualquier intervalo tal que \(c'_2-c'_1<c_2-c_1\). Se demostrará que esto implica que
  \[
-  P[c'_1<\x<c'_2]=\int_{c'_1}^{c'_2}f(x)\,dx<\gamma.
+  P\{c'_1<\x<c'_2\}=\int_{c'_1}^{c'_2}f(x)\,dx<\gamma.
  \]
  El caso en que \((c'_1,\,c'_2)\subset(c_1,\,c_2)\) es trivial, ya que inmediatamente se observa que se cumple que
  \[
   \int_{c'_1}^{c'_2}f(x)\,dx<\int_{c_1}^{c_2}f(x)\,dx=\gamma.
  \]
- La prueba se realizará únicamente para el caso en que \(c'_1\leq c_1\), dado que la prueba para el caso en que \(c'_1>c_1\) es análoga. Asumiendo entonces que \(c'_1\leq c_1\), hay que distinguir dos casos, \(c'_2\leq c_1\) y \(c'_2>c_1\).
+ La prueba se realizará únicamente para el caso en que \(c'_1\leq c_1\), dado que la prueba para el caso en que \(c'_1>c_1\) es análoga. Asumiendo entonces que \(c'_1\leq c_1\), hay que distinguir dos casos, \(c'_2\leq c_1\) y \(c'_2>c_1\), que son las situaciones que se muestran en la figura  \ref{fig:shortest_prediction_interval}. En el ejemplo de esta figura, los intervalos \((c_1,\,c_2)\) y \((c'_1,\,c'_2)\) tienen la misma probabilidad \(\gamma\) y \((c_1,\,c_2)\) es el mas corto de todos los posibles, por lo que no se cumple que \(c'_2-c'_1<c_2-c_1\), como se asume en el teorema.
  \begin{itemize}
   \item Caso \(c'_2\leq c_1\): se cumple que \(c'_1\leq c'_2\leq c_1\leq x^*\). Por lo tanto,
   \[
@@ -9197,9 +9199,42 @@ donde \(\gamma\) es una constante dada llamada \emph{coeficiente de confianza}. 
     &=f(c_1)\left[(c'_2-c'_1)-(c_2-c_1)\right]\\
     &\overset{(b)}{<}0,
   \end{align*}
-  donde en \(a\) se tuvo en cuenta 2. y en \((b)\) que \(c'_2-c'_1<c_2-c_1\) y \(f(c_1)\), concluyendo la prueba.  
+  donde en \((a)\) se tuvo en cuenta 2. y en \((b)\) que \(c'_2-c'_1<c_2-c_1\) y \(f(c_1)\), concluyendo la prueba.  
  \end{itemize}
 \end{itemize}
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=0.95\columnwidth]{figuras/shortest_prediction_interval.pdf}
+\caption{\label{fig:shortest_prediction_interval} Comparación del intervalo de confianza mas corto \((c_1,\,c_2)\) con otro intervalo \((c'_1,\,c'_2)\) con la misma probabilidad \(\gamma\) para valores de \(\gamma\) de 0.3 y 0.8 en el caso una variable aleatoria con distribución \(\beta(5,\,2)\). El intervalo con \(c_2-c_1\) mínimo es el que cumple que \(f(c_1)=f(c_2)\).}
+\end{center}
+\end{figure}
+En la figura \ref{fig:shortest_prediction_interval} se muestra el intervalo \((c_1,\,c_2)\) mas corto para dos valores de \(\gamma\) y se compara con otro intervalo \((c'_1,\,c'_2)\) con la misma probabilidad en el caso de una variable aleatoria con distribución beta. Se observa que para cierto coeficiente de confianza \(\gamma\), el intervalo mas corto es el que cumple que \(f(c_1)=f(c_2)\). Los valores de \(c_1\) y \(c_2\) pueden obtenerse mediante ensayo y error. En la figura \ref{fig:shortest_prediction_interval_code} se muestra el código en el lenguaje Python para obtener el intervalo de confianza mas corto dado el coeficiente de confianza \(\gamma\)\footnote{El código fué extraído de \url{https://stackoverflow.com/a/25777507}}.
+\begin{figure}[!htb]
+\begin{center}
+\lstinputlisting{figuras/shortest_prediction_interval_code.py}
+\caption{\label{fig:shortest_prediction_interval_code} Implementación en el lenguaje Python del cálculo del intervalo \((c_1,\,c_2)\) con \(c_2-c_1\) mínimo para un coeficiente de confianza \(\gamma\) dado. Se emplea la función \texttt{fmin} de la biblioteca Scipy para minimizar la función \texttt{interval\_widht}. La función \texttt{interval\_widht} recibe el área de la cola inferior \texttt{low\_tail\_pr} y retorna el largo \(c_2-c_1\) del intervalo dado el coeficiente de confianza \texttt{confidence\_coef}. El largo del intervalo se calcula como \(c_2-c_1=F^{-1}(\gamma+\alpha)-F^{-1}(\alpha)\), donde \(F(x)\) es la distribución de probabilidad y \(\alpha\) el área de la cola inferior (variable \texttt{low\_tail\_pr}). La condición inicial del algoritmo de optimización es \(\texttt{low\_tail\_pr\_ini}=1-\texttt{confidence\_coef}\), es decir, \(\alpha=1-\gamma\). De esta forma, al inicio, \(c_1=F^{-1}(1-\gamma)\) y \(c_2\) es la frontera superior de la densidad si es de soporte acotado o infinito si no es de soporte acotado. Observar que el algoritmo no emplea el hecho de que el intevalo de largo mínimo es el que cumple que \(f(c_1)=f(c_2)\).}
+\end{center}
+\end{figure}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+Una solución subóptima mas simple se obtiene fácilmente si se determina \(c_1\) y \(c_2\) tal que 
+\[
+ P\{\x<c_1\}=\frac{\delta}{2}
+  \qquad\qquad\textrm{y}\qquad\qquad
+ P\{\x>c_2\}=\frac{\delta}{2}.
+\]
+De esta forma,
+\[
+ c_1=F^{-1}\left(\frac{\delta}{2}\right)=x_{\delta/2}
+ \qquad\qquad\textrm{y}\qquad\qquad
+ c_2=F^{-1}\left(1-\frac{\delta}{2}\right)=x_{1-\delta/2},
+\]
+donde \(x_u\) es el percentil \(u\) y \(F(x)\) es la distribución de probabilidad de \(\x\). El intervalo obtenido se denomina \emph{intervalo de confianza de colas iguales} y es óptimo si la densidad \(f(x)\) es simétrica respecto a su media \(\eta\), ya que en ese caso, \(f(c_1)=f(c_2)\).
+Si \(\x\) es normal, \(x_u=\eta+z_u\sigma\), donde \(z_u\) es el percentil normal estándar. Efectivamente, sea \(\x\sim N(\eta,\,\sigma^2)\). De la definición de percentil (ver la sección \ref{sec:distribution_function}),  el percentil \(u\) es \(u=P\{\x<x_u\}\) y por lo tanto, normalizando, se cumple que
+\[
+ P\left\{\frac{\x-\eta}{\sigma}<\frac{x_u-\eta}{\sigma}\right\}=u,
+\]
+o \(P\{\z<z_u\}=u\), donde \(\z=(\x-\eta)/\sigma\sim N(0,\,1)\) y \(z_u=(x_u-\eta)/\sigma\).
+
+
 
 
 

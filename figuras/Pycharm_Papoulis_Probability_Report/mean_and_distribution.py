@@ -11,6 +11,7 @@ __author__ = 'ernesto'
 
 # if use latex or mathtext
 rc('text', usetex=False)
+rc('mathtext', fontset='cm')
 
 
 # auxiliar function for plot ticks of equal length in x and y axis despite its scales.
