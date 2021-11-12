@@ -7,6 +7,8 @@ __author__ = 'ernesto'
 
 # if use latex or mathtext
 rc('text', usetex=False)
+rc('mathtext', fontset='cm')
+
 
 z1 = 0.7
 z2 = 1.5
@@ -35,7 +37,7 @@ tl = 0.1
 # z ticks labels baseline
 bl = -0.2
 # colors
-lgray = "#dddddd"  # ligth gray
+lgray = "#dddddd"  # light gray
 dgray = "k"  # dark gray
 
 fig = plt.figure(1, figsize=(10, 4), frameon=False)
@@ -84,7 +86,7 @@ plt.plot([z1+dz, z1+dz], [-z1-dz, z1+dz], 'k')
 vertices = np.array([[z1, z1], [z1+dz, z1+dz], [z1+dz, -z1-dz], [z1, -z1]])
 ax.add_patch(Polygon(vertices, facecolor=dgray, edgecolor='none'))
 plt.text(z1, z1+dz/2+0.05, r'$w=z$', fontsize=font_size, ha='right', va='center')
-plt.text(z1, -z1-0.1, r'$w=-z$', fontsize=font_size, ha='right', va='center')
+plt.text(z1+0.02, -z1-0.1, r'$w=-z$', fontsize=font_size, ha='right', va='center')
 
 plt.plot([z2, z2], [z2-2, -z2+2], 'k')
 plt.plot([z2+dz, z2+dz], [z2+dz-2, -z2-dz+2], 'k')

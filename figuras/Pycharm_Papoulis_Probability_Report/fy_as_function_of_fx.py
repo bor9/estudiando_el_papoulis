@@ -8,6 +8,7 @@ __author__ = 'ernesto'
 
 # if use latex or mathtext
 rc('text', usetex=False)
+rc('mathtext', fontset='cm')
 
 #####################################
 # PARAMETERS - This can be modified #
@@ -126,6 +127,6 @@ plt.text(x_ax_max, bl, '$x$', fontsize=fontsize, ha='center', va='baseline')
 plt.text(0.08, bl, '$0$', fontsize=fontsize, ha='left', va='baseline')
 
 plt.axis('off')
-# save as eps image
+# save as pdf image
 plt.savefig('fy_as_function_of_fx.pdf', bbox_inches='tight')
 plt.show()
