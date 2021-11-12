@@ -18,6 +18,8 @@
 \usepackage{bm}
 \usepackage{fullpage}
 \usepackage{mathdots}
+\usepackage{multirow}
+\usepackage[table,xcdraw]{xcolor}
 
 % plot a circle
 \usepackage{tikz}
@@ -80,6 +82,7 @@
 \newcommand{\Phibf}{\mathbf{\Phi}}
 \newcommand{\Psibf}{\mathbf{\Psi}}
 \newcommand{\Gammabf}{\mathbf{\Gamma}}
+\newcommand{\thetabf}{\bm{\theta}}
 
 
 \DeclareMathOperator*{\argmin}{arg\,min}
@@ -1259,11 +1262,11 @@ Este resultado será empleado para obtener la probabilidad de que un evento ocur
  p_n(k)=\binom{n}{k}p^kq^{n-k},\qquad q=1-p.
 \end{equation}
 
-El experimento en consideración es tirar una moneda \(n\) veces. El resultado del experimento es una secuencia particular de caras (\(h\)) y números (\(t\)). El evento \{\(k\) caras en cualquier orden\} consiste en todas las secuencias que contienen \(k\) caras y \(n-k\) números. Para obtener la cantidad de secuencias distintas de \(n\) objetos que contienen \(k\) caras y \(n-k\) números, hay que notar que si los objetos fueran todos distintos, habría \(n!\) secuencias distintas. Sin embargo, como las \(k\) caras y los \(n-k\) números son idénticos entre sí, las correspondientes \(k!\) permutaciones entre las caras y las \((n-k)!\) entre los números de una secuencia especifica contribuyen solo a una secuencia. Por lo tanto, el número total de secuencias distintas (combinaciones) con \(k\) caras y \(n-k\) números es
+El experimento en consideración es tirar una moneda \(n\) veces. El resultado del experimento es una secuencia particular de caras (\(h\)) y números (\(t\)). El evento \{\(k\) caras en cualquier orden\} consiste en todas las secuencias que contienen \(k\) caras y \(n-k\) números. Para obtener la cantidad de secuencias distintas de \(n\) objetos que contienen \(k\) caras y \(n-k\) números, hay que notar que si los objetos fueran todos distintos, habría \(n!\) secuencias distintas. Sin embargo, como las \(k\) caras y los \(n-k\) números son idénticos entre sí, las correspondientes \(k!\) permutaciones entre las caras y las \((n-k)!\) entre los números de una secuencia específica contribuyen solo a una secuencia. Por lo tanto, el número total de secuencias distintas (combinaciones) con \(k\) caras y \(n-k\) números es
 \begin{equation}\label{eq:combinations_definition}
  \frac{n!}{k!(n-k)!}=\binom{n}{k},
 \end{equation}
-es decir, el evento \{\(k\) caras en cualquier orden\} consiste en \(\binom{n}{k}\) eventos elementales conteniendo \(k\) caras y \(n-k\) números en un orden específico. Como la probabilidad de cada uno se esos eventos elementales es \(p^{k}q^{n-k}\), se concluye que
+es decir, el evento \{\(k\) caras en cualquier orden\} consiste en \(\binom{n}{k}\) eventos elementales conteniendo \(k\) caras y \(n-k\) números en un orden específico. Como la probabilidad de cada uno de esos eventos elementales es \(p^{k}q^{n-k}\), se concluye que
 \[
  P\{k\textrm{ caras en cualquier orden}\}=\binom{n}{k}p^{k}q^{n-k}.
 \]
@@ -3865,7 +3868,7 @@ donde \(x\) e \(y\) son dos números reales arbitrarios y \(D_1\) es el cuadrant
 
 La distribución de probabilidad cumple las siguientes propiedades:
 \begin{enumerate}[1.]
- \item La función \(F_{xy}(x,\,y)\) es tal que
+ \item La función \(F(x,\,y)\) es tal que
  \[
   F(-\infty,\,y)=0,\qquad F(x,\,-\infty)=0,\qquad F(\infty,\,\infty)=1.
  \]
@@ -3931,7 +3934,7 @@ y los eventos a la derecha de la igualdad son mutuamente excluyentes, se cumple 
 Por lo tanto,
 \begin{align*}
  P\{x_1<\x\leq x_2,\,y_1<\y\leq y_2\}=&P\{x_1<\x\leq x_2,\,\y\leq y_2\}-P\{x_1<\x\leq x_2,\,\y\leq y_1\}\\
-  \overset{(a)}{=}&\left(F(x_2,\,y_2)-F(x_1,\,y_2)\right)-\left(F(x_2,\,y_1)-F(x_1,\,y_1)\right)\\
+  \overset{(a)}{=}&\left[F(x_2,\,y_2)-F(x_1,\,y_2)\right]-\left[F(x_2,\,y_1)-F(x_1,\,y_1)\right]\\
   =&F(x_2,\,y_2)-F(x_1,\,y_2)-F(x_2,\,y_1)+F(x_1,\,y_1),
 \end{align*}
 donde en \((a)\) se usó la primera ecuación en \ref{eq:joint_distribution_properties2}.
@@ -3953,10 +3956,25 @@ De esta forma,
 acorde con una de las propiedades de la distribución de probabilidad conjunta.
 
 \subsection{Estadísticas conjuntas}
-Se puede demostrar que la probabilidad de que el punto \((\x,\,\y)\) esté en una región \(D\) del plano \(xy\) es la integral de \(f(x,\,y)\) en \(D\), es decir,
+Se probará que la probabilidad de que el punto \((\x,\,\y)\) esté en una región \(D\) del plano \(xy\) es la integral de \(f(x,\,y)\) en \(D\), es decir,
 \begin{equation}\label{eq:joint_probability_definition}
- P\{(\x,\,\y)\in D\}=\iint_{D} f(x,\,y)\,dx\,dy.
+ P\{(\x,\,\y)\in D\}=\iint_{D} f(x,\,y)\,dx\,dy,
 \end{equation}
+donde \(\{(\x,\,\y)\in D\}\) es el evento que consiste en todos los resultados \(\zeta\) en los cuales el punto \([\x(\zeta),\,\y(\zeta)]\) está en \(D\). Para mostrarlo, se observa que por la definición de derivada, se cumple que 
+\begin{equation}\label{eq:joint_probability_definition_tmp}
+ \frac{\partial^2F(x,\,y)}{\partial x\partial y}=\lim_{\Delta x\to0}\lim_{\Delta y\to0}\frac{F(x+\Delta x,\,y+\Delta y)-F(x,\,y+\Delta y)-F(x+\Delta x,\,y)+F(x,\,y)}{\Delta x\Delta y}.
+\end{equation}
+Efectivamente,
+\begin{align*}
+ \frac{\partial^2F(x,\,y)}{\partial x\partial y}&=\frac{\partial}{\partial x}\left[\frac{\partial F(x,\,y)}{\partial y}\right]\\
+  &=\lim_{\Delta x\to0}\dfrac{\dfrac{\partial F}{\partial y}(x+\Delta x,\,y)-\dfrac{\partial F}{\partial y}(x,\,y)}{\Delta x}\\
+  &=\lim_{\Delta x\to0}\dfrac{\left[\lim\limits_{\Delta x\to0}\dfrac{F(x+\Delta x,\,y+\Delta y)-F(x+\Delta x,\,y)}{\Delta y}\right]-\left[\lim\limits_{\Delta x\to0}\dfrac{F(x,\,y+\Delta y)-F(x,\,y)}{\Delta y}\right]}{\Delta x},
+\end{align*}
+obteniendo la ecuación \ref{eq:joint_probability_definition_tmp}. Empleando los resultados de las ecuaciones \ref{eq:joint_distribution_rectangular_region} y \ref{eq:joint_density_definition} en la ecuación \ref{eq:joint_probability_definition_tmp}, se llega a que
+\begin{equation}\label{eq:joint_probability_interval_approximation}
+ P\{x<\x\leq x+\Delta x,\,y<\y\leq y+\Delta y\}\approx f(x,\,y)\Delta x\Delta y.
+\end{equation}
+Esto indica que la probabilidad de que el punto \((\x,\,\y)\) esté en un rectángulo diferencial es el producto entre \(f(x,\,y)\) y el área \(\Delta x\Delta y\) del rectángulo, lo que prueba la ecuación \ref{eq:joint_probability_definition}, ya que la región \(D\) se puede expresar como el límite de la unión de dichos rectángulos.
 
 \subsection{Estadísticas marginales}\label{sec:marginal_statisctics_two_rv}
 En el análisis de varias variables aleatorias, la estadística de cada una por separado se llama \emph{marginal}. De esta forma, \(F_x(x)\) es la \emph{distribución marginal} y \(f_x(x)\) es la \emph{densidad marginal} de \(\x\). Se puede demostrar que la estadística marginal de \(\x\) e \(\y\) en función de su estadística conjunta \(F(x,\,y)\) y \(f(x,\,y)\) es
@@ -4695,9 +4713,9 @@ Este resultado coincide con el de la ecuación \ref{eq:joint_distribution_rv_min
 Sean \(g(x,\,y)\) y \(h(x,\,y)\) dos funciones continuas y diferenciables y dos variables aleatorias \(\x\) e \(\y\). Se definen las variables aleatorias \(\z\) y \(\w\) como
 \begin{align*}
  \z&=g(\x,\,\y)\\
- \w&=h(\x,\,\y),
+ \w&=h(\x,\,\y).
 \end{align*}
-Se puede demostrar que las densidades de probabilidad \(f_{xy}(x,\,y)\) y \(f_{zw}(z,\,w)\) se vinculan como
+Al igual que en el caso de una única variable aleatoria (ecuación \ref{eq:functions_of_rv_fundamental_theorem}), es posible desarrollar una fórmula para obtener la densidad de probabilidad conjunta \(f_{zw}(z,\,w)\) directamente. Se probará que las densidades de probabilidad \(f_{xy}(x,\,y)\) y \(f_{zw}(z,\,w)\) se vinculan como
 \begin{equation}\label{eq:joint_density_two_funcions_two_rv}
  f_{zw}(z,\,w)=\sum_{i}|J(z,\,w)|f_{xy}(x_i,\,y_i)=\sum_{i}\frac{1}{|J(x_i,\,y_i)|}f_{xy}(x_i,\,y_i),
 \end{equation}
@@ -4710,9 +4728,9 @@ para un punto dado \((z,\,w)\), es decir, \((x_1,\,y_1),\,(x_2,\,y_2),\dots,\,(x
  g(x_i,\,y_i)=z,\qquad h(x_i,\,y_i)=w.
 \]
 Equivalentemente, si \(g_1\) y \(h_1\) es la transformación inversa a \ref{eq:joint_density_two_rv_transformation}, se cumple que
-\[
- x_i=g_1(z,\,w),\qquad y_i=h_1(z,\,w).
-\]
+\begin{equation}\label{eq:joint_density_two_rv_probability_inverse_transform}
+ x_i=g_1(z,\,w),\qquad y_i=h_1(z,\,w). 
+\end{equation}
 Además, \(|J(z,\,w)|\) y \(|J(x_i,\,y_i)|\) son el valor absoluto del determinante de la matriz Jacobiana de la transformación inversa y directa respectivamente, es decir,
 \begingroup
 \renewcommand*{\arraystretch}{2.2}
@@ -4727,7 +4745,7 @@ J(x_i,\,y_i)=
  \begin{vmatrix}
     \dfrac{\partial g}{\partial x} & \dfrac{\partial g}{\partial y} \\
     \dfrac{\partial h}{\partial x} & \dfrac{\partial h}{\partial y}
-\end{vmatrix}_{x=x_1,\,y=y_i}.
+\end{vmatrix}_{x=x_i,\,y=y_i}.
 \]
 \endgroup
 Como la matriz inversa de la matriz Jacobiana de una transformación invertible es la matriz Jacobiana de la transformación inversa, se cumple que
@@ -4735,10 +4753,397 @@ Como la matriz inversa de la matriz Jacobiana de una transformación invertible 
  |J(z,\,w)|=\frac{1}{|J(x_i,\,y_i)|}.
 \]
 
+Para la demostración, hay que evaluar la probabilidad
+\begin{equation}\label{eq:joint_density_two_rv_probability_1}
+ P\{z<\z\leq z+\Delta z,\,w<\w\leq w+\Delta w\}=P\{z<g(\x,\,\y)\leq z+\Delta z,\,w<h(\x,\,\y)\leq w+\Delta w\}.
+\end{equation}
+\sloppy Para un punto dado \((z,\,w)\), el sistema de ecuaciones \ref{eq:joint_density_two_rv_transformation} puede tener múltiples soluciones. Sean \((x_1,\,y_1),\,(x_2,\,y_2),\,\dots,\,(x_n,\,y_n)\) dichas soluciones, las cuales se representan en la figura \ref{fig:fzw_as_function_of_fxy_1}, y cumplen que
+\[
+ g(x_i,\,y_i)=z,\qquad h(x_i,\,y_i)=w.
+\]
+\begin{figure}[!htb]
+\begin{center}
+ \includegraphics[width=0.8\columnwidth]{figuras/fzw_as_function_of_fxy_1.pdf}
+\caption{Mapeo del punto \((z,\,w)\) y el rectángulo de área \(\Delta z\Delta w\) en el plano \(xy\) mediante la transformación \ref{eq:joint_density_two_rv_transformation}. Para un punto \((z,\,w)\) dado, \((x_1,\,y_1),\,\dots,\,(x_n,\,y_n)\) son las soluciones del sistema.}\label{fig:fzw_as_function_of_fxy_1}
+\end{center}
+\end{figure}
+Empleando la ecuación \ref{eq:joint_probability_interval_approximation}, la probabilidad de la ecuación \ref{eq:joint_density_two_rv_probability_1} puede escribirse como
+\begin{equation}\label{eq:joint_density_two_rv_probability_zw}
+ P\{z<\z\leq z+\Delta z,\,w<\w\leq w+\Delta w\}=f_{zw}(z,\,w)\Delta z\Delta w. 
+\end{equation}
+Para expresar esta probabilidad en términos de \(f_{xy}(x,\,y)\), es necesario evaluar la región en la que se mapea el rectángulo de área \(\Delta z\Delta w\) del plano \(zw\) en el plano \(xy\). Respecto a esto, como se muestra en la figura \ref{fig:fzw_as_function_of_fxy_2}, el punto \(A\) con coordenadas \((z,\,w)\) se mapea en el punto \(A'\) con coordenadas \((x_i,\,y_i)\), además de en otros puntos, como se mencionó previamente y se muestra en la figura \ref{fig:fzw_as_function_of_fxy_1}. Cuando \(z\) cambia a \(z+\Delta z\) hacia el punto \(B\), sea \(B'\) su imagen en el plano \(xy\), y de forma similar, cuando \(w\) cambia a \(w+\Delta w\) hacia el punto \(C\), sea \(C'\) su imagen en el plano \(xy\), como se muestra en la figura \ref{fig:fzw_as_function_of_fxy_2}. Finalmente, \(D\) se mapea en el punto \(D'\), y \(A'B'C'D'\) representa el paralelogramo equivalente en el plano \(xy\) con área \(\Delta_i\). Debido a que estas regiones no se solapan, como en la figura \ref{fig:fzw_as_function_of_fxy_1}, la probabilidad de la ecuación \ref{eq:joint_probability_interval_approximation} puede expresarse en el plano \(xy\) como
+\begin{equation}\label{eq:joint_density_two_rv_probability_xy}
+ \sum_i P\{(\x,\,\y)\in\Delta_i\}=\sum_i f_{xy}(x_i,\,y_i)\Delta_i.
+\end{equation}
+Igualando las ecuaciones \ref{eq:joint_density_two_rv_probability_zw} y \ref{eq:joint_density_two_rv_probability_xy} se obtiene que 
+\begin{equation}\label{eq:joint_density_two_rv_probability_relation_tmp}
+ f_{zw}(z,\,w)=\sum_i f_{xy}(x_i,\,y_i)\frac{\Delta_i}{\Delta z\Delta w}.
+\end{equation}
+\begin{figure}[!htb]
+\begin{center}
+ \includegraphics[width=0.8\columnwidth]{figuras/fzw_as_function_of_fxy_2.pdf}
+\caption{Imagen \(A'B'C'D'\) en el plano \(xy\) del rectángulo \(ABCD\) en el plano \(zw\) correspondiente a una solución \((x_i,\,y_i)\) de la transformación \ref{eq:joint_density_two_rv_transformation}. El rectángulo de área \(\Delta z\Delta w\) se mapea en un paralelogramo de área \(\Delta_i\).}\label{fig:fzw_as_function_of_fxy_2}
+\end{center}
+\end{figure}
+Para desarrollar la ecuación \ref{eq:joint_density_two_rv_probability_relation_tmp}, se necesita calcular el área del paralelogramo de la figura \ref{fig:fzw_as_function_of_fxy_2} en términos de \(\Delta z\Delta w\). Con ese objetivo, sea \(g_1\) y \(h_1\) la transformación inversa a \ref{eq:joint_density_two_rv_transformation}, de forma que
+\[
+ x_i=g_1(z,\,w),\qquad y_i=h_1(z,\,w).
+\]
+Teniendo esto en cuenta, las coordenadas de los puntos en los planos \(zw\) y \(xy\) son:
+\begin{center}
+\def\arraystretch{1.4}
+\begin{tabular}{@{}llll@{}}
+\hline
+\multicolumn{2}{|c|}{Plano \(zw\)}               & \multicolumn{2}{c|}{Plano \(xy\)}              \\ \hline
+\multicolumn{1}{|l|}{Punto} & \multicolumn{1}{>{\centering\arraybackslash}m{5.0cm}|}{Coordenadas} & \multicolumn{1}{l|}{Punto} & \multicolumn{1}{>{\centering}m{7.0cm}|}{Coordenadas} \\ \hline
+\multicolumn{1}{|c|}{\(A\)} & \multicolumn{1}{c|}{\((z,\,w)\)} & \multicolumn{1}{c|}{\(A'\)} & \multicolumn{1}{c|}{\([g_1(z,\,w),\,h_1(z,\,w)]\)} \\ \hline
+\multicolumn{1}{|c|}{\(B\)} & \multicolumn{1}{c|}{\((z+\Delta z,\,w)\)} & \multicolumn{1}{c|}{\(B'\)} & \multicolumn{1}{c|}{\([g_1(z+\Delta z,\,w),\,h_1(z+\Delta z,\,w)]\)} \\ \hline
+\multicolumn{1}{|c|}{\(C\)} & \multicolumn{1}{c|}{\((z,\,w+\Delta w)\)} & \multicolumn{1}{c|}{\(C'\)} & \multicolumn{1}{c|}{\([g_1(z,\,w+\Delta w),\,h_1(z,\,w+\Delta w)]\)} \\ \hline
+\multicolumn{1}{|c|}{\(D\)} & \multicolumn{1}{c|}{\((z+\Delta z,\,w+\Delta w)\)} & \multicolumn{1}{c|}{\(D'\)} & \multicolumn{1}{c|}{\([g_1(z+\Delta z,\,w+\Delta w),\,h_1(z+\Delta z,\,w+\Delta w)]\)} \\ \hline
+\end{tabular}
+\end{center}
+Realizando una aproximación de Taylor con \(\Delta z\to0\) y \(\Delta w\to0\), se tiene que 
+\[
+\def\arraystretch{2.2}
+\begin{array}{lllll}
+ g_1(z+\Delta z,\,w)&=&g_1(z,\,w)+\dfrac{\partial g_1}{\partial z}\Delta z&=&x_i+\dfrac{\partial g_1}{\partial z}\Delta z\\
+ h_1(z+\Delta z,\,w)&=&h_1(z,\,w)+\dfrac{\partial h_1}{\partial z}\Delta z&=&y_i+\dfrac{\partial h_1}{\partial z}\Delta z\\
+ g_1(z,\,w+\Delta w)&=&g_1(z,\,w)+\dfrac{\partial g_1}{\partial w}\Delta w&=&x_i+\dfrac{\partial g_1}{\partial w}\Delta w\\
+ h_1(z,\,w+\Delta w)&=&h_1(z,\,w)+\dfrac{\partial h_1}{\partial w}\Delta w&=&y_i+\dfrac{\partial h_1}{\partial w}\Delta w,
+\end{array}
+\]
+por lo que las coordenadas de los puntos en el plano \(xy\) resultan en los valores mostrados en la siguiente tabla:
+\begin{center}
+\def\arraystretch{1.2}
+\begin{tabular}{@{}|>{\centering\arraybackslash}m{4.5cm}|>{\centering\arraybackslash}m{4.5cm}|>{\centering\arraybackslash}m{4.5cm}|@{}}
+\hline
+\(A'\) & \(B'\)      & \(C'\)   \\ \hline
+& & \\[-1em]
+\((x_i,\,y_i)\)  & \(\left(x_i+\dfrac{\partial g_1}{\partial z}\Delta z,\,y_i+\dfrac{\partial h_1}{\partial z}\Delta z\right)\) & \(\left(x_i+\dfrac{\partial g_1}{\partial w}\Delta w,\,y_i+\dfrac{\partial h_1}{\partial w}\Delta w\right)\) \\[-1em]
+& & \\
+\hline
+\end{tabular}
+\end{center}
+El área del paralelogramo \(A'B'C'D'\) en la figura \ref{fig:fzw_as_function_of_fxy_2} está dado por 
+\begin{align*}
+ \Delta_i&\overset{(a)}{=}(A'B')(A'C')\sin(\theta-\phi)\\
+   &\overset{(b)}{=}(A'B')(A'C')\left[\sin\theta\cos\phi-\cos\theta\sin\phi\right]\\
+   &=(A'B'\cos\phi)(A'C'\sin\theta)-(A'B'\sin\phi)(A'C'\cos\theta)\\
+   &\overset{(c)}{=}\frac{\partial g_1}{\partial z}\Delta z\frac{\partial h_1}{\partial w}\Delta w
+     -\frac{\partial h_1}{\partial z}\Delta z\frac{\partial g_1}{\partial w}\Delta w,
+\end{align*}
+donde en \((a)\) se empleó que el área del paralelogramo es \(\Delta_i=bh\) (\(\textrm{base}\times\textrm{altura}\)), donde la base es \(b=A'B'\) y la altura es \(h=(A'C')\sin(\theta-\phi)\), en \((b)\) se empleó la identidad trigonométrica \(\sin(\theta-\phi)=\sin\theta\cos\phi-\cos\theta\sin\phi\) y en \((c)\) se consideró que, como se observa en la figura \ref{fig:fzw_as_function_of_fxy_2}, las coordenadas de los puntos \(B'\) y \(C'\) se pueden expresar como
+\[
+ B':\;\left(x_i+A'B'\cos\phi,\,y_i+A'B'\sin\phi\right)
+  \qquad\textrm{y}\qquad 
+ C':\;\left(x_i+A'C'\cos\theta,\,y_i+A'C'\sin\theta\right), 
+\]
+por lo que comparando con la tabla, se deduce que
+\[
+\def\arraystretch{2.2}
+ \begin{array}{lllllll}
+  A'B'\cos\phi&=&\dfrac{\partial g_1}{\partial z}\Delta z
+  &\qquad\qquad\qquad&
+  A'C'\sin\theta&=&\dfrac{\partial h_1}{\partial w}\Delta w\\
+  A'B'\sin\phi&=&\dfrac{\partial h_1}{\partial z}\Delta z
+  &\qquad\qquad\qquad&
+  A'C'\cos\theta&=&\dfrac{\partial g_1}{\partial w}\Delta w.
+ \end{array}
+\]
+Se obtuvo que el área del paralelogramo es
+\[
+ \Delta_i=\left(\frac{\partial g_1}{\partial z}\frac{\partial h_1}{\partial w}-\frac{\partial g_1}{\partial w}\frac{\partial h_1}{\partial z}\right)\Delta z\Delta w
+\]
+y por lo tanto
+\[
+ \frac{\Delta_i}{\Delta z\Delta w}=\left(\frac{\partial g_1}{\partial z}\frac{\partial h_1}{\partial w}-\frac{\partial g_1}{\partial w}\frac{\partial h_1}{\partial z}\right)
+ =
+ \def\arraystretch{2.2}
+ \begin{vmatrix}
+   \dfrac{\partial g_1}{\partial z} & \dfrac{\partial g_1}{\partial w} \\
+   \dfrac{\partial h_1}{\partial z} & \dfrac{\partial h_1}{\partial w}
+ \end{vmatrix}.
+\]
+El determinante en el lado derecho de la igualdad representa el valor absoluto de la matriz Jacobiana \(J(z,\,w)\) de la transformación inversa \ref{eq:joint_density_two_rv_probability_inverse_transform}. Sustituyendo este resultado en la ecuación \ref{eq:joint_density_two_rv_probability_relation_tmp}, se concluye que 
+\[
+ f_{zw}(z,\,w)=\sum_i|J(z,\,w)|f_{xy}(x_i,\,y_i)=\sum_i\frac{1}{|J(x_i,\,y_i)|}f_{xy}(x_i,\,y_i),
+\]
+donde \(J(x_i,\,y_i)\) es la matriz Jacobiana de la transformación original dada por la ecuación \ref{eq:joint_density_two_rv_transformation}, y por el teorema de la función inversa\footnote{Ver \url{https://en.wikipedia.org/wiki/Inverse_function_theorem}, por ejemplo.}, se cumple que \(J(z,\,w)=J^{-1}(x_i,\,y_i)\) y por lo tanto, \(\det[J(z,\,w)]=1/\det[J(x_i,\,y_i)]\).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \paragraph{Transformación lineal}
 Sean
 \[
- \z=a\x+b\y,\qquad \y=c\x+d\y.
+ \z=a\x+b\y,\qquad \w=c\x+d\y.
 \]
 Se quiere calcular \(f_{zw}(z,\,w)\). Se considera el sistema de ecuaciones
 \[
@@ -6350,7 +6755,7 @@ En este caso, usando la ecuación \ref{eq:ordered_statistic_density} se concluye
 \end{equation}
 Estos resultados son la densidad de probabilidad del mínimo y el máximo respectivamente de \(n\) variables aleatorias i.i.d. uniformes.
 
-\subsection{Media y covarianza}
+\subsection{Media y covarianza}\label{sec:mean_and_covariance}
 
 Extendiendo la ecuación \ref{eq:mean_of_gxy} para \(n\) variables aleatorias, se concluye que la media de \(g(\x_1,\dots,\x_n)\) es
 \[
@@ -6383,7 +6788,7 @@ Se dice que las variables aleatorias \(\x_i\) son \emph{no correlacionadas} si \
 \end{equation}
 como se mencionó en la sección \ref{sec:uncorrelation_and_onthogonality}.
 
-\paragraph{Ejemplo 7-5: media y varianza muestral}\label{sec:sample_mean_and_variance}
+\paragraph{Ejemplo 7-5: media y varianza muestral}
 
 La \emph{media muestral} y la \emph{varianza muestral} de las variables aleatorias \(\x_i\) se definen como las variables aleatorias
 \begin{equation}\label{eq:sample_mean_and_variance}
@@ -6433,7 +6838,7 @@ se tiene que
   &\overset{(d)}{=}n(\sigma^2+\eta^2)+n(n-1)\eta^2\\
   &=n\sigma^2+n^2\eta^2,
 \end{align*}
-donde en \((a)\) se empleó la linealidad de la esperanza, en \((b)\) que las variables \(\x_i\) son no correlacionadas y por lo tanto \(E\{\x_i\x_j\}=E\{\x_i\}E\{\x_j\}\), en \((c)\) el resultado de la ecuación \ref{eq:moments_as_function_of_central_moments_first_4} y que todas las variables aleatorias \(\x_i\) tienen la misma media y varianza, y en \((d)\)  que la primer sumatoria tiene \(n\) sumandos y la segunda doble sumatoria tiene \(n(n-1)\) sumandos. Sustituyendo este resultado en la ecuación \ref{eq:sample_mean_variance_aux}, se obtiene que
+donde en \((a)\) se empleó la linealidad de la esperanza, en \((b)\) que las variables \(\x_i\) son no correlacionadas y por lo tanto \(E\{\x_i\x_j\}=E\{\x_i\}E\{\x_j\}\) si \(i\neq j\), en \((c)\) el resultado de la ecuación \ref{eq:moments_as_function_of_central_moments_first_4} y que todas las variables aleatorias \(\x_i\) tienen la misma media y varianza, y en \((d)\)  que la primer sumatoria tiene \(n\) sumandos y la segunda doble sumatoria tiene \(n(n-1)\) sumandos. Sustituyendo este resultado en la ecuación \ref{eq:sample_mean_variance_aux}, se obtiene que
 \[
  \sigma_{\bar{x}}^2=\frac{n\sigma^2+n^2\eta^2}{n^2}-\eta^2=\frac{\sigma^2}{n},
 \]
@@ -6520,7 +6925,7 @@ Para calcular el primer sumando de \ref{eq:sample_variance_variance_tmp1}, hay q
 \[
  E\{(\x_i-\x_j)^2(\x_k-\x_l)^2\}.
 \] 
-Claramente, esta expresión es nula si \(i=j\) o \(k=l\). Asimismo, toma valores distintos dependiendo del tamaño de \(\{i,\,j\}\cap\{k,\,l\}\), que puede ser 0, 1 o 2. Se discuten a continuación cada uno de estos casos.
+Claramente, esta expresión es nula si \(i=j\) o \(k=l\). Asimismo, toma valores distintos dependiendo de la cantidad de elementos de \(\{i,\,j\}\cap\{k,\,l\}\), que puede ser 0, 1 o 2. Se discuten a continuación cada uno de estos casos.
 \begin{enumerate}
  \item \(|\{i,\,j\}\cap\{k,\,l\}|=0\), es decir, \(i,\,j,\,k,\,l\) son todos distintos. Como las variables aleatorias son independientes, se cumple que
  \[
@@ -6566,7 +6971,7 @@ Estos son los tres tipos de sumandos distintos en la sumatoria cuádruple de ín
  \bigl\{\left[(\x_1-\x_2)^2+(\x_1-\x_3)^2+(\x_1-\x_4)^2\right]&+\left[(\x_2-\x_1)^2+(\x_2-\x_3)^2+(\x_2-\x_4)^2\right]+\\
  \left[(\x_3-\x_1)^2+(\x_3-\x_2)^2+(\x_3-\x_4)^2\right]&+\left[(\x_4-\x_1)^2+(\x_4-\x_2)^2+(\x_4-\x_3)^2\right]\bigr\}^2.
 \end{align*}
-Se observa que hay \(n(n-1)\) términos de la forma \((\x_i-\x_j)^2\) entre las llaves, ya que hay \(n\) términos agrupados por corchetes, que se diferencian por el valor del primer índice, y \((n-1)\) términos \((\x_i-\x_j)^2\) dentro de los corchetes, diferenciados por el valor del segundo índice. Por lo tanto, al desarrollar el cuadrado se obtienen \(n^2(n-1)^2\) términos de la forma \((\x_i-\x_j)^2(\x_k-\x_l)^2\). A continuación se contarán la cantidad de términos con \(|\{i,\,j\}\cap\{k,\,l\}|=0\), 1 y 2.
+Se observa que hay \(n(n-1)\) términos de la forma \((\x_i-\x_j)^2\) entre las llaves, ya que hay \(n\) términos agrupados por corchetes rectos, que se diferencian por el valor del primer índice, y \((n-1)\) términos \((\x_i-\x_j)^2\) dentro de los corchetes rectos, diferenciados por el valor del segundo índice. Por lo tanto, al desarrollar el cuadrado se obtienen \(n^2(n-1)^2\) términos de la forma \((\x_i-\x_j)^2(\x_k-\x_l)^2\). A continuación se contarán la cantidad de términos con \(|\{i,\,j\}\cap\{k,\,l\}|=0\), 1 y 2.
 \begin{enumerate}
  \item \(|\{i,\,j\}\cap\{k,\,l\}|=0\), es decir, todos los subíndices distintos.
  \begin{itemize}
@@ -6629,8 +7034,7 @@ Por lo tanto, la cantidad total de términos es
 
 Para verificar estos resultados, se puede comprobar que la suma de la cantidad de términos en cada situación debería coincidir con la cantidad total de términos de la sumatoria cuádruple, que como ya se mencionó es \(n^2(n-1)^2\). Haciendo esto se ve que
 \begin{align*}
-  n(n-1)(n-2)(n-3)+\\
-  4n(n-1)(n-2)+2n(n-1)&=n(n-1)\left\{(n-2)\left[(n-3)+4\right]+2\right\}\\
+  n(n-1)(n-2)(n-3)+4n(n-1)(n-2)+2n(n-1)&=n(n-1)\left\{(n-2)\left[(n-3)+4\right]+2\right\}\\
    &=n(n-1)\left[(n-2)(n+1)+2\right]\\
    &=n(n-1)(n^2-n)\\
    &=n^2(n-1)^2.
@@ -6659,7 +7063,7 @@ Por lo tanto, se tiene que
  &=\frac{1}{n(n-1)}\left[(n-2)(n\sigma^4+\mu_4)+(\mu_4+3\sigma^4)\right]\nonumber\\
  &=\frac{1}{n(n-1)}\left[(n^2-2n+3)\sigma^4+(n-1)\mu_4\right].
 \end{align}
-Sustituyendo los resultados de las ecuaciones \ref{eq:sample_variance_variance_tmp2} y \ref{eq:sample_variance_variance_tmp3} en la ecuación \ref{eq:sample_variance_variance_tmp1} se tiene que
+Sustituyendo los resultados de las ecuaciones \ref{eq:sample_variance_variance_tmp2} y \ref{eq:sample_variance_variance_tmp3} en la ecuación \ref{eq:sample_variance_variance_tmp1} se obtiene que
 \begin{align*}\label{eq:sample_variance_variance_tmp1}
  \sigma_{\bar{v}}^2&=\frac{1}{n(n-1)}\left[(n^2-2n+3)\sigma^4+(n-1)\mu_4\right]-2\sigma^4+\sigma^4\\
    &=\frac{1}{n(n-1)}\left[(n^2-2n+3)\sigma^4+(n-1)\mu_4-n(n-1)\sigma^4\right]\\
@@ -7487,7 +7891,7 @@ Se demostrará que la variable aleatoria
 \begin{equation}\label{eq:normal_sample_variance_density}
  \frac{(n-1)\mathbf{s}^2}{\sigma^2}=\sum_{i=1}^{n}\left(\frac{\x_i-\bar{\x}}{\sigma}\right)^2\qquad\textrm{es}\qquad\chi^2(n-1).
 \end{equation}
-Como resultado previo, se demostrará que las variables aleatorias \(\mathbf{s}^2\) y \(\bar{\x}\) son independientes. Se considera primero el caso de \(n\) variables aleatorias \(\y_i\) i.i.d. con distribución \(N(0,\,1)\). Por lo tanto, \(\bar{\y}\) y \(\y_i-\bar{\y}\) son variables aleatorias normales por tratarse de una combinación lineal de variables aleatorias normales, como se mostró en la sección \ref{sec:two_rv_independence_and_convolution} para el caso de la combinación lineal de dos variables aleatorias. Además, como \(\y_i\) tiene media nula, \(\bar{\y}\) e \(\y_i-\bar{\y}\) también tienen media nula (ver sección \ref{sec:sample_mean_and_variance}). La covarianza entre \(\bar{\y}\) e \(\y_i-\bar{\y}\) es
+Como resultado previo, se demostrará que las variables aleatorias \(\mathbf{s}^2\) y \(\bar{\x}\) son independientes. Se considera primero el caso de \(n\) variables aleatorias \(\y_i\) i.i.d. con distribución \(N(0,\,1)\). Por lo tanto, \(\bar{\y}\) y \(\y_i-\bar{\y}\) son variables aleatorias normales por tratarse de una combinación lineal de variables aleatorias normales, como se mostró en la sección \ref{sec:two_rv_independence_and_convolution} para el caso de la combinación lineal de dos variables aleatorias. Además, como \(\y_i\) tiene media nula, \(\bar{\y}\) e \(\y_i-\bar{\y}\) también tienen media nula (ver la sección \ref{sec:mean_and_covariance}). La covarianza entre \(\bar{\y}\) e \(\y_i-\bar{\y}\) es
 \[
  \operatorname{Cov}\{\bar{\y},\,\y_i-\bar{\y}\}\overset{(a)}{=}E\{\bar{\y}(\y_i-\bar{\y})\}=E\{\bar{\y}\y_i\}-E\{{\bar{\y}}^2\},
 \]
@@ -7503,7 +7907,7 @@ donde en \((a)\) se tuvo en cuenta que las variables \(\y_i\) son independientes
 \[
  E\{{\bar{\y}}^2\}=\sigma_{\bar{y}}^2=\frac{\sigma_{y_i}^2}{n}=\frac{1}{n},
 \]
-como se calculó en la sección \ref{sec:sample_mean_and_variance}. Sustituyendo estos resultados en la ecuación de la covarianza, se obtiene que
+como se calculó en la sección \ref{sec:mean_and_covariance}. Sustituyendo estos resultados en la ecuación de la covarianza, se obtiene que
 \[
  \operatorname{Cov}\{\bar{\y},\,\y_i-\bar{\y}\}=\frac{1}{n}-\frac{1}{n}=0,
 \]
@@ -7923,9 +8327,9 @@ Se consideran a continuación dos casos particulares. Si \(\s\) es un vector del
 \subsection{Estimación cuadrática media no lineal: caso general}
 
 El problema de estimación MS no lineal consiste en determinar la función \(g(\x_1,\dots,\,\x_n)=g(\X)\) de los datos \(\x_i\) de forma de minimizar el error MS
-\[
+\begin{equation}\label{eq:nonlinear_general_case_ms}
  P=E\{[\s-g(\X)]^2\}.
-\]
+\end{equation}
 Se demostrará que \(P\) es mínimo si
 \begin{equation}\label{eq:nonlinear_general_case_mse}
  g(X)=E\{\s\,|\,X\}=\int_{-\infty}^{\infty}sf_s(s\,|\,X)\,ds.
@@ -8072,7 +8476,7 @@ donde los componentes de error \(\mathbf{v}_i\) son variables aleatorias indepen
 \[
  \bar{\x}=\frac{\x_1+\dots+\x_n}{n}
 \]
-de las lecturas tiene media \(a\) y varianza \(\sigma^2/n\), como se explicó en la sección \ref{sec:sample_mean_and_variance}. Por lo tanto, si \(n\) es suficientemente grande de forma que \(\sigma^2\ll na\), el valor \(\bar{\x}(\zeta)\) de la media muestral \(\bar{\x}\) en un único experimento de \(n\) medidas es un buen estimador de \(a\). Supóngase que la cantidad de lecturas \(n\) es tal que \(\sigma^2/na^2=10^{-4}\) y se quiere calcular la probabilidad de que \(\bar{\x}\) esté entre \(0.9a\) y \(1.1a\). Para hacerlo, se recurre a la desigualdad de Chebyshev (ecuación \ref{eq:chebyshev_inequality}) y se observa que
+de las lecturas tiene media \(a\) y varianza \(\sigma^2/n\), como se explicó en la sección \ref{sec:mean_and_covariance}. Por lo tanto, si \(n\) es suficientemente grande de forma que \(\sigma^2\ll na\), el valor \(\bar{\x}(\zeta)\) de la media muestral \(\bar{\x}\) en un único experimento de \(n\) medidas es un buen estimador de \(a\). Supóngase que la cantidad de lecturas \(n\) es tal que \(\sigma^2/na^2=10^{-4}\) y se quiere calcular la probabilidad de que \(\bar{\x}\) esté entre \(0.9a\) y \(1.1a\). Para hacerlo, se recurre a la desigualdad de Chebyshev (ecuación \ref{eq:chebyshev_inequality}) y se observa que
 \[
  |\bar{\x}-a|<\epsilon\qquad\Leftrightarrow\qquad -\epsilon<\bar{\x}-a<\epsilon
  \qquad\Leftrightarrow\qquad a-\epsilon<\bar{\x}<a+\epsilon,
@@ -9212,7 +9616,7 @@ En la figura \ref{fig:shortest_prediction_interval} se muestra el intervalo \((c
 \begin{figure}[!htb]
 \begin{center}
 \lstinputlisting{figuras/shortest_prediction_interval_code.py}
-\caption{\label{fig:shortest_prediction_interval_code} Implementación en el lenguaje Python del cálculo del intervalo \((c_1,\,c_2)\) con \(c_2-c_1\) mínimo para un coeficiente de confianza \(\gamma\) dado. Se emplea la función \texttt{fmin} de la biblioteca Scipy para minimizar la función \texttt{interval\_widht}. La función \texttt{interval\_widht} recibe el área de la cola inferior \texttt{low\_tail\_pr} y retorna el largo \(c_2-c_1\) del intervalo dado el coeficiente de confianza \texttt{confidence\_coef}. El largo del intervalo se calcula como \(c_2-c_1=F^{-1}(\gamma+\alpha)-F^{-1}(\alpha)\), donde \(F(x)\) es la distribución de probabilidad y \(\alpha\) el área de la cola inferior (variable \texttt{low\_tail\_pr}). La condición inicial del algoritmo de optimización es \(\texttt{low\_tail\_pr\_ini}=1-\texttt{confidence\_coef}\), es decir, \(\alpha=1-\gamma\). De esta forma, al inicio, \(c_1=F^{-1}(1-\gamma)\) y \(c_2\) es la frontera superior de la densidad si es de soporte acotado o infinito si no es de soporte acotado. Observar que el algoritmo no emplea el hecho de que el intevalo de largo mínimo es el que cumple que \(f(c_1)=f(c_2)\).}
+\caption{\label{fig:shortest_prediction_interval_code} Implementación en el lenguaje Python del cálculo del intervalo \((c_1,\,c_2)\) con \(c_2-c_1\) mínimo para un coeficiente de confianza \(\gamma\) dado. Se emplea la función \texttt{fmin} de la biblioteca Scipy para minimizar la función \texttt{interval\_widht}. La función \texttt{interval\_widht} recibe el área de la cola inferior \texttt{low\_tail\_pr} y retorna el largo \(c_2-c_1\) del intervalo dado el coeficiente de confianza \texttt{confidence\_coef}. El largo del intervalo se calcula como \(c_2-c_1=F^{-1}(\gamma+\alpha)-F^{-1}(\alpha)\), donde \(F(x)\) es la distribución de probabilidad y \(\alpha\) el área de la cola inferior (variable \texttt{low\_tail\_pr}). La condición inicial del algoritmo de optimización es \(\texttt{low\_tail\_pr\_ini}=1-\texttt{confidence\_coef}\), es decir, \(\alpha=1-\gamma\). De esta forma, al inicio, \(c_1=F^{-1}(1-\gamma)\) y \(c_2=F^{-1}(1)\) es la frontera superior de la densidad si es de soporte acotado o infinito si no es de soporte acotado. Observar que el algoritmo no emplea el hecho de que el intevalo de largo mínimo es el que cumple que \(f(c_1)=f(c_2)\).}
 \end{center}
 \end{figure}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 Una solución subóptima mas simple se obtiene fácilmente si se determina \(c_1\) y \(c_2\) tal que 
@@ -9228,12 +9632,24 @@ De esta forma,
  c_2=F^{-1}\left(1-\frac{\delta}{2}\right)=x_{1-\delta/2},
 \]
 donde \(x_u\) es el percentil \(u\) y \(F(x)\) es la distribución de probabilidad de \(\x\). El intervalo obtenido se denomina \emph{intervalo de confianza de colas iguales} y es óptimo si la densidad \(f(x)\) es simétrica respecto a su media \(\eta\), ya que en ese caso, \(f(c_1)=f(c_2)\).
-Si \(\x\) es normal, \(x_u=\eta+z_u\sigma\), donde \(z_u\) es el percentil normal estándar. Efectivamente, sea \(\x\sim N(\eta,\,\sigma^2)\). De la definición de percentil (ver la sección \ref{sec:distribution_function}),  el percentil \(u\) es \(u=P\{\x<x_u\}\) y por lo tanto, normalizando, se cumple que
+Si \(\x\) es normal, \(x_u=\eta+z_u\sigma\), donde \(z_u\) es el percentil normal estándar. Efectivamente, sea \(\x\sim N(\eta,\,\sigma^2)\). De la definición de percentil (ver la sección \ref{sec:distribution_function}),  el percentil \(x_u\) de \(\x\) es \(u=P\{\x<x_u\}\) y por lo tanto, normalizando, se cumple que
 \[
  P\left\{\frac{\x-\eta}{\sigma}<\frac{x_u-\eta}{\sigma}\right\}=u,
 \]
 o \(P\{\z<z_u\}=u\), donde \(\z=(\x-\eta)/\sigma\sim N(0,\,1)\) y \(z_u=(x_u-\eta)/\sigma\).
 
+
+\section{Estimación}
+
+Supóngase que la distribución de una variable aleatoria \(\x\) es una función \(F(x,\,\theta)\) de forma conocida que depende de un parámetro \(\theta\), escalar o vectorial, y se quiere estimar \(\theta\). Para hacerlo, se repite el experimento subyacente \(n\) veces, y denotando con \(x_i\) a los valores observados de \(\x\), hay que encontrar un estimador puntual y un intervalo de estimación de \(\theta\) empleando esas observaciones.
+
+Una \emph{estimación puntual} es una función \(\hat{\theta}=g(X)\) del vector de observación \(X=[x_1,\,\dots,\,x_n]\). La variable aleatoria correspondiente \(\hat{\thetabf}=g(\X)\) es el \emph{estimador puntual} de \(\thetabf\). Cualquier función del vector de observación \(\X=[\x_1,\,\dots,\,\x_n]\) se denomina \emph{estadístico}.
+
+Se dice que \(\hat{\theta}\) es un estimador \emph{insesgado} del parámetro \(\theta\) si \(E\{\hat{\theta}\}=\theta\). En caso contrario, se dice que el estimador es sesgado con sesgo \(b=E\{\hat{\theta}\}-\theta\). Si la función \(g(X)\) se elige adecuadamente, el error de estimación \(\hat{\theta}-\theta\) decrece cuando \(n\) crece. Si tiende a 0 en probabilidad cuando \(n\to\infty\), se dice que \(\hat{\theta}\) es un estimador \emph{consistente}. La media muestral \(\bar{\x}\) de \(\x\) es un estimador insesgado de la media \(\eta\). Adicionalmente, su varianza \(\sigma^2/n\) tiende a 0 con \(n\to\infty\) (ver el ejemplo de la sección \ref{sec:mean_and_covariance}). Esto implica que \(\bar{\x}\) tiende a \(\eta\) en media cuadrática, y por lo tanto, también en probabilidad (ver la sección \ref{sec:convergence_modes}). En otras palabras, \(\bar{\x}\) es un estimador consistente de \(\eta\). El problema de estimación consiste por lo tanto en la elección de una función \(g(X)\) que minimice en algún sentido el error de estimación \(g(\X)-\theta\). Si \(g(X)\) se elige de forma de minimizar el error cuadrático medio
+\begin{equation}\label{eq:estimator_mean_square_error}
+ e=E\left\{[g(\X)-\theta]^2\right\}=\int_{R}[g(X)-\theta]^2f(X,\,\theta)\,dX,
+\end{equation}
+el estimador \(\hat{\thetabf}=g(\X)\) se denomina \emph{mejor estimador}. Es importante notar que \(f(X,\,\theta)\) en la ecuación \ref{eq:estimator_mean_square_error} no es la densidad de probabilidad conjunta entre \(X\) y \(\theta\), si no que es la densidad de \(X\) paramétrica con \(\theta\). De hecho, \(\theta\) no es una variable aleatoria. Determinar el mejor estimador no es sencillo en general, ya que el integrando de la ecuación \ref{eq:estimator_mean_square_error}, además de depender de \(X\), depende de \(\theta\). El problema correspondiente de predicción involucra la misma integral, pero tiene una solución mas simple, ya que la densidad de probabilidad es conocida (ver las ecuaciones \ref{eq:mse_constant_definition} y \ref{eq:nonlinear_general_case_ms}).
 
 
 
