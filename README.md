@@ -6,6 +6,8 @@ Este documento consiste en apuntes sobre el libro "Probability, random variables
 
 El repositorio contiene el código fuente en Latex del documento, el código Python de las figuras y los archivos SVG de dibujos y diagramas, realizados en Inkscape.
 
+Este es un trabajo en proceso.
+
 ## Compilación
 
 ```
@@ -13,4 +15,5 @@ $ pdflatex papoulis_probability_notes
 $ bibtex papoulis_probability_notes
 $ pdflatex papoulis_probability_notes
 $ pdflatex papoulis_probability_notes
+```
 
