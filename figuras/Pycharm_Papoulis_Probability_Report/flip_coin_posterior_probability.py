@@ -1,13 +1,14 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import math
-
+from scipy.stats import beta
 from matplotlib import rc
 
 __author__ = 'ernesto'
 
 # if use latex or mathtext
 rc('text', usetex=False)
+rc('mathtext', fontset='cm')
 
 
 #####################################
@@ -25,7 +26,6 @@ x1 = 1
 # extension to the left and right of the range of interest
 delta_xi = 0.1
 delta_xs = 0.3
-delta_y = 0.4
 # number of samples in an interval of length 0.1
 npoints = 40
 
@@ -56,16 +56,20 @@ ind_max = np.argmax(beta_pdf)
 print("argmax of beta density: {}".format(x[ind_max]))
 print("k/n: {}".format(k/n))
 
+# densidad de probabilidad beta - para comparar
+fx = beta.pdf(x, k+1, n-k+1, loc=0, scale=1)
+print("Diference: {}".format(np.max(np.absolute(beta_pdf-fx))))
+
 # axis parameters
 dx = 0.08
 xmin = xinf - dx
 xmax = xsup + dx
 
-ymax = beta_pdf[ind_max] + delta_y
-ymin = -delta_y
+ymax = beta_pdf[ind_max] + 1.2
+ymin = -0.4
 
 # vertical tick margin
-vtm = -0.36
+vtm = -0.5
 # horizontal tick margin
 htm = -0.05
 # font size
@@ -90,9 +94,8 @@ plt.plot(x, uniform_pdf, 'k', linewidth=2)
 plt.plot(x, beta_pdf, 'r', linewidth=2)
 
 # legend
-leg = plt.legend(['$f_p(p)=U(0,\,1)$', r'$f_{p|A}(p|A)=\beta(n,\,k)$'], loc=(0.42, 0.7), fontsize=14)
-leg.get_frame().set_facecolor(bggrey*np.ones((3,)))
-leg.get_frame().set_edgecolor(bggrey*np.ones((3,)))
+leg = plt.legend(['$f_p(p)=U(0,\,1)$', r'$f_{p|A}(p|A)=\mathrm{Beta}(k+1,\,n-k+1)$'], loc=(0.15, 0.75), fontsize=14,
+                 frameon=False)
 # xlabels and xtickslabels
 plt.plot([k/n, k/n], [0, beta_pdf[ind_max]], 'k--', linewidth=0.8, dashes=dashed)
 plt.text(xmax, vtm, '$p$', fontsize=fontsize, ha='right', va='baseline')

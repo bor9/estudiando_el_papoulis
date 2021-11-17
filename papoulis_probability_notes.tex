@@ -1835,9 +1835,9 @@ y por lo tanto
  \Gamma(n)=(n-1)\Gamma(n-1)=(n-1)(n-2)\cdots 2\cdot 1\cdot\Gamma(1)=(n-1)!.
 \]
 Se cumple además que
-\[
+\begin{equation}\label{eq:gamma_function_of_one_half}
  \Gamma(1/2)=\sqrt{\pi}.
-\]
+\end{equation}
 Efectivamente, evaluando la función gamma en \(\alpha=1/2\) y operando, se tiene que 
 \begin{align*}
  \Gamma(1/2)&=\int_{0}^{\infty}x^{1/2-1}e^{-x}\,dx\\
@@ -1922,14 +1922,60 @@ Se dice que una variable aleatoria \(\x\) es \(\chi^2(n)\) (chi-cuadrado) con \(
 \end{equation}
 donde \(\Gamma(\alpha)\) es la función gamma definida en la ecuación \ref{eq:gamma_function}.
 
+\paragraph{Distribución Beta} Una variable aleatoria \(\x\) tiene distribución beta con parámetros \(\alpha\) y \(\beta\) no negativos  si
+\begin{equation}\label{eq:pdf_beta}
+\def\arraystretch{2.0}
+ f_x(x)=
+ \left\{\begin{array}{ll}
+  \dfrac{1}{\mathrm{B}(\alpha,\,\beta)}x^{\alpha-1}(1-x)^{\beta-1}, & 0<x<1\\
+  0, & \textrm{en otro caso},
+ \end{array} \right.
+\end{equation}
+donde la función beta \(\mathrm{B}(\alpha,\,\beta)\) se define como
+\begin{equation}\label{eq:beta_function}
+ \mathrm{B}(\alpha,\,\beta)=\int_0^1x^{\alpha-1}(1-x)^{\beta-1}\,dx
+  =2\int_0^{\pi/2}(\sin\theta)^{2\alpha-1}(\cos\theta)^{2\beta-1}\,d\theta.
+\end{equation}
+La forma trigonométrica en la ecuación \ref{eq:beta_function} se obtiene mediante el cambio de variable \(x=\sin^2\theta\). Efectivamente, realizando dicho cambio de variable y teniendo en cuenta que entonces \(dx=2\sin\theta\cos\theta d\theta\), se tiene que 
+\begin{align*}
+ \mathrm{B}(\alpha,\,\beta)&=2\int_0^{\pi/2}(\sin^2\theta)^{\alpha-1}(1-\sin^2\theta)^{\beta-1}\sin\theta\cos\theta\,d\theta\\
+  &=2\int_0^{\pi/2}(\sin\theta)^{2\alpha-2}(\cos\theta)^{2\beta-2}\sin\theta\cos\theta\,d\theta\\
+  &=2\int_0^{\pi/2}(\sin\theta)^{2\alpha-1}(\cos\theta)^{2\beta-1}\,d\theta.
+\end{align*}
+Es posible expresar la función beta en términos de la función gamma definida en la ecuación \ref{eq:gamma_function}. Para hacerlo, primero se considera que 
+\begin{align*}
+ \Gamma(\alpha)&=\int_{0}^{\infty}x^{\alpha-1}e^{-x}\,dx\\
+   &\overset{(a)}{=}2\int_{0}^{\infty}y^{2\alpha-2}e^{-y^2}y\,dy,
+\end{align*}
+donde en \((a)\) se realizó el cambio de variable \(x=y^2\). Esto resulta en que la función gamma se puede expresar como
+\[
+ \Gamma(\alpha)=2\int_{0}^{\infty}y^{2\alpha-1}e^{-y^2}\,dy.
+\]
+De esta forma, 
+\begin{align*}
+ \Gamma(\alpha)\Gamma(\beta)&=\left(2\int_{0}^{\infty}x^{2\alpha-1}e^{-x^2}\,dx\right)\left(2\int_{0}^{\infty}y^{2\beta-1}e^{-y^2}\,dy\right)\\
+  &=4\int_{0}^{\infty}\int_{0}^{\infty}x^{2\alpha-1}y^{2\beta-1}e^{-(x^2+y^2)}\,dxdy.
+\end{align*}
+Realizando el cambio a coordenadas polares \(x=r\sin\theta\) y \(y=r\cos\theta\), donde el determinante de la matriz Jacobiana de la transformación es \(|J(r,\,\theta)|=r\), como se vió previamente, y \(0\leq r<\infty\) y \(0\leq\theta\leq\pi/2\), se tiene que 
+\begin{align*}
+ \Gamma(\alpha)\Gamma(\beta)&=4\int_0^{\pi/2}\int_{0}^{\infty}(r\sin\theta)^{2\alpha-1}(r\cos\theta)^{2\beta-1}e^{-r^2}r\,drd\theta\\
+  &=4\int_0^{\pi/2}\int_{0}^{\infty}r^{2(\alpha+\beta)-1}e^{-r^2}(\sin\theta)^{2\alpha-1}(\cos\theta)^{2\beta-1}\,drd\theta\\
+  &=\left(2\int_{0}^{\infty}r^{2(\alpha+\beta)-1}e^{-r^2}\,dr\right)\left(2\int_0^{\pi/2}(\sin\theta)^{2\alpha-1}(\cos\theta)^{2\beta-1}\,d\theta\right)\\
+  &=\Gamma(\alpha+\beta)\mathrm{B}(\alpha,\,\beta),
+\end{align*}
+y por lo tanto,
+\begin{equation}\label{eq:beta_function_as_gamma}
+ \mathrm{B}(\alpha,\,\beta)=\frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}. 
+\end{equation}
+
+Una variable aleatoria con distribución beta con parámetros \(\alpha\) y \(\beta\) se denota como \(\x\sim\mathrm{Beta}(\alpha,\,\beta)\). La distribución beta tiene una gran flexibilidad, tomando diversas formas en función de los parámetros 
+\(\alpha\) y \(\beta\). Con \(\alpha=\beta=1\) se obtiene la distribución uniforme en \((0,\,1)\). Si \(\alpha>1\) y \(\beta>1\), \(f_x(x)\to0\) en \(x=0\) y \(x=1\) y tiene un único máximo. Si \(0<\alpha<1\), \(f_x(x)\to\infty\) con \(x\to0\), y si \(0<\beta<1\), \(f_x(x)\to\infty\) con \(x\to1\). Si \(\alpha<1\) y \(\beta<1\), \(f_x(x)\) es convexa con un único mínimo. Si \(\alpha=\beta\), la densidad es simétrica en torna a \(x=1/2\). 
 
 \paragraph{Otras distribuciones}
 
-En la referencia bibliográfica utilizada (\cite{papoulis2002probability}), se describe con cierto detalle otros tipos de variables aleatorias continuas. Se mencionarán a continuación algunas de ellas de forma breve. 
+En \cite{papoulis2002probability} se describe con cierto detalle otros tipos de variables aleatorias continuas. Se mencionarán a continuación algunas de ellas de forma breve. 
 
 La \emph{variable aleatoria de Erlang} es un caso particular de la variable aleatoria gamma con \(G(n,\, 1/n\mu)\). Cuando el parámetro \(n\) entero de la distribución de Erlang es \(1\), se obtiene una distribución exponencial, y cuando \(n\to\infty\) se obtiene una distribución constante \(F_x(t)=1\) para \(t>1/\mu\) y cero en otro caso. Por lo tanto, la distribución de Erlang abarca  de aleatoriedad a certeza cuando \(n\) varía 1 a \(\infty\).
-
-La \emph{distribución beta} toma una cantidad variada de formas en un soporte acotado, por ejemplo, en \((0,\, 1)\), y por lo tanto, es una distribución mas flexible que la distribución uniforme.
 
 Otras distribuciones mencionadas en \cite{papoulis2002probability} son: Rayleigh, Nakagami, uniforme, Cauchy, Laplace y Maxwell.
 
@@ -2138,18 +2184,23 @@ donde en \((a)\) se observó que \([n-(k-1)][n-(k-2)]\dots n=n!/(n-k)!\). En con
  P(A)=\frac{(n-k)!k!}{(n+1)!}.
 \]
 La densidad de probabilidad a posteriori \(f_{p|A}(p|A)\) es la información actualizada sobre \(p\) dada la ocurrencia del evento \(A\), y puede obtenerse de la ecuación \ref{eq:bayes_theorem_for_events_continuous},
-\begin{align*}
- f_{p|A}(p|A)&=\frac{P\{A|\p = p\}}{P(A)}f_p(p)\\
+\begin{align}\label{eq:example_4_19_posterior_probability}
+ f_{p|A}(p|A)&=\frac{P\{A|\p = p\}}{P(A)}f_p(p)\nonumber\\
    &=\frac{(n+1)!}{(n-k)!k!}p^kq^{n-k},\qquad 0<p<1.
-\end{align*}
-La densidad a posteriori ya no es uniforme sino beta, es decir, \(p\sim U(0,\,1)\) pero \(p|A\sim \beta(n,\,k)\). El resultado se muestra en la figura \ref{fig:flip_coin_posterior_probability}.
+\end{align}
+Comparando el resultado con la ecuación \ref{eq:pdf_beta}, se deduce que \(p|A\sim\mathrm{Beta}(k+1,\,n-k+1)\). Observar que con estos parámetros, la función beta, dada por la ecuación \ref{eq:beta_function_as_gamma}, en la ecuación \ref{eq:pdf_beta} es 
+\[
+ \mathrm{B}(k+1,\,n-k+1)=\frac{\Gamma(k+1)\Gamma(n-k+1)}{\Gamma(n+2)}=\frac{k!(n-k)!}{(n+1)!},
+\]
+acorde con la ecuación \ref{eq:example_4_19_posterior_probability}. Además, de la ecuación \ref{eq:beta_distibution_mode}, el máximo de la densidad se da en \(k/n\).
+Se obtuvo que la densidad a posteriori ya no es uniforme sino beta, es decir, \(p\sim U(0,\,1)\) pero \(p|A\sim\mathrm{Beta}(k+1,\,n-k+1)\). El resultado se muestra en la figura \ref{fig:flip_coin_posterior_probability}.
 \begin{figure}[!htb]
   \begin{minipage}[c]{0.52\textwidth}
     \includegraphics[width=\textwidth]{figuras/flip_coin_posterior_probability.pdf}
   \end{minipage}\hfill
   \begin{minipage}[c]{0.45\textwidth}
     \caption{
-       Densidad \(f_p(p)\) a priori y densidad \(f_{p|A}(p|A)\) a posteriori. Luego de haber realizado el experimento \(n\) veces, los resultados se reflejan en la densidad a posteriori. En el ejemplo de la figura, \(n=10\) y \(k=3\). La densidad a posteriori es \(\beta(n,\,k)\), cuyo máximo se da en \(k/n\).
+       Densidad \(f_p(p)\) a priori y densidad \(f_{p|A}(p|A)\) a posteriori. Luego de haber realizado el experimento \(n\) veces, los resultados se reflejan en la densidad a posteriori. En el ejemplo de la figura, \(n=10\) y \(k=3\). La densidad a posteriori es \(\mathrm{Beta}(k+1,\,n-k+1)\), cuyo máximo se da en \(k/n\).
     } \label{fig:flip_coin_posterior_probability}
   \end{minipage}
 \end{figure}
@@ -2852,6 +2903,73 @@ Los momentos \(m_n=E\{\x^n\}\) pueden calcularse a partir de los momentos centra
  m_4&=\eta^4+6\sigma^2\eta^2+3\sigma^4.
 \end{aligned}
 \end{equation}
+
+\subsection{Momentos de una variable aleatoria beta}\label{sec:beta_rv_moments}
+
+Se demostrará a continuación que si \(\x\sim\mathrm{Beta}(\alpha,\,\beta)\) (ver la ecuación \ref{eq:pdf_beta}), los momentos son \cite{panchenko03lec8}
+\[
+ m_n=\frac{(\alpha+n-1)(\alpha+n-2)\dots\alpha}{(\alpha+\beta+n-1)(\alpha+\beta+n-2)\dots(\alpha+\beta)}.
+\]
+Partiendo de la definición del momento \(n\)-ésimo, se ve que 
+\begin{align*}
+ m_n=E\{\x^n\}&=\int_{-\infty}^{\infty}x^nf(x)\,dx\\
+  &=\frac{1}{\mathrm{B}(\alpha,\,\beta)}\int_{0}^{1}x^nx^{\alpha-1}(1-x)^{\beta-1}\,dx\\
+  &=\frac{1}{\mathrm{B}(\alpha,\,\beta)}\int_{0}^{1}x^{\alpha+n-1}(1-x)^{\beta-1}\,dx\\
+  &=\frac{\mathrm{B}(\alpha+n,\,\beta)}{\mathrm{B}(\alpha,\,\beta)}\left[\frac{1}{\mathrm{B}(\alpha+n,\,\beta)}\int_{0}^{1}x^{\alpha+n-1}(1-x)^{\beta-1}\,dx\right].
+\end{align*}
+Considerando que el término entre paréntesis rectos es la integral de la densidad de una variable aleatoria \(\mathrm{Beta}(\alpha+n,\,\beta)\) en todo su soporte, y por lo tanto, vale 1, se obtiene que
+\[
+ m_n=E\{\x^n\}=\frac{\mathrm{B}(\alpha+n,\,\beta)}{\mathrm{B}(\alpha,\,\beta)}.
+\]
+Empleando la ecuación \ref{eq:beta_function_as_gamma}, este resultado puede expresarse en términos de la función gamma como
+\[
+ m_n=\frac{\Gamma(\alpha+n)\Gamma(\beta)}{\Gamma(\alpha+\beta+n)}\times\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)},
+\]
+resultando en que
+\[
+ m_n=E\{\x^n\}=\frac{\Gamma(\alpha+\beta)\Gamma(\alpha+n)}{\Gamma(\alpha)\Gamma(\alpha+\beta+n)}
+\]
+Además, a partir de la propiedad de la función gamma dada por la ecuación 
+\ref{eq:gamma_functional_equation}, se tiene que 
+\begin{align*}
+ m_n&=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)}\times\frac{(\alpha+n-1)(\alpha+n-2)\dots\alpha\Gamma(\alpha)}{(\alpha+\beta+n)(\alpha+\beta+n-1)\dots(\alpha+\beta)\Gamma(\alpha+\beta)},
+\end{align*}
+resultando en que 
+\[
+ m_n=E\{\x^n\}=\frac{(\alpha+n-1)(\alpha+n-2)\dots\alpha}{(\alpha+\beta+n)(\alpha+\beta+n-1)\dots(\alpha+\beta)}.
+\]
+Por lo tanto, la media y el segundo momento son respectivamente
+\[
+ m_1=E\{\x\}=\frac{\alpha}{\alpha+\beta}
+  \qquad\qquad\textrm{y}\qquad\qquad
+ m_2=E\{\x^2\}=\frac{(\alpha+1)\alpha}{(\alpha+\beta+1)(\alpha+\beta)}, 
+\]
+y la varianza es
+\begin{align*}
+ \sigma^2&=E\{\x^2\}-E^2\{\x\}\\
+  &=\frac{(\alpha+1)\alpha}{(\alpha+\beta+1)(\alpha+\beta)}-\frac{\alpha^2}{(\alpha+\beta)^2}\\
+  &=\frac{(\alpha+1)\alpha(\alpha+\beta)-\alpha^2(\alpha+\beta+1)}{(\alpha+\beta+1)(\alpha+\beta)^2},
+\end{align*}
+resultando en
+\[
+ \sigma^2=\frac{\alpha\beta}{(\alpha+\beta+1)(\alpha+\beta)^2}.
+\]
+
+Como resultado adicional, se calculará la moda. Para eso, se observa que la derivada de la densidad de probabilidad es
+\begin{align*}
+ f'(x)&=\frac{1}{\mathrm{B}(\alpha,\,\beta)}\left[(\alpha-1)x^{\alpha-2}(1-x)^{\beta-1}
+    -x^{\alpha-1}(\beta-1)(1-x)^{\beta-2}\right]\\
+    &=\frac{1}{\mathrm{B}(\alpha,\,\beta)}x^{\alpha-2}(1-x)^{\beta-2}\left[(\alpha-1)(1-x)-x(\beta-1)\right],
+\end{align*}
+e igualando a 0, se obtiene que la moda cumple que
+\[
+ (\alpha-1)(1-x)-x(\beta-1)=0,
+\]
+resultando en 
+\begin{equation}\label{eq:beta_distibution_mode}
+ x=\frac{\alpha-1}{\alpha+\beta-2}.
+\end{equation}
+Este resultado es válido en el caso en que \(\alpha>1\) y \(\beta>1\). Si \(\alpha<1\) y \(\beta<1\), se trata de la antimoda, es decir, de la ubicación del mínimo. Se observa además que si \(\alpha=\beta\), la moda es \(1/2\).
 
 \subsection{Desigualdad de Chebyshev}
 
@@ -4870,276 +4988,6 @@ El determinante en el lado derecho de la igualdad representa el valor absoluto d
 \]
 donde \(J(x_i,\,y_i)\) es la matriz Jacobiana de la transformación original dada por la ecuación \ref{eq:joint_density_two_rv_transformation}, y por el teorema de la función inversa\footnote{Ver \url{https://en.wikipedia.org/wiki/Inverse_function_theorem}, por ejemplo.}, se cumple que \(J(z,\,w)=J^{-1}(x_i,\,y_i)\) y por lo tanto, \(\det[J(z,\,w)]=1/\det[J(x_i,\,y_i)]\).
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 \paragraph{Transformación lineal}
 Sean
 \[
@@ -5353,7 +5201,7 @@ con \(\x\) e \(\y\) variables aleatorias. Es posible determinar la densidad de p
 \]
 se determina \(f_{zw}(z,\,w)\) y se integra.
 
-Como ejemplo, considérese la variable aleatoria \(\z=\x+\y\), y se quiere determinar \(f_z(z)\). Para hacerlo, se define la variable aleatoria \(\w=\y\).
+\paragraph{Ejemplo 6-24} Como ejemplo, considérese la variable aleatoria \(\z=\x+\y\), y se quiere determinar \(f_z(z)\). Para hacerlo, se define la variable aleatoria \(\w=\y\).
 El sistema de ecuaciones
 \[
 \arraycolsep=1.4pt
@@ -5392,6 +5240,291 @@ y la densidad de probabilidad de \(\z\) es
  f_z(z)=\int_{-\infty}^{\infty}f_{zw}(z,\,w)\,dw=\int_{-\infty}^{\infty}f_{xy}(z-w,\,w)\,dw,
 \]
 coincidiendo con el resultado de la ecuación \ref{eq:pdf_of_sum_of_two_rv}.
+
+\paragraph{Ejemplo 6-28: la distribución \(t\) Student} Una variable aleatoria \(\z\) tiene distribución \(t\) Student \(t(n)\) con \(n\) grados de libertad si para \(-\infty<z<\infty\)
+\[
+ f_z(z)=\dfrac{\gamma_1}{\sqrt{\left(1+\dfrac{z^2}{n}\right)^{n+1}}},
+  \qquad\qquad\textrm{con}\qquad\qquad
+ \gamma_1=\frac{\Gamma((n+1)/2)}{\sqrt{\pi n}\,\Gamma(n/2)}.
+\]
+Se demostrará que si \(\x\) e \(\y\) son dos variables aleatorias independientes, con \(\x\sim N(0,\,1)\) e \(\y\sim\chi^2(n)\), la variable aleatoria 
+\[
+ \z=\frac{\x}{\y/n}
+\]
+tiene distribución \(t(n)\). Observar que la distribución \(t\) Student representa el cociente de una variable aleatoria normal y la raíz cuadrada de una variable aleatoria independiente \(\chi^2\) dividida entre sus grados de libertad. Para demostrarlo, se introduce la variable auxiliar \(\w=\y\) y se emplea la ecuación \ref{eq:joint_density_two_funcions_two_rv}, donde la transformación es
+\[
+ \z=\frac{\x}{\sqrt{\y/n}},\qquad\qquad \w=\y.
+\]
+Fijando \((z,\,w)\), el sistema de ecuaciones
+\[
+ \frac{x}{\sqrt{y/n}}=z,\qquad\qquad y=w
+\]
+tiene una solución única \((x_i,\,y_i)\), y la transformación inversa es
+\[
+ x_i=g_1(z,\,w)=z\sqrt{\frac{w}{n}},\qquad\qquad y_i=h_1(z,\,w)=w.
+\]
+Considerando que 
+\[
+ \frac{\partial g_1}{\partial z}=\sqrt{\frac{w}{n}},\qquad\qquad\frac{\partial g_1}{\partial w}=\frac{z}{2\sqrt{nw}},\qquad\qquad \frac{\partial h_1}{\partial z}=0,\qquad\qquad\textrm{y}\qquad\qquad\frac{\partial h_1}{\partial w}=1,
+\]
+la matriz Jacobiana de la transformación inversa es
+\begingroup
+\renewcommand*{\arraystretch}{2.2}
+\[
+ J(z,\,w)=
+ \begin{vmatrix}
+    \dfrac{\partial g_1}{\partial z} & \dfrac{\partial g_1}{\partial w} \\
+    \dfrac{\partial h_1}{\partial z} & \dfrac{\partial h_1}{\partial w}
+\end{vmatrix}=
+ \begin{vmatrix}
+    \sqrt{\dfrac{w}{n}} & \dfrac{z}{2\sqrt{nw}} \\
+    0 & 1
+\end{vmatrix},
+\]
+\endgroup
+y el valor absoluto del determinante es
+\[
+ |J(z,\,w)|=\sqrt{\dfrac{w}{n}}.
+\]
+Además, como \(\x\) e \(\y\) son independientes, se cumple que 
+\[
+ f_{xy}(x,\,y)=f_x(x)f_y(y)=\frac{1}{\sqrt{2\pi}}e^{-x^2/2}\frac{y^{n/2-1}}{2^{n/2}\Gamma(n/2)}e^{-y/2}U(y),
+\]
+donde en la última igualdad se emplearon la ecuaciones \ref{eq:pdf_gaussian} y \ref{eq:pdf_chi_square} de las densidades de probabilidad de \(\x\) e \(\y\) respectivamente. Sustituyendo estos resultados en la ecuación \ref{eq:joint_density_two_funcions_two_rv}, se tiene que
+\begin{align*}
+ f_{zw}(z,\,w)&=|J(z,\,w)|f_{xy}(x_i,\,y_i)\\
+   &=\sqrt{\dfrac{w}{n}}\frac{1}{\sqrt{2\pi}}e^{-x_i^2/2}\frac{y_i^{n/2-1}}{2^{n/2}\Gamma(n/2)}e^{-y_i/2}U(y_i)\\
+   &=\sqrt{\dfrac{w}{n}}\frac{1}{\sqrt{2\pi}}e^{-z^2w/2n}\frac{w^{n/2-1}}{2^{n/2}\Gamma(n/2)}e^{-w/2}U(w)\\
+   &=\frac{w^{(n-1)/2}}{\sqrt{2\pi n}2^{n/2}\Gamma(n/2)}e^{-w(1+z^2/n)/2}U(w),
+\end{align*}
+e integrando respecto a \(w\) se obtiene que
+\begin{align*}
+ f_z(z)&=\int_{-\infty}^\infty f_{zw}(z,\,w)\,dw\\
+  &=\frac{1}{\sqrt{2\pi n}2^{n/2}\Gamma(n/2)}\int_0^\infty w^{(n-1)/2}e^{-w(1+z^2/n)/2}\,dw\\
+  &\overset{(a)}{=}\frac{1}{\sqrt{2\pi n}2^{n/2}\Gamma(n/2)}\int_0^\infty \frac{2^{(n-1)/2}u^{(n-1)/2}}{(1+z^2/n)^{(n-1)/2}}e^{-u}\,\frac{du}{(1+z^2/n)/2}\\
+  &=\frac{1}{\sqrt{\pi n}\,\Gamma(n/2)(1+z^2/n)^{(n-1)/2}}\int_0^\infty u^{(n-1)/2}e^{-u}\,du\\
+  &\overset{(b)}{=}\frac{\Gamma((n+1)/2)}{\sqrt{\pi n}\,\Gamma(n/2)(1+z^2/n)^{(n-1)/2}},
+\end{align*}
+donde en \((a)\) se realizó el cambio de variable 
+\[
+ u=w(1+z^2/n)/2\qquad\Rightarrow\qquad du=dw(1+z^2/n)/2\qquad\textrm{y}\qquad w=2u/(1+z^2/n),
+\]
+y en \((b)\) se notó que la integral es \(\Gamma((n+1)/2)\), como indica la ecuación \ref{eq:gamma_function}. Esto concluye la prueba.
+Observando además que 
+\[
+ \frac{\sqrt{\pi}\,\Gamma(n/2)}{\Gamma((n+1)/2)}\overset{(a)}{=}\frac{\Gamma(1/2)\Gamma(n/2)}{\Gamma((n/2+1/2)}\overset{(b)}{=}\mathrm{B}(1/2,\,n/2),
+\]
+donde en \((a)\) se consideró que \(\Gamma(n/2)=\sqrt{\pi}\), como indica la ecuación \ref{eq:gamma_function_of_one_half}, y en \((b)\) la definición de la función beta, dada por la ecuación \ref{eq:beta_function_as_gamma}. Mediante este resultado, la distribución de \(t\) Student se puede expresar en términos de la función beta como
+\[
+ f_z(z)=\frac{1}{\sqrt{n}\,\mathrm{B}(1/2,\,n/2)\sqrt{(1+z^2/n)^{(n-1)}}}.
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \section{Momentos conjuntos}
 
@@ -5692,7 +5825,7 @@ Se calculará ahora la covarianza entre \(\z\) y \(\w\) para estudiar la correla
    &\overset{(a)}{=}E\{\x^2\}-E\{\y^2\}\\
    &\overset{(b)}{=}0,
 \end{align*}
-donde en \((a)\) se empleó la propiedad de linealidad de la esperanza y en \((b)\) se usó que \(E\{\x^2\}=E\{\y^2\}\) debido a que \(\x\) y \(\z\) tienen igual densidad de probabilidad. Esto indica que las variables aleatorias \(\z\) y \(\w\) son ortogonales. Por otro lado, se ve que
+donde en \((a)\) se empleó la propiedad de linealidad de la esperanza y en \((b)\) se usó que \(E\{\x^2\}=E\{\y^2\}\) debido a que \(\x\) e \(\y\) tienen igual densidad de probabilidad. Esto indica que las variables aleatorias \(\z\) y \(\w\) son ortogonales. Por otro lado, se ve que
 \[
  E\{\w\}=E\{\x-\y\}=E\{\x\}-E\{\y\}=0.
 \]
