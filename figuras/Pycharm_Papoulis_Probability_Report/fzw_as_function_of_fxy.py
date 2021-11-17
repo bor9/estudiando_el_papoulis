@@ -54,7 +54,7 @@ ys = T[2] * zs + T[3] * ws - 3.5
 
 
 ##############################
-# PARÁMETROS DE LAS GRAFICAs #
+# PARÁMETROS DE LAS GRAFICAS #
 ##############################
 
 # ancho de línea
