@@ -103,7 +103,7 @@ xm = (a - 1) / (a + b - 2)
 fxm = beta.pdf(xm, a, b, loc=0, scale=1)
 
 # intervalo disjunto con la misma probabilidad
-c11 = 0.2
+c11 = 0.3
 c21 = beta.ppf(beta.cdf(c11, a, b, loc=0, scale=1) + gamma1, a, b, loc=0, scale=1)
 fc11 = beta.pdf(c11, a, b, loc=0, scale=1)
 fc21 = beta.pdf(c21, a, b, loc=0, scale=1)

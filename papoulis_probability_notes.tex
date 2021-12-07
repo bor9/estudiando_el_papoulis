@@ -1286,6 +1286,15 @@ Realizando el mismo cálculo usando la ecuación \ref{eq:binomial_density_functi
  p_3(2)=\binom{3}{2}\left(\frac{1}{2}\right)^2\left(\frac{1}{2}\right)=\frac{3!}{2!1!}\left(\frac{1}{2}\right)^3=\frac{3}{8}.
 \]
 
+Finalmente, se calculará la probabilidad 
+\[
+ P\{k_1\leq k\leq k_2\}
+\]
+de que el número de ocurrencias del evento \(A\) (obtención de cara) esté entre \(k_1\) y \(k_2\). Para hacerlo, se observa que los eventos \{\(A\) ocurre \(k\) veces\} con \(k\) tomando cualquier valor entre \(k_1\) y \(k_2\), son mutuamente excluyentes y su unión es el evento \(\{k_1\leq k\leq k_2\}\). Por lo tanto, de la ecuación \ref{eq:binomial_density_function}, se obtiene que
+\begin{equation}\label{eq:binomial_interval_probability}
+ P\{k_1\leq k\leq k_2\}=\sum_{k=k_1}^{k_2}p_n(k)=\sum_{k=k_1}^{k_2}\binom{n}{k}p^kq^{n-k}.
+\end{equation}
+
 \subsection{Generalización de ensayos de Bernoulli}
 
 La generalización del teorema de la ecuación \ref{eq:binomial_density_function} cuando cada ensayo tiene mas de dos resultados posibles puede encontrarse en la sección 4-5 de \cite{papoulis2002probability} y se plantea como sigue. 
@@ -1981,6 +1990,8 @@ Otras distribuciones mencionadas en \cite{papoulis2002probability} son: Rayleigh
 
 \subsection{Variables aleatorias discretas}\label{sec:discrete_random_variables}
 
+En el caso de variables aleatorias discretas, la probabilidad de que la variable aleatoria tome un valor específico \(k\) es una función de \(k\) que se suele denominar \emph{función de masa de probabilidad} (p.m.f, \emph{probability mass function}). Es el concepto análogo a la función densidad de probabilidad de una variable aleatoria continua.
+
 \paragraph{Distribución de Bernoulli} 
 
 La variable aleatoria \(\x\) es Bernoulli si toma valores 0 o 1 con probabilidad
@@ -1990,10 +2001,10 @@ La variable aleatoria \(\x\) es Bernoulli si toma valores 0 o 1 con probabilidad
 
 \paragraph{Distribución Binomial}
 
-En \(n\) ensayos Bernoulli independientes donde \(p\) es la probabilidad de éxito de cada ensayo, si \(\y\) es la cantidad de éxitos en los \(n\) experimentos, \(\y\) es una variable aleatoria Binomial. Por lo tanto, se dice que \(\y\) es una variable aleatoria Binomial de parámetros \(n\) y \(p\) si \(\y\) toma valores \(0,\,1,\,2,\dots,\,n\) con probabilidad
-\[
+En \(n\) ensayos Bernoulli independientes donde \(p\) es la probabilidad de éxito de cada ensayo, si \(\y\) es la cantidad de éxitos en los \(n\) experimentos, \(\y\) es una variable aleatoria Binomial (ver la sección \ref{sec:bernoulli_trials}). Por lo tanto, se dice que \(\y\) es una variable aleatoria Binomial de parámetros \(n\) y \(p\) si \(\y\) toma valores \(0,\,1,\,2,\dots,\,n\) con probabilidad (ver la ecuación \ref{eq:binomial_density_function})
+\begin{equation}\label{eq:binomial_density_function2}
  P\{\y=k\}=\binom{n}{k}p^{k}q^{n-k},\qquad p+q=1,\qquad k=0,\,1,\,2,\dots,\,n.
-\]
+\end{equation}
 
 \paragraph{Distribución de Poisson}
 
@@ -2223,6 +2234,69 @@ y por lo tanto, al sustituir el resultado en la ecuación anterior, se llega a q
  P(B)=\frac{k+1}{n+2}.
 \]
 Por ejemplo, si en \(n=10\) tiradas salieron \(k=5\) caras, la probabilidad que en la onceava tirada salga cara es \(P(B)=6/12=0.5\).
+
+
+\section{Aproximaciones asintóticas de una variable aleatoria binomial}
+
+Sea \(\x\) una variable aleatoria binomial, caracterizada por la ecuación  \ref{eq:binomial_density_function2}. La probabilidad de que \(\x\) se encuentre entre los valores \(k_1\) y \(k_2\) está dada por la ecuación \ref{eq:binomial_interval_probability} y es
+\begin{equation}\label{eq:binomial_interval_probability2}
+ P\{k_1\leq\x\leq k_2\}=\sum_{k=k_1}^{k_2}p_n(k)=\sum_{k=k_1}^{k_2}\binom{n}{k}p^kq^{n-k}.
+\end{equation}
+Como el coeficiente binomial
+\[
+ \binom{n}{k}=\frac{n!}{(n-k)!k!}
+\]
+crece rápidamente con \(n\), el cálculo de \ref{eq:binomial_interval_probability2} puede ser difícil para valores grandes de \(n\). Por este motivo son útiles dos aproximaciones, la aproximación normal y la aproximación de Poisson. Se verá a continuación la aproximación normal.
+
+\subsection{Aproximación normal de una variable aleatoria binomial}
+
+Supóngase que \(n\to\infty\) y \(p\) es fijo. Como se verá en la sección \ref{sec:demoivre_laplace_theorem} mediante funciones características, para \(k\) en la vecindad \(\sqrt{npq}\) de \(np\), es válida la aproximación
+\begin{equation}\label{eq:demoivre_laplace_theorem}
+ \binom{n}{k}p^kq^{n-k}\approx\frac{1}{\sqrt{2\pi npq}}e^{-(k-np)^2/2npq},\qquad p+q=1,
+\end{equation}
+conocida como el teorema de DeMoivre-Laplace. Empleando este resultado se mostrará que una aproximación de \(P\{k_1\leq\x\leq k_2\}\) está dada por 
+\begin{equation}\label{eq:binomial_normal_approximation}
+ P\{k_1\leq\x\leq k_2\}=\sum_{k=k_1}^{k_2}\binom{n}{k}p^kq^{n-k}\approx G\left(\frac{k_2-np}{\sqrt{npq}}\right)-G\left(\frac{k_1-np}{\sqrt{npq}}\right),
+\end{equation}
+donde 
+\[
+ G(x)=\int_{-\infty}^x\frac{1}{\sqrt{2\pi}}e^{-y^2/2}\,dy
+\]
+es la distribución de probabilidad normal estándar. Esto indica que para calcular la probabilidad de que el número de ocurrencias del evento \(A\) en \(n\) ensayos esté entre \(k_1\) y \(k_2\) alcanza con evaluar la distribución normal estándar \(G(x)\). La aproximación es satisfactoria si \(\sigma^2=npq\gg 1\) y \(k_1\) y \(k_2\) están dentro o cerca del intervalo \((np-\sqrt{npq},\,np+\sqrt{npq})\). Para la demostración, se parte sustituyendo la ecuación \ref{eq:demoivre_laplace_theorem} en la ecuación \ref{eq:binomial_interval_probability2}, obteniendo
+\begin{equation}\label{eq:binomial_normal_approximation_aux1}
+ \sum_{k=k_1}^{k_2}\binom{n}{k}p^kq^{n-k}\approx\frac{1}{\sigma\sqrt{2\pi}}\sum_{k=k_1}^{k_2}e^{-(k-np)^2/2\sigma^2}.
+\end{equation}
+La curva normal es aproximadamente constante en cualquier intervalo de largo 1 debido a que \(\sigma^2=npq\gg 1\) por hipótesis, y por lo tanto, el área en un intervalo de largo 1 iguala aproximadamente a su ordenada. Esto implica que el lado derecho de la ecuación anterior puede aproximarse como
+\begin{equation}\label{eq:binomial_normal_approximation_aux2}
+ \frac{1}{\sigma\sqrt{2\pi}}\sum_{k=k_1}^{k_2}e^{-(k-np)^2/2\sigma^2}\approx
+ \frac{1}{\sigma\sqrt{2\pi}}\int_{k_1}^{k_2}e^{-(k-np)^2/2\sigma^2}.
+\end{equation}
+De esta forma
+\[
+ P\{k_1\leq\x\leq k_2\}\approx\frac{1}{\sqrt{2\pi}}\int_{k_1}^{k_2}e^{-(x-np)^2/2\sigma^2}\,dx
+ =\frac{1}{\sqrt{2\pi}}\int_{y_1}^{y_2}e^{-y^2/2}\,dy=G(y_2)-G(y_1)
+\]
+donde
+\[
+ y_1=\frac{k_1-np}{\sqrt{npq}}\qquad\qquad\textrm{y}\qquad\qquad y_2=\frac{k_2-np}{\sqrt{npq}},
+\]
+concluyendo la prueba.
+
+\paragraph{Corrección del error} La suma en la izquierda de la ecuación \ref{eq:binomial_normal_approximation_aux1} consiste en \(k_2-k_1+1\) términos, y la aproximación de la derecha consiste en la suma de \(k_2-k_1+1\) ordenadas de la densidad normal. La integral en la ecuación \ref{eq:binomial_normal_approximation_aux2} es una aproximación del área sombreada entre \(k_1\) y \(k_2\) en la figura \ref{fig:binomial_normal_approximation}, que consiste en \(k_2-k_1\) rectángulos cuya área es la ordenada de la densidad normal. Si \(k_2-k_1\gg1\), el error es despreciable. Para valores moderados de \(k_2-k_1\) el error no es despreciable. Para reducirlo, se reemplazan los límites de integración \(k_1\) y \(k_2\) por \(k_1-1/2\) y \(k_2+1/2\) en la ecuación \ref{eq:binomial_normal_approximation_aux2}, como se muestra en la figura. Esto conduce a la mejor aproximación
+\begin{equation}\label{eq:binomial_normal_approximation_correction}
+ P\{k_1\leq\x\leq k_2\}=\sum_{k=k_1}^{k_2}\binom{n}{k}p^kq^{n-k}\approx G\left(\frac{k_2+0.5-np}{\sqrt{npq}}\right)-G\left(\frac{k_1-0.5-np}{\sqrt{npq}}\right).
+\end{equation}
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=1\columnwidth]{figuras/binomial_normal_approximation.pdf}
+\caption{\label{fig:binomial_normal_approximation} Aproximación normal de la probabilidad de un intervalo de una variable aleatoria binomial. Se muestran los valores \(P\{\x=k\}=\binom{n}{k}p^kq^{n-k}\) para cada valor de \(k\) en el intervalo entre \(k_1\) y \(k_2\) de una variable aleatoria \(\x\sim B(n,\,p)\). La suma de dichos valores es \(P\{k_1\leq\x\leq k_2\}\). Se grafica además la densidad de probabilidad gaussiana con la misma media y varianza, \(N(np,\,npq)\). El área sombreada en la figura de la derecha es exactamente el lado derecho de la ecuación \ref{eq:binomial_normal_approximation_aux1}, y se puede aproximar por el área de la normal entre \(k_1-0.5\) y \(k_2+0.5\). Los valores empleados para generar la figura son \(n=30\), \(p=0.6\) y \(k_1=15\) y \(k_2=23\). De esta forma, \(\eta=np=18\) y \(\sigma^2=npq=7.2\).}
+\end{center}
+\end{figure}
+La figura \ref{fig:binomial_normal_approximation} fue generada con los parámetros \(n=30\), \(p=0.6\) y \(k_1=15\) y \(k_2=23\). Con esos valores, se obtiene que la probabilidad exacta del intervalo es
+\[
+ P\{15\leq\x\leq 23\}=\sum_{k=15}^{23}\binom{30}{k}0.6^k0.4^{30-k}=0.88576,
+\]
+mientras que la aproximación normal mediante la ecuación \ref{eq:binomial_normal_approximation} es \(0.83702\) y la aproximación normal corregida dada por la ecuación \ref{eq:binomial_normal_approximation_correction} es \(0.88375\).
 
 \chapter{Funciones de una variable aleatoria}
 
@@ -2645,6 +2719,42 @@ Además,
 \[
  \sigma^2=E\{\x^2\}-E^2\{\x\}=p-p^2=p(1-p)=pq.
 \]
+
+\subsection{Media y varianza de una variable aleatoria Poisson}\label{sec:poisson_rv_mean_variance}
+
+Una variable aleatoria con distribución de Poisson con parámetro \(\lambda\) toma valores \(0,\,1,\,\dots\) con probabilidades
+\[
+ P\{\x=k\}=e^{-\lambda}\frac{\lambda^k}{k!}.
+\]
+Se mostrará que la media y la varianza son iguales y toman el valor \(\lambda\), es decir,
+\[
+ \eta=E\{\x\}=\lambda,\qquad E\{\x^2\}=\lambda^2+\lambda,\qquad \sigma^2=E\{\x^2\}-E^2\{\x\}=\lambda.
+\]
+
+Para calcular la media, se observa que 
+\begin{align*}
+ \eta=E\{\x^2\}&=e^{-\lambda}\sum_{k=0}^\infty k\frac{\lambda^k}{k!}\\
+   &=e^{-\lambda}\sum_{k=1}^\infty \frac{\lambda^k}{(k-1)!}\\
+   &\overset{(a)}{=}e^{-\lambda}\sum_{n=0}^\infty \frac{\lambda^{n+1}}{n!}\\
+   &=\lambda e^{-\lambda}\sum_{n=0}^\infty \frac{\lambda^n}{n!}\\
+   &\overset{(b)}{=}\lambda,
+\end{align*}
+donde en \((a)\) se realizó el cambio de variable \(k=n+1\) y en \((b)\) consideró que la sumatoria es la expansión de Taylor de \(e^\lambda\),
+\[
+ e^\lambda=\sum_{k=0}^\infty \frac{\lambda^k}{k!}.
+\]
+De forma similar, el segundo momento es
+\begin{align*}
+ E\{\x^2\}&=e^{-\lambda}\sum_{k=0}^\infty k^2\frac{\lambda^k}{k!}\\
+   &=e^{-\lambda}\sum_{k=1}^\infty k\frac{\lambda^k}{(k-1)!}\\
+   &=e^{-\lambda}\sum_{n=0}^\infty(n+1)\frac{\lambda^{n+1}}{n!}\\
+   &=e^{-\lambda}\left(\lambda\sum_{n=1}^\infty n\frac{\lambda^n}{n!}+\lambda\sum_{n=0}^\infty \frac{\lambda^n}{n!}\right)\\
+   &=e^{-\lambda}\left(\lambda\sum_{n=1}^\infty\frac{\lambda^n}{(n-1)!}+\lambda e^{\lambda}\right)\\
+   &=e^{-\lambda}\left(\lambda\sum_{k=0}^\infty\frac{\lambda^{k+1}}{k!}+\lambda e^{\lambda}\right)\\
+   &=e^{-\lambda}\left(\lambda^2e^{\lambda}+\lambda e^{\lambda}\right)\\
+   &=\lambda^2+\lambda,
+\end{align*}
+culminando la prueba.
 
 \subsection{Ejemplo: media y mediana}
 
@@ -3146,7 +3256,7 @@ Considérese la curva rectangular \(\Gamma_c(T)\) que se ilustra en la figura \r
 \Gamma_{c_4}(T) : z=-T+iy,& 0<y<b.
 \end{array}
 \]
-La función \(f(z) \triangleq e^{-pz^2}\) es analítica dentro de la región limtada por \(\Gamma_c(T)\) y por lo tanto el teorma integral de Cauchy\footnote{\textbf{Enunciado}: Sea \(D\) un subconjunto abierto de \(\mathbb{C}\), sea \(f:D\rightarrow \mathbb{C}\) una función analítica y sea \(\Gamma\) un contorno cerrado simple contenido en \(D\), entonces \(\oint_\Gamma f(z)\,dz = 0\).} indica que
+La función \(f(z) \triangleq e^{-pz^2}\) es analítica dentro de la región limtada por \(\Gamma_c(T)\) y por lo tanto el teorema integral de Cauchy\footnote{\textbf{Enunciado}: Sea \(D\) un subconjunto abierto de \(\mathbb{C}\), sea \(f:D\rightarrow \mathbb{C}\) una función analítica y sea \(\Gamma\) un contorno cerrado simple contenido en \(D\), entonces \(\oint_\Gamma f(z)\,dz = 0\).} indica que
 \begin{equation}\label{eq:gaussian_integral_complex_offset_tmp2}
  \oint_{\Gamma_c} f(z)\,dz = 0.
 \end{equation}
@@ -3522,9 +3632,9 @@ y
  \sigma^2=E\{\x^2\}-E^2\{\x\}=mpq.
 \]
 
-\subsection{Teorema de DeMoivre-Laplace}
+\subsection{Teorema de DeMoivre-Laplace}\label{sec:demoivre_laplace_theorem}
 
-Sea \(\x\sim B(n\,p)\). Se demostrará que cuando \(n\to\infty\), \(\x\) tiende a una distribución normal, \(N(np,\,npq)\).
+Sea \(\x\sim B(n,\,p)\). Se demostrará que cuando \(n\to\infty\), \(\x\) tiende a una distribución normal, \(N(np,\,npq)\).
 
 La función característica de \(\x\) se obtiene evaluando la ecuación \ref{eq:binomial_moment_generating_function} en \(z=e^{j\omega}\), y es
 \[
@@ -4794,7 +4904,7 @@ Integrando la densidad de probabilidad \(f_{zw}(z,\,w)\) como indica la ecuació
 \[
  F_{zw}(z,\,w)=\int_{-\infty}^{z}\int_{-\infty}^{w}f_{zw}(z,\,w)\,dw\,dz,
 \]
-Esto consiste en calcular el volumen de \(f_{zw}(z,\,w)\) en el cuadrante determinado por las semirectas \((-\infty,\,z)\) y \((-\infty,\,w)\) para todo valor de \((z,\,w)\). Como en este ejemplo \(f_{zw}(z,\,w)\) es una función sencilla, constante en una región triangular, el cálculo puede realizarse de forma geométrica, teniendo en cuenta que el volumen cambia según la región del plano donde se encuentren \(z\) y \(w\), como se muestra en la figura \ref{fig:joint_density_function_rv_min_max_integration}.
+Esto consiste en calcular el volumen de \(f_{zw}(z,\,w)\) en el cuadrante determinado por las semirrectas \((-\infty,\,z)\) y \((-\infty,\,w)\) para todo valor de \((z,\,w)\). Como en este ejemplo \(f_{zw}(z,\,w)\) es una función sencilla, constante en una región triangular, el cálculo puede realizarse de forma geométrica, teniendo en cuenta que el volumen cambia según la región del plano donde se encuentren \(z\) y \(w\), como se muestra en la figura \ref{fig:joint_density_function_rv_min_max_integration}.
 \begin{figure}[!htb]
 \begin{center}
  \includegraphics[width=0.85\columnwidth]{figuras/joint_density_function_rv_min_max_integration.pdf}
@@ -4826,7 +4936,7 @@ y la altura es \(f_{zw}(z,\,w)=2/\theta^2\), por lo que el volumen es
 \end{itemize}
 Este resultado coincide con el de la ecuación \ref{eq:joint_distribution_rv_min_max}.
 
-\subsection{Densidad de probabilidad conjunta}
+\subsection{Densidad de probabilidad conjunta}\label{sec:two_funcions_of_two_rv_joint_density}
 
 Sean \(g(x,\,y)\) y \(h(x,\,y)\) dos funciones continuas y diferenciables y dos variables aleatorias \(\x\) e \(\y\). Se definen las variables aleatorias \(\z\) y \(\w\) como
 \begin{align*}
@@ -5242,14 +5352,14 @@ y la densidad de probabilidad de \(\z\) es
 coincidiendo con el resultado de la ecuación \ref{eq:pdf_of_sum_of_two_rv}.
 
 \paragraph{Ejemplo 6-28: la distribución \(t\) Student} Una variable aleatoria \(\z\) tiene distribución \(t\) Student \(t(n)\) con \(n\) grados de libertad si para \(-\infty<z<\infty\)
-\[
- f_z(z)=\dfrac{\gamma_1}{\sqrt{\left(1+\dfrac{z^2}{n}\right)^{n+1}}},
+\begin{equation}\label{eq:t_student_distribution}
+  f_z(z)=\dfrac{\gamma_1}{\sqrt{\left(1+\dfrac{z^2}{n}\right)^{n+1}}},
   \qquad\qquad\textrm{con}\qquad\qquad
  \gamma_1=\frac{\Gamma((n+1)/2)}{\sqrt{\pi n}\,\Gamma(n/2)}.
-\]
-Se demostrará que si \(\x\) e \(\y\) son dos variables aleatorias independientes, con \(\x\sim N(0,\,1)\) e \(\y\sim\chi^2(n)\), la variable aleatoria 
+\end{equation}
+Se demostrará que si \(\x\) e \(\y\) son dos variables aleatorias independientes, con \(\x\sim N(0,\,1)\) e \(\y\sim\chi^2(n)\), la variable aleatoria
 \[
- \z=\frac{\x}{\y/n}
+ \z=\frac{\x}{\sqrt{\y/n}}
 \]
 tiene distribución \(t(n)\). Observar que la distribución \(t\) Student representa el cociente de una variable aleatoria normal y la raíz cuadrada de una variable aleatoria independiente \(\chi^2\) dividida entre sus grados de libertad. Para demostrarlo, se introduce la variable auxiliar \(\w=\y\) y se emplea la ecuación \ref{eq:joint_density_two_funcions_two_rv}, donde la transformación es
 \[
@@ -5315,215 +5425,23 @@ Observando además que
  \frac{\sqrt{\pi}\,\Gamma(n/2)}{\Gamma((n+1)/2)}\overset{(a)}{=}\frac{\Gamma(1/2)\Gamma(n/2)}{\Gamma((n/2+1/2)}\overset{(b)}{=}\mathrm{B}(1/2,\,n/2),
 \]
 donde en \((a)\) se consideró que \(\Gamma(n/2)=\sqrt{\pi}\), como indica la ecuación \ref{eq:gamma_function_of_one_half}, y en \((b)\) la definición de la función beta, dada por la ecuación \ref{eq:beta_function_as_gamma}. Mediante este resultado, la distribución de \(t\) Student se puede expresar en términos de la función beta como
+\begin{equation}\label{eq:t_student_distribution_beta}
+ f_z(z)=\frac{1}{\sqrt{n}\,\mathrm{B}(1/2,\,n/2)(1+z^2/n)^{(n-1)/2}}.
+\end{equation}
+
+Cuando \(n\) crece, la distribución \(t\) tiene a la distribución normal. De hecho, en la ecuación \ref{eq:t_student_distribution_beta} se cumple que 
 \[
- f_z(z)=\frac{1}{\sqrt{n}\,\mathrm{B}(1/2,\,n/2)\sqrt{(1+z^2/n)^{(n-1)}}}.
+ \left(1+\frac{z^2}{n}\right)^{-(n+1)/2}\to e^{-z^2/2}\qquad\textrm{con}\qquad n\to\infty.
 \]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Esto se debe a que, tomando logaritmo
+\[
+ -\frac{n+1}{2}\ln\left(1+\frac{z^2}{n}\right)=-\dfrac{\ln\left(1+\dfrac{z^2}{n}\right)}{\dfrac{2}{n+1}}\to-\dfrac{\dfrac{z^2}{n}}{\dfrac{2}{n}}=-\frac{z^2}{2}
+ \qquad\textrm{con}\qquad n\to\infty.
+\]
+%\[
+% \left(1+\frac{z^2}{n}\right)^{-n/2}=\left(1+\frac{z^2}{2m}\right)^{-m}=\left(1-\dfrac{\left(-\dfrac{z^2}{2}\right)}{m}\right)^{-m}\to e^{-z^2/2}\qquad\textrm{con}\qquad m\to\infty.
+%\]
+Para \(n\) pequeño, la distribución \(t\) tiene colas mas anchas que la distribución normal debido a su forma polinómica.
 
 
 \section{Momentos conjuntos}
@@ -5624,24 +5542,20 @@ A partir de la ecuación \ref{eq:mean_of_gxy}, se cumple que
 \]
 donde la densidad de probabilidad conjunta \(f_{xy}(x,\,y)\) está dada por las ecuaciones \ref{eq:joint_normal_pdf1} y \ref{eq:joint_normal_pdf2}.
 Como se explicó en la sección \ref{sec:joint_normal_pdf}, el exponente de la densidad conjunta, teniendo en cuenta que las medias de \(\x\) e \(\y\) son nulas, se puede escribir como
-\small
 \begin{align*}
  -\frac{1}{2(1-r^2)}\left[\frac{x^2}{\sigma_1^2}-2r\frac{xy}{\sigma_1\sigma_2}+\frac{y^2}{\sigma_2^2}\right]
    &=-\frac{1}{2(1-r^2)}\left[\left(\frac{x}{\sigma_1}-r\frac{y}{\sigma_2}\right)^2+(1-r^2)\frac{y^2}{\sigma_2^2}\right]\\
    &=-\frac{1}{2(1-r^2)}\left[\frac{1}{\sigma_1^2}\left(x-ry\frac{\sigma_1}{\sigma_2}\right)^2+(1-r^2)\frac{y^2}{\sigma_2^2}\right]\\
    &=-\frac{(x-ry\sigma_1/\sigma_2)^2}{2\sigma_1^2(1-r^2)}-\frac{y^2}{2\sigma_2^2},
 \end{align*}
-\normalsize
 por lo tanto
-\small
 \begin{align*}
  E\{\x\y\}&=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}xy\frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-r^2}}\exp\left[-\frac{(x-ry\sigma_1/\sigma_2)^2}{2\sigma_1^2(1-r^2)}-\frac{y^2}{2\sigma_2^2}\right]\,dx\,dy\\
-   &=\frac{1}{\sigma_2\sqrt{2\pi}} \int_{-\infty}^{\infty}ye^{-y^2/2\sigma_2^2}\int_{-\infty}^{\infty}\frac{x}{\sigma_1\sqrt{2\pi(1-r^2)}}\exp\left[-\frac{(x-ry\sigma_1/\sigma_2)^2}{2\sigma_1^2(1-r^2)}\right]\,dx\,dy
+   &=\frac{1}{\sigma_2\sqrt{2\pi}} \int_{-\infty}^{\infty}ye^{-y^2/2\sigma_2^2}\int_{-\infty}^{\infty}\frac{x}{\sigma_1\sqrt{2\pi(1-r^2)}}\exp\left[-\frac{(x-ry\sigma_1/\sigma_2)^2}{2\sigma_1^2(1-r^2)}\right]\,dx\,dy.
 \end{align*}
-\normalsize
 La integral interna es la media de una variable aleatoria de distribución normal de media \(ry\sigma_1/\sigma_2\) y varianza \(\sigma_1^2(1-r^2)\), y por lo tanto vale \(ry\sigma_1/\sigma_2\). Esto lleva a que
 \[
- E\{\x\y\}=r\frac{\sigma_1}{\sigma_2}\int_{-\infty}^{\infty}\frac{1}{\sigma_2\sqrt{2\pi}}y^2e^{-y^2/2\sigma_2^2}\,dy
+ E\{\x\y\}=r\frac{\sigma_1}{\sigma_2}\int_{-\infty}^{\infty}\frac{1}{\sigma_2\sqrt{2\pi}}y^2e^{-y^2/2\sigma_2^2}\,dy.
 \]
 La integral es la varianza de una variable aleatoria de distribución normal de media nula y varianza \(\sigma_2^2\), por lo que el resultado es \(\sigma_2^2\). Se concluye que
 \[
@@ -5754,10 +5668,10 @@ es decir, \(|J(z,\,w)|=1/2\). También se puede ver que como \(0<x<1\) y \(0<y<1
 \]
 Estas condiciones determinan la región del plano \((z,\,w)\) donde \(f_{zw}(z,\,w)\) no es nula, y se muestra en la figura \ref{fig:joint_distribution_sum_sub_v3}.
 \begin{figure}[!htb]
-  \begin{minipage}[c]{0.4\textwidth}
+  \begin{minipage}[c]{0.35\textwidth}
     \includegraphics[width=\textwidth]{figuras/joint_distribution_sum_sub_v3.pdf}
   \end{minipage}\hfill
-  \begin{minipage}[c]{0.57\textwidth}
+  \begin{minipage}[c]{0.62\textwidth}
     \caption{
        Región del plano \((z,\,w)\) donde \(f_{zw}(z,\,w)\) no es nula. Consiste en la intersección de los semiplanos determinados por las condiciones \(0<z+w<2\) y \(0<z-w<2\).
     } \label{fig:joint_distribution_sum_sub_v3}
@@ -5777,7 +5691,7 @@ Sustituyendo estos resultados en la ecuación \ref{eq:joint_density_two_funcions
 
 \begin{figure}[!htb]
 \begin{center}
- \includegraphics[width=0.9\columnwidth]{figuras/joint_distribution_sum_sub_marginals.pdf}
+ \includegraphics[width=0.84\columnwidth]{figuras/joint_distribution_sum_sub_marginals.pdf}
 \caption{\label{fig:joint_distribution_sum_sub_marginals} Límites de integración de \(f_{zw}(z,\,w)\) para el cálculo de las densidades marginales. Se observa que los límites de integración dependen del valor de la variable de la que se calcula el marginal. A la izquierda se muestran los intervalos de integración para calcular la densidad marginal de \(z\). Se distinguen dos casos: si \(0<z<1\), los límites de integración son \(-z<w<z\) y si \(1<z<2\), los límites de integración son \(z-2<w<-z+2\). A la derecha, se muestran los intervalos de integración para calcular el marginal de \(w\). Si \(0<w<1\), los límites de integración son \(w<z<-w+2\), y si \(-1<w<0\), los límites de integración son \(-w<z<w+2\). En este caso, esto se puede resumir como \(|w|<z<2-|w|\) para \(-1<w<1\).}
 \end{center}
 \end{figure}
@@ -6867,14 +6781,14 @@ Notar en particular que
  f_1(y)=n[1-F_x(y)]^{n-1}f_x(y),\qquad f_n(y)=nF_x^{n-1}(y)f_x(y).
 \]
 
-Como ejemplo, considérese el caso en que las variables aleatorias \(\x_i\) son uniformes en \((0,\,\theta)\). En ese caso,
+Como ejemplo, considérese el caso en que las variables aleatorias \(\x_i\) son uniformes en \((0,\,\theta)\). De esa forma,
 \[
  f_x(x)
  =\left\{\begin{array}{ll}
    1/\theta, & 0<x<\theta\\ 
    0, & \textrm{en otro caso}
- \end{array} \right.,
- \qquad
+ \end{array} \right.
+ \qquad\textrm{y}\qquad
  F_x(x)
  =\left\{\begin{array}{ll}
    0, & x<0\\
@@ -7612,7 +7526,6 @@ Una forma de resolver esta integral es usar la técnica de ``completar el cuadra
  \frac{1}{2}zAz^t+bz^t+c=\frac{1}{2}\left(z^t+A^{-1}b^t\right)^tA\left(z^t+A^{-1}b^t\right)-\frac{1}{2}bA^{-1}b^t+c,
 \end{equation}
 donde \(A\) es una matriz simétrica invertible y \(z\), \(b\) y \(c\) son vectores fila. Para verificar la igualdad, se observa que al desarrollar el primer término a la derecha de la igualdad, se obtiene que
-\small
 \begin{align*}
  \frac{1}{2}\left(z^t+A^{-1}b^t\right)^tA\left(z^t+A^{-1}b^t\right)&=
       \frac{1}{2}\left[z+b\left(A^{-1}\right)^t\right]A\left[z^t+A^{-1}b^t\right]\\
@@ -7621,7 +7534,6 @@ donde \(A\) es una matriz simétrica invertible y \(z\), \(b\) y \(c\) son vecto
   &=\frac{1}{2}\left(zAz^t+zb^t+bz^t+bA^{-1}b^t\right)\\
   &\overset{(b)}{=}\frac{1}{2}zAz^t+bz^t+\frac{1}{2}bA^{-1}b^t,
 \end{align*}
-\normalsize
 donde en \((a)\) se usó que \((A^{-1})^t=(A^t)^{-1}=A^{-1}\). En esta ecuación, la primera igualdad surge de observar que
 \[
  A^t(A^{-1})^t=(A^{-1}A)^t=I^t=I,
@@ -9310,7 +9222,7 @@ se cumple que
 \]
 Esto es una consecuencia del teorema de Markov, ya que como las variables aleatorias \(\x_i\) son no correlacionadas, el lado izquierdo de la ecuación \ref{eq:chebyshev_condition} es \(\bar{\sigma}^2_n\). La ecuación \ref{eq:chebyshev_condition} es la condición de Tchebycheff, y es satisfecha si \(\sigma_i<K<\infty\) para todo \(i\). Ese es el caso si las variables aleatorias \(\x_i\) son i.i.d. y de varianza finita.
 
-\subsection{Teorema central del límite}
+\subsection{Teorema central del límite}\label{sec:clt}
 
 La suma de \(n\) variables aleatorias \(\x_i\) independientes,
 \[
@@ -9691,7 +9603,7 @@ Un \emph{intervalo de predicción} de \(\x\) es la determinación de dos constan
 \begin{equation}\label{eq:statistics_interval_prediction}
   P\{c_1<\x<c_2\}=\gamma=1-\delta,
 \end{equation}
-donde \(\gamma\) es una constante dada llamada \emph{coeficiente de confianza}. Esta ecuación indica que si se predice que el valor \(x\) que tomará \(\x\) en el próximo ensayo va a estar en el intervalo \((c_1,\,c_2)\), la predicción va a ser correcta el \(100\gamma\) \% de los casos. El problema en intervalo de predicción es encontrar \(c_1\) y \(c_2\) de forma de minimizar la diferencia \(c_2-c_1\) sujeta a la restricción dada por la ecuación \ref{eq:statistics_interval_prediction}. La elección de \(\gamma\) se rige por dos requerimientos en conflicto. Si \(\gamma\) es cercano a 1, la predicción de que \(x\) estará en el intervalo \((c_1,\,c_2)\) es confiable, pero la diferencia \(c_2-c_1\) es grande y brinda poca información sobre \(x\). Si se reduce \(\gamma\), se reduce \(c_2-c_1\), pero la estimación es menos confiable. Se mostrará a continuación que si la densidad de probabilidad \(f(x)\) de \(\x\) es unimodal, \(c_2-c_1\) es mínimo para un \(\gamma\) dado si \(f(c_1)=f(c_2)\) (teorema 9.3.2 en \cite{casella2001statistical}):
+donde \(\gamma\) es una constante dada llamada \emph{coeficiente de confianza}. Esta ecuación indica que si se predice que el valor \(x\) que tomará \(\x\) en el próximo ensayo va a estar en el intervalo \((c_1,\,c_2)\), la predicción va a ser correcta el \(100\gamma\) \% de los casos. El problema en intervalo de predicción es encontrar \(c_1\) y \(c_2\) de forma de minimizar la diferencia \(c_2-c_1\) sujeta a la restricción dada por la ecuación \ref{eq:statistics_interval_prediction}. La elección de \(\gamma\) se rige por dos requerimientos en conflicto. Si \(\gamma\) es cercano a 1, la predicción de que \(x\) estará en el intervalo \((c_1,\,c_2)\) es confiable, pero la diferencia \(c_2-c_1\) es grande y brinda poca información sobre \(\x\). Si se reduce \(\gamma\), se reduce \(c_2-c_1\), pero la estimación es menos confiable. Se mostrará a continuación que si la densidad de probabilidad \(f(x)\) de \(\x\) es unimodal, \(c_2-c_1\) es mínimo para un \(\gamma\) dado si \(f(c_1)=f(c_2)\) (teorema 9.3.2 en \cite{casella2001statistical}):
 \begin{itemize}
  \item[] \emph{Teorema:} Sea \(f(x)\) una densidad unimodal. Si el intervalo \((c_1,\,c_2)\) satisface que 
  \begin{enumerate}
@@ -9749,7 +9661,7 @@ En la figura \ref{fig:shortest_prediction_interval} se muestra el intervalo \((c
 \begin{figure}[!htb]
 \begin{center}
 \lstinputlisting{figuras/shortest_prediction_interval_code.py}
-\caption{\label{fig:shortest_prediction_interval_code} Implementación en el lenguaje Python del cálculo del intervalo \((c_1,\,c_2)\) con \(c_2-c_1\) mínimo para un coeficiente de confianza \(\gamma\) dado. Se emplea la función \texttt{fmin} de la biblioteca Scipy para minimizar la función \texttt{interval\_widht}. La función \texttt{interval\_widht} recibe el área de la cola inferior \texttt{low\_tail\_pr} y retorna el largo \(c_2-c_1\) del intervalo dado el coeficiente de confianza \texttt{confidence\_coef}. El largo del intervalo se calcula como \(c_2-c_1=F^{-1}(\gamma+\alpha)-F^{-1}(\alpha)\), donde \(F(x)\) es la distribución de probabilidad y \(\alpha\) el área de la cola inferior (variable \texttt{low\_tail\_pr}). La condición inicial del algoritmo de optimización es \(\texttt{low\_tail\_pr\_ini}=1-\texttt{confidence\_coef}\), es decir, \(\alpha=1-\gamma\). De esta forma, al inicio, \(c_1=F^{-1}(1-\gamma)\) y \(c_2=F^{-1}(1)\) es la frontera superior de la densidad si es de soporte acotado o infinito si no es de soporte acotado. Observar que el algoritmo no emplea el hecho de que el intevalo de largo mínimo es el que cumple que \(f(c_1)=f(c_2)\).}
+\caption{\label{fig:shortest_prediction_interval_code} Implementación en el lenguaje Python del cálculo del intervalo \((c_1,\,c_2)\) con \(c_2-c_1\) mínimo para un coeficiente de confianza \(\gamma\) dado. Se emplea la función \texttt{fmin} de la biblioteca Scipy para minimizar la función \texttt{interval\_widht}. La función \texttt{interval\_widht} recibe como argumento el área de la cola inferior \texttt{low\_tail\_pr} y retorna el largo \(c_2-c_1\) del intervalo dado el coeficiente de confianza \texttt{confidence\_coef}. El largo del intervalo se calcula como \(c_2-c_1=F^{-1}(\gamma+\alpha)-F^{-1}(\alpha)\), donde \(F(x)\) es la distribución de probabilidad y \(\alpha\) el área de la cola inferior (variable \texttt{low\_tail\_pr}). La condición inicial del algoritmo de optimización es \(\texttt{low\_tail\_pr\_ini}=1-\texttt{confidence\_coef}\), es decir, \(\alpha=1-\gamma\). De esta forma, al inicio, \(c_1=F^{-1}(1-\gamma)\) y \(c_2=F^{-1}(1)\) es la frontera superior de la densidad si es de soporte acotado o infinito si no es de soporte acotado. Observar que el algoritmo no emplea el hecho de que el intevalo de largo mínimo es el que cumple que \(f(c_1)=f(c_2)\).}
 \end{center}
 \end{figure}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 Una solución subóptima mas simple se obtiene fácilmente si se determina \(c_1\) y \(c_2\) tal que 
@@ -9782,9 +9694,120 @@ Se dice que \(\hat{\theta}\) es un estimador \emph{insesgado} del parámetro \(\
 \begin{equation}\label{eq:estimator_mean_square_error}
  e=E\left\{[g(\X)-\theta]^2\right\}=\int_{R}[g(X)-\theta]^2f(X,\,\theta)\,dX,
 \end{equation}
-el estimador \(\hat{\thetabf}=g(\X)\) se denomina \emph{mejor estimador}. Es importante notar que \(f(X,\,\theta)\) en la ecuación \ref{eq:estimator_mean_square_error} no es la densidad de probabilidad conjunta entre \(X\) y \(\theta\), si no que es la densidad de \(X\) paramétrica con \(\theta\). De hecho, \(\theta\) no es una variable aleatoria. Determinar el mejor estimador no es sencillo en general, ya que el integrando de la ecuación \ref{eq:estimator_mean_square_error}, además de depender de \(X\), depende de \(\theta\). El problema correspondiente de predicción involucra la misma integral, pero tiene una solución mas simple, ya que la densidad de probabilidad es conocida (ver las ecuaciones \ref{eq:mse_constant_definition} y \ref{eq:nonlinear_general_case_ms}).
+el estimador \(\hat{\thetabf}=g(\X)\) se denomina \emph{mejor estimador}. Es importante notar que \(f(X,\,\theta)\) en la ecuación \ref{eq:estimator_mean_square_error} no es la densidad de probabilidad conjunta entre \(\X\) y \(\theta\), si no que es la densidad de \(\X\) paramétrica con \(\theta\). De hecho, \(\theta\) no es una variable aleatoria. Determinar el mejor estimador no es sencillo en general, ya que el integrando de la ecuación \ref{eq:estimator_mean_square_error}, además de depender de \(X\), depende de \(\theta\). El problema correspondiente de predicción involucra la misma integral, pero tiene una solución mas simple, ya que la densidad de probabilidad es conocida (ver las ecuaciones \ref{eq:mse_constant_definition} y \ref{eq:nonlinear_general_case_ms}).
 
+\subsection{Estimación de intervalos}
 
+En el problema de estimación de un parámetro \(\theta\), ¿es posible extraer con certeza alguna conclusión sobre el valor verdadero de \(\theta\)? No es posible afirmar que \(\theta\) es idéntico al estimador puntual \(\hat{\theta}\) o a alguna otra constante. Sin embargo, se podría concluir casi con certeza que \(\theta\) iguala a \(\hat{\theta}\) con ciertos límites de tolerancia especificados. Esto conduce al concepto de \emph{estimación de intervalos}. 
+
+Una \emph{estimación de intervalo} de un parámetro \(\theta\) es un intervalo \((\theta_1,\,\theta_2)\) cuyos extremos son funciones \(\theta_1=g_1(X)\) y \(\theta_2=g_2(X)\) del vector de observación \(X\). El intervalo aleatorio \((\thetabf_1,\,\thetabf_2)\) correspondiente es el \emph{estimador de intervalo} de \(\theta\). Se dice que \((\theta_1,\,\theta_2)\) es un intervalo de confianza de \(\gamma\) del parámetro \(\theta\) si
+\begin{equation}\label{eq:statistics_confidence_interval}
+  P\{\theta_1<\theta<\theta_2\}=\gamma.
+\end{equation}
+La constante \(\gamma\) es el \emph{coeficiente de confianza} del estimador y la diferencia \(\delta=1-\gamma\) es el \emph{nivel de confianza}. De esta forma, \(\gamma\) es una medida de la confianza de que el parámetro desconocido \(\theta\) pertenezca al intervalo \((\theta_1,\,\theta_2)\). Si \(\gamma\) es cercano a 1, puede afirmarse casi con certeza que eso es cierto, y el estimador del intervalo es correcto el \(100\gamma\%\) de los casos. El objetivo en la estimación de intervalo es determinar las funciones \(g_1(X)\) y \(g_2(X)\) de forma de minimizar el largo \(\theta_2-\theta_1\) del intervalo \((\theta_1,\,\theta_2)\) sujeto a la restricción de la ecuación \ref{eq:statistics_confidence_interval}. A continuación se desarrollan estimadores de parámetros empleados frecuentemente en la práctica. La elección de \(\hat{\theta}\) se basa en que la que media muestral es un estimador insesgado de la media, y en muchos casos es el mejor estimador. Se asume además que \(n\) es grande.
+
+\subsubsection{Media}
+
+Como estimador puntual de la media, se usa la media muestral
+\[
+ \bar{x}=\frac{1}{n}\sum_{i=1}^nx_i.
+\]
+Para encontrar un estimador de intervalo, hay que determinar la distribución de \(\bar{\x}\), lo cual en general es un problema difícil. Para simplificarlo, se asumirá que \(\bar{\x}\) es normal. Esto es cierto si \(\x\) es normal y es aproximadamente verdadero para cualquier \(\x\) si \(n\) es grande por el teorema central del límite (ver la sección \ref{sec:clt}).
+
+\paragraph{Varianza conocida} Supóngase en primer lugar que la varianza \(\sigma^2\) de \(\x\) es conocida. La hipótesis de normalidad implica que el estimador puntual \(\bar{\x}\) tiene distribución \(N(\eta,\,\sigma^2/n)\). Dado \(\gamma=1-\delta\), el estimador de intervalo cumple que 
+\begin{equation}\label{eq:statistics_confidence_interval_sample_mean_tmp}
+ P\left\{x_{\delta/2}<\bar{\x}<x_{1-\delta/2}\right\}=F(1-\delta/2)-F(\delta/2)=1-\delta/2-\delta/2=1-\delta=\gamma,
+\end{equation}
+donde \(x_{\delta/2}\) y \(x_{1-\delta/2}\) son respectivamente los percentiles \(\delta/2\) y \(1-\delta/2\) de \(\x\sim N(\eta,\,\sigma^2/n)\). Observar que como la distribución es simétrica, el intervalo es de la forma \(\eta\pm a\). Normalizando, se observa que 
+\[
+  P\left\{\frac{x_{\delta/2}-\eta}{\sigma/\sqrt{n}}<\frac{\bar{\x}-\eta}{\sigma/\sqrt{n}}<\frac{x_{1-\delta/2}-\eta}{\sigma/\sqrt{n}}\right\}= P\left\{z_{\delta/2}<\z<z_{1-\delta/2}\right\}=1-\delta=\gamma,
+\]
+donde \(z_u\) es el percentil \(u\) de la densidad normal estándar. De esta forma
+\[
+\def\arraystretch{2.4}
+\begin{array}{lll}
+ \dfrac{x_{\delta/2}-\eta}{\sigma/\sqrt{n}}=z_{\delta/2}\overset{(a)}{=}-z_{1-\delta/2}
+ &\qquad\Rightarrow\qquad\qquad
+ &x_{\delta/2}=\eta-z_{1-\delta/2}\dfrac{\sigma}{\sqrt{n}}\\
+ \dfrac{x_{1-\delta/2}-\eta}{\sigma/\sqrt{n}}=z_{1-\delta/2}
+ &\qquad\Rightarrow\qquad\qquad
+ &x_{1-\delta/2}=\eta+z_{1-\delta/2}\dfrac{\sigma}{\sqrt{n}}
+\end{array}
+\]
+donde en \((a)\) se consideró que \(z_u=-z_{1-u}\) por ser los percentiles de una variable aleatoria de media nula con densidad simétrica. Sustituyendo los resultados en la ecuación \ref{eq:statistics_confidence_interval_sample_mean_tmp} se obtiene que 
+\[
+ P\left\{\eta-z_{1-\delta/2}\dfrac{\sigma}{\sqrt{n}}<\bar{\x}<\eta+z_{1-\delta/2}\dfrac{\sigma}{\sqrt{n}}\right\}=1-\delta=\gamma,
+\]
+y por lo tanto,
+\begin{equation}\label{eq:statistics_confidence_interval_for_mean}
+ P\left\{\bar{\x}-z_{1-\delta/2}\dfrac{\sigma}{\sqrt{n}}<\eta<\bar{\x}+z_{1-\delta/2}\dfrac{\sigma}{\sqrt{n}}\right\}=1-\delta=\gamma.
+\end{equation}
+Esto indica que se puede afirmar con un coeficiente de confianza \(\gamma\) que la media \(\eta\) está en el intervalo \(\bar{x}\pm z_{1-\delta/2}\sigma/\sqrt{n}\). La determinación del intervalo de confianza para la media se realiza de la siguiente forma: se observan las muestras \(x_i\) de \(\x\) y se calcula el promedio \(\bar{x}\). Se elije el número \(\gamma=1\delta\) y se obtiene el percentil normal estándar \(z_u\) para \(u=1-\delta/2\). El intervalo es \(\bar{x}\pm z_{1-\delta/2}\sigma/\sqrt{n}\).
+
+Supóngase ahora que no se conoce la distribución de \(\x\). Para encontrar el intervalo de confianza de la media puede emplearse la desigualdad de Chebyshev, dada por la ecuación \ref{eq:chebyshev_inequality}, la cual indica que
+\[
+ P\{x-\epsilon<\eta<x+\epsilon\}>1-\frac{\sigma^2}{\epsilon^2}
+\]
+Reemplazando \(x\) por \(\bar{x}\) y \(\sigma\) por \(\sigma/\sqrt{n}\) y tomando \(\epsilon=\sigma/\sqrt{n\delta}\), se obtiene que 
+\begin{equation}\label{eq:statistics_confidence_interval_for_mean_unknown_dist}
+  P\left\{\bar{\x}-\frac{\sigma}{\sqrt{n\delta}}<\eta<\bar{\x}+\frac{\sigma}{\sqrt{n\delta}}\right\}>1-\delta=\gamma.
+\end{equation}
+El resultado indica que el intervalo de confianza \(\gamma\) de \(\eta\) está contenido en el intervalo \(\bar{x}\pm\sigma/\sqrt{n\delta}\). 
+
+\paragraph{Varianza desconocida} Si la varianza es desconocida no puede emplearse la ecuación \ref{eq:statistics_confidence_interval_for_mean}. Para estimar el intervalo de confianza de la media \(\eta\) se considera la varianza muestral (ecuación \ref{eq:sample_mean_and_variance})
+\[
+ s^2=\frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^2,
+\]
+la cual es un estimador insesgado de \(\sigma^2\), como se mostró en la sección \ref{sec:mean_and_covariance}, y tiende a \(\sigma^2\) con \(n\to\infty\). Por lo tanto, si \(n\) es grande, se puede emplear la aproximación \(\sigma\approx s\) en la ecuación \ref{eq:statistics_confidence_interval_for_mean}, lo que conduce al intervalo de confianza aproximado
+\[
+ \bar{x}-z_{1-\delta/2}\dfrac{s}{\sqrt{n}}<\eta<\bar{x}+z_{1-\delta/2}\dfrac{s}{\sqrt{n}}.
+\]
+Es posible encontrar un intervalo de confianza exacto para el caso en que \(\x\) es normal. Bajo esa hipótesis, el cociente
+\[
+ \frac{\bar{\x}-\eta}{\s/\sqrt{n}}
+\]
+tiene distribución \(t\) Student con \(n-1\) grados de libertad. Efectivamente, notando que dicho cociente se puede escribir como
+\[
+ \frac{\bar{\x}-\eta}{\s/\sqrt{n}}=\dfrac{\dfrac{\bar{\x}-\eta}{\sigma/\sqrt{n}}}{\sqrt{\dfrac{(n-1)\s^2/\sigma^2}{n-1}}}=\frac{\w}{\sqrt{\y/(n-1)}},
+\]
+con
+\[
+ \w=\dfrac{\bar{\x}-\eta}{\sigma/\sqrt{n}}\;\overset{(a)}{\sim}\;N(0,\,1)
+  \qquad\qquad\textrm{y}\qquad\qquad
+ \y=\frac{(n-1)\s^2}{\sigma^2}\;\overset{(b)}{\sim}\;\chi^2(n-1),
+\]
+donde en \((a)\) se tuvo en cuenta que \(\bar{\x}\sim N(\eta,\,\sigma^2/n)\) y en \((b)\) se empleó el resultado de la ecuación \ref{eq:normal_sample_variance_density}, se concluye por el ejemplo 6-28 de la sección \ref{sec:two_funcions_of_two_rv_joint_density} que el cociente tiene distribución \(t(n-1)\). Denotando por \(t_u\) su percentil \(u\) se concluye que 
+\[
+ P\left\{-t_u<\frac{\bar{\x}-\eta}{\s/\sqrt{n}}<t_u\right\}=u-(1-u)=2u-1=\gamma.
+\]
+Con \(u=1-\delta/2\), esto conduce al intervalo
+\[
+ \bar{x}-t_{1-\delta/2}\frac{s}{\sqrt{n}}<\eta<\bar{x}+t_{1-\delta/2}\frac{s}{\sqrt{n}}.
+\]
+
+En el siguiente ejemplo, la distribución de \(\x\) es especificada en términos de un único parámetro, y por lo tanto, no puede emplearse la ecuación \ref{eq:statistics_confidence_interval_for_mean_unknown_dist} para obtener el intervalo de confianza debido a que las constantes \(\eta\) y \(\sigma\) están relacionadas.
+
+\paragraph{Distribución de Poisson} Considérese el caso en que la variable aleatoria \(\x\) tiene distribución de Poisson con parámetro \(\lambda\), es decir,
+\[
+ P\{\x=k\}=e^{-\lambda}\frac{\lambda^k}{k!},\qquad k=0,\,1,\,\dots.
+\]
+En este caso, como se mostró en la sección \ref{sec:poisson_rv_mean_variance}, \(\eta=\lambda\) y \(\sigma^2=\lambda\), y por lo tanto, si \(n\) es grande, la distribución de \(\bar{\x}\) es aproximadamente \(N(\lambda,\,\lambda/n)\). De esta forma, de la ecuación \ref{eq:statistics_confidence_interval_for_mean}, se obtiene que 
+\[
+ P\left\{|\bar{\x}-\lambda|<z_u\sqrt{\frac{\lambda}{n}}\right\}=\gamma.
+\]
+Los puntos del plano \(\bar{x}\lambda\) que satisfacen la desigualdad \(|\bar{x}-\lambda|<z_u\sqrt{\lambda/n}\) se encuentran en el interior de la parábola
+\begin{equation}\label{eq:statistics_confidence_interval_poisson}
+ (\lambda-\bar{x})^2=\frac{z_u^2}{n}\lambda,
+\end{equation}
+como se observa en la figura \ref{fig:poisson_confidence_interval_v3}. El intervalo de confianza \(\gamma\) de \(\lambda\) es el segmento vertical \((\lambda_1,\,\lambda_2)\) mostrado en la figura, donde \(\lambda_1\) y \(\lambda_2\) son las raíces de la forma cuadrática de la ecuación \ref{eq:statistics_confidence_interval_poisson} dado el valor de \(\bar{x}\).
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=1\columnwidth]{figuras/poisson_confidence_interval_v3.pdf}
+\caption{\label{fig:poisson_confidence_interval_v3} Intervalo de confianza del parámetro \(\lambda\) de una variable aleatoria de Poisson. Los puntos del plano \(\bar{\x}\lambda\) que cumplen \((\lambda-\bar{\x})^2<z_u^2\lambda/n\) se encuentran en el interior de la parábola determinada por la intersección de la forma cuadrática \((\lambda-\bar{\x})^2\) y el plano \(z_u^2\lambda/n\). La forma cuadrática se anula en la recta \(\lambda=\bar{\x}\) y el plano pasa por el eje \(\bar{\x}\). La parábola está dada por la ecuación \ref{eq:statistics_confidence_interval_poisson}.}
+\end{center}
+\end{figure}
+
+\ref{eq:binomial_interval_probability}
 
 
 \bibliographystyle{ieeetr}
