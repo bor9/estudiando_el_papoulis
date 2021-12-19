@@ -83,7 +83,7 @@
 \newcommand{\Psibf}{\mathbf{\Psi}}
 \newcommand{\Gammabf}{\mathbf{\Gamma}}
 \newcommand{\thetabf}{\bm{\theta}}
-
+\newcommand{\var}{\operatorname{var}}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
@@ -1869,24 +1869,25 @@ y así sucesivamente, resultando en el caso general, en
  &\overset{(a)}{=}\dfrac{(2n-1)!!}{2^n}\sqrt{\pi}\\
  &\overset{(b)}{=}\dfrac{(2n)!}{4^nn!}\sqrt{\pi}
 \end{align*}
-donde en \((a)\) se expresó la ecuación empleando la operación de doble factorial\footnote{Ver \url{https://en.wikipedia.org/wiki/Double_factorial}.} y en \((b)\) se tuvieron las siguientes consideraciones. Por un lado, para un número par \(2n\), se cumple que
-\[
- (2n)!!=(2n)(2n-2)(2n-4)\cdots4\cdot2\overset{(a)}{=}2^nn(n-1)(n-2)\cdots2\cdot1=2^nn!,
-\]
+donde en \((a)\) se expresó la ecuación empleando la operación de doble factorial\footnote{Ver \url{https://en.wikipedia.org/wiki/Double_factorial}.} y en \((b)\) se tuvieron las dos siguientes consideraciones:
+\begin{enumerate}
+ \item Para un número par \(2n\), se cumple que
+  \[
+   (2n)!!=(2n)(2n-2)(2n-4)\cdots4\cdot2\overset{(a)}{=}2^nn(n-1)(n-2)\cdots2\cdot1=2^nn!,
+  \]
 donde en \((a)\) se sacó 2 de factor común en cada uno de los \(n\) factores del producto.
-Por otro lado, es fácil ver que
-\[
+ \item Se cumple que
+ \[
  n!=n!!(n-1)!!\qquad\Rightarrow\qquad n!!=\frac{n!}{(n-1)!!}=\frac{n!(n+1)}{(n-1)!!(n+1)}=\frac{(n+1)!}{(n+1)!!}.
 \]
+\end{enumerate}
 Empleando estos dos resultados, se observa que para un número impar \(2n-1\), se cumple que
 \[
  (2n-1)!!=\frac{(2n)!}{(2n)!!}=\frac{(2n)!}{2^nn!},
 \]
 que es lo que se quería mostrar.
 
-
-
-Una variable aleatoria \(\x\) gamma de parámetros \(\alpha\) y \(\beta\) se denota como \(\x\sim G(\alpha,\, \beta)\). La función de densidad gamma tiene un conjunto variado de formas en función del valor de los parámetros \(\alpha\) y \(\beta\). Una variable aleatoria exponencial es un caso particular de una variable aleatoria gamma con \(\alpha=1\). Con \(\alpha=n/2\) y \(\beta=2\) se obtiene una variable aleatoria \(\chi^2\) (chi-cuadrado) con \(n\) grados de libertad.
+Una variable aleatoria \(\x\) gamma de parámetros \(\alpha\) y \(\beta\) se denota como \(\x\sim G(\alpha,\, \beta)\). La función de densidad gamma tiene un conjunto variado de formas en función del valor de los parámetros \(\alpha\) y \(\beta\). Una variable aleatoria exponencial es un caso particular de una variable aleatoria gamma con \(\alpha=1\). Con \(\alpha=n/2\) y \(\beta=2\) se obtiene una variable aleatoria \(\chi^2(n)\) (chi-cuadrado con \(n\) grados de libertad).
 
 Con \(\alpha=n\) entero en la ecuación \ref{eq:pdf_gamma} y definiendo \(\beta=1/\lambda\), la función densidad de probabilidad gamma es
 \begin{equation}\label{eq:pdf_gamma_integer}
@@ -1920,7 +1921,7 @@ Aplicando integración por partes \(n-2\) veces mas, es decir, \(n-1\) veces en 
 
 \paragraph{Distribución chi-cuadrado}
 
-Se dice que una variable aleatoria \(\x\) es \(\chi^2(n)\) (chi-cuadrado) con \(n\) grados de libertad si su densidad de probabilidad es
+Se dice que una variable aleatoria \(\x\) es \(\chi^2(n)\) (chi-cuadrado con \(n\) grados de libertad) si su densidad de probabilidad es
 \begin{equation}\label{eq:pdf_chi_square}
 \def\arraystretch{2.0}
  f_x(x)=
@@ -2001,17 +2002,17 @@ La variable aleatoria \(\x\) es Bernoulli si toma valores 0 o 1 con probabilidad
 
 \paragraph{Distribución Binomial}
 
-En \(n\) ensayos Bernoulli independientes donde \(p\) es la probabilidad de éxito de cada ensayo, si \(\y\) es la cantidad de éxitos en los \(n\) experimentos, \(\y\) es una variable aleatoria Binomial (ver la sección \ref{sec:bernoulli_trials}). Por lo tanto, se dice que \(\y\) es una variable aleatoria Binomial de parámetros \(n\) y \(p\) si \(\y\) toma valores \(0,\,1,\,2,\dots,\,n\) con probabilidad (ver la ecuación \ref{eq:binomial_density_function})
+En \(n\) ensayos Bernoulli independientes donde \(p\) es la probabilidad de éxito de cada ensayo, si \(\x\) es la cantidad de éxitos en los \(n\) experimentos, \(\x\) es una variable aleatoria Binomial (ver la sección \ref{sec:bernoulli_trials}). Por lo tanto, se dice que \(\x\) es una variable aleatoria Binomial de parámetros \(n\) y \(p\) si \(\x\) toma valores \(0,\,1,\,2,\dots,\,n\) con probabilidad (ver la ecuación \ref{eq:binomial_density_function})
 \begin{equation}\label{eq:binomial_density_function2}
- P\{\y=k\}=\binom{n}{k}p^{k}q^{n-k},\qquad p+q=1,\qquad k=0,\,1,\,2,\dots,\,n.
+ P\{\x=k\}=\binom{n}{k}p^{k}q^{n-k},\qquad p+q=1,\qquad k=0,\,1,\,2,\dots,\,n.
 \end{equation}
 
 \paragraph{Distribución de Poisson}
 
 La distribución de Poisson representa el número de ocurrencias de un evento poco frecuente en un número grande de ensayos. La variable aleatoria \(\x\) se dice Poisson con parámetro \(\lambda\) si toma valores \(0,\,1,\,2,\dots,\,\infty\) con probabilidad
-\[
+\begin{equation}\label{eq:pdf_poisson}
  P\{\x=k\}=e^{-\lambda}\frac{\lambda^k}{k!},\qquad k=0,\,1,\,2,\dots,\,\infty.
-\]
+\end{equation}
 
 \section{Distribuciones condicionales}\label{sec:conditional_distributions}
 
@@ -3001,9 +3002,9 @@ donde en \((a)\) se aplicó integración por partes, \(\int udv=uv-\int vdu\), c
 \paragraph{Caso con media no nula} 
 
 Se calcularán a continuación los momentos de una variable aleatoria \(\x\sim N(\eta,\,\sigma^2)\). Debido al argumento dado en la sección \ref{sec:density_shift_moments}, los momentos centrales son iguales a los de la variable aleatoria \(\x'\sim N(0,\,\sigma^2)\), ya que \(\x=\x'+\eta\), y por lo tanto, están dados por la ecuación \ref{eq:gaussian_rv_moments}. Los primeros momentos centrales son
-\begin{align*}
+\begin{equation}\label{eq:normal_rv_central_moments}
  \mu_2=\sigma^2,\qquad\mu_4=3\sigma^4,\qquad\mu_6=15\sigma^6
-\end{align*}
+\end{equation}
 
 Los momentos \(m_n=E\{\x^n\}\) pueden calcularse a partir de los momentos centrales empleando la ecuación \ref{eq:moments_as_function_of_central_moments}. En la ecuación \ref{eq:moments_as_function_of_central_moments_first_4} se indican los cuatro primeros momentos, y sustituyendo los momentos centrales, se obtiene que
 \begin{equation}\label{eq:normal_rv_moments}
@@ -3538,18 +3539,17 @@ Por lo tanto, los primeros momentos son
 \]
 
 
-
 \paragraph{Cumulantes}
 
-Los cumulantes \(\lambda_n\) de una variable aleatoria \(\x\) se definen como las derivadas de la función generadora de momentos segunda,
+Los cumulantes \(\lambda_n\) de una variable aleatoria \(\x\) se definen como las derivadas de la función generadora de momentos segunda (también llamada función generadora de cumulantes),
 \[
  \frac{d\Psibf(0)}{ds^n}=\lambda_n,
 \]
 y se cumple que 
-\[
- \lambda_1=\eta,\qquad\lambda_2=\sigma^2.
-\]
-Para ver esto, se observa que por definición, \(\Phibf=e^{\Psibf}\) y por lo tanto,
+\begin{equation}\label{eq:cumulants_first_second}
+  \lambda_1=\eta,\qquad\lambda_2=\sigma^2.
+\end{equation}
+Para mostrarlo, se observa que por definición, \(\Phibf=e^{\Psibf}\) y por lo tanto,
 \[
  \Phibf'=\Psibf'e^{\Psibf},\qquad \Phibf''=\left[\Psibf''+\left(\Psibf'\right)^2\right]e^{\Psibf}
 \]
@@ -3583,10 +3583,10 @@ De esta forma, \(\Gammabf(1/z)\) es la transformada \(z\) de la secuencia \(p_n=
 \[
  \Phi_x(\omega)=\sum _{n=-\infty}^{\infty}p_ne^{j\omega n},
 \]
-y se trata de la transformada discreta de Fourier de la secuencia \(\{p_n\}\). La \emph{segunda función característica} se define como
-\[
+y se trata de la transformada discreta de Fourier de la secuencia \(\{p_n\}\). La \emph{segunda función de momentos}, también llamada \emph{función generadora de cumulantes}, se define como
+\begin{equation}\label{eq:second_moment_function_discrete}
  \Psibf(s)=\ln\Gammabf(e^s).
-\]
+\end{equation}
 
 El \emph{teorema de los momentos} se deriva diferenciando la función generadora de momentos. Luego de diferenciar \(k\) veces la ecuación \ref{eq:moment_generating_function_discrete} se obtiene que
 \[
@@ -3607,7 +3607,7 @@ Sea \(\x\sim B(m,\,p)\). La densidad de probabilidad está dada por la ecuación
 \[
  p_n=P\{\x=n\}=\binom{m}{n}p^nq^{m-n},\qquad0\leq n\leq m,
 \]
-y la ecuación generadora de momentos es
+y la función generadora de momentos es
 \begin{equation}\label{eq:binomial_moment_generating_function}
   \Gammabf(z)=\sum_{n=0}^{m}\binom{m}{n}p^nq^{m-n}z^{n}=(pz+q)^m,
 \end{equation}
@@ -3631,6 +3631,34 @@ y
 \[
  \sigma^2=E\{\x^2\}-E^2\{\x\}=mpq.
 \]
+
+\subsection{Momentos de una variable aleatoria de Poisson}
+
+Si \(\x\) una variable aleatoria de Poisson con parámetro \(\lambda\) (ver la ecuación \ref{eq:pdf_poisson}),
+\[
+ P\{\x=n\}=e^{-\lambda}\frac{\lambda^n}{n!},\qquad n=0,\,1,\,2,\dots,
+\]
+y la función generadora de momentos es
+\begin{equation}\label{eq:poisson_moment_generating_function}
+ \Gammabf(z)=e^{-\lambda}\sum_{n=0}^{m}\lambda^n\frac{z^{n}}{n!}=e^{-\lambda}e^{\lambda z}=e^{\lambda(z-1)}.
+\end{equation}
+La función de momentos segunda, dada por la ecuación \ref{eq:second_moment_function_discrete}, es
+\begin{equation}\label{eq:poisson_second_moment_function}
+ \Psibf(s)=\lambda(e^s-1).
+\end{equation}
+Observando que 
+\[
+ \Psibf'(0)=\lambda
+  \qquad\qquad\textrm{y}\qquad\qquad
+ \Psibf''(0)=\lambda, 
+\]
+de la ecuación \ref{eq:cumulants_first_second} se concluye que 
+\[
+ E\{\x\}=\lambda
+  \qquad\qquad\textrm{y}\qquad\qquad
+ \sigma^2=\lambda, 
+\]
+resultado acorde al obtenido en la sección \ref{sec:poisson_rv_mean_variance}.
 
 \subsection{Teorema de DeMoivre-Laplace}\label{sec:demoivre_laplace_theorem}
 
@@ -4760,6 +4788,31 @@ concluyendo que
  F_w(w)=F_x(w)+F_y(w)-F_{xy}(w,\,w).
 \end{equation}
 
+\paragraph{Ejemplo: caso discreto} Sean \(\x\) y \(\y\) variables aleatorias de Poisson con parámetros \(\lambda_1\) y \(\lambda_2\) respectivamente. Si \(\z=\x+\y\), se quiere determinar la p.m.f de \(\z\).
+
+Como \(\x\) y \(\y\) toman los valores \(\{0,\,1,\,2,\,\dots\}\), lo mismo ocurre con \(\z\). Para cada \(n=0,\,1,\,2,\,\dots\), \(\{\x+\y=n\}\) implica un número finito de valores posibles para \(\x\) y \(\y\). De hecho, si \(\x=0\), \(\y\) debe ser \(n\), si \(\x=1\), \(\y\) debe ser \(n-1\), y así sucesivamente. Por lo tanto, el evento \(\{\x+\y=n\}\) es la unión de los eventos mutuamente excluyentes \(A_k=\{\x=k,\,\y=n-k\}\), con \(k=0,\,1,\,\dots,\,n\). Por lo tanto,
+\[
+ P\{\z=n\}=P\{\x+\y=n\}=P\left\{\bigcup_{k=0}^n\{\x=k,\,\y=n-k\}\right\}
+  =\sum_{k=0}^nP\{\x=k,\,\y=n-k\}.
+\]
+Además, como \(\x\) y \(\y\) son independientes, se cumple que 
+\[
+ P\{\x=k,\,\y=n-k\}=P\{\x=k\}P\{\,\y=n-k\}.
+\]
+De esta forma,
+\begin{align*}
+ P\{\z=n\}&=\sum_{k=0}^nP\{\x=k\}P\{\,\y=n-k\}\\
+  &\overset{(a)}{=}\sum_{k=0}^ne^{-\lambda_1}\frac{\lambda_1^k}{k!}e^{-\lambda_2}\frac{\lambda_2^{n-k}}{(n-k)!}\\
+  &\overset{(b)}{=}\frac{e^{-(\lambda_1+\lambda_2)}}{n!}\sum_{k=0}^n\frac{n!}{k!(n-k)!}\lambda_1^k\lambda_2^{n-k},
+\end{align*}
+donde en \((a)\) se sustituyó la p.m.f. de Poisson, dada por la ecuación \ref{eq:pdf_poisson} y en \((b)\) se multiplicó y dividió entre \(n!\). Notando que la sumatoria es \((\lambda_1+\lambda_2)^n\), como indica la ecuación \ref{eq:binomial_theorem}, se obtiene que
+\begin{equation}\label{eq:poisson_sum_pmf}
+ P\{\z=n\}=e^{-(\lambda_1+\lambda_2)}\frac{(\lambda_1+\lambda_2)^n}{n!},\qquad n=0,\,1,\,\dots.
+\end{equation}
+Se concluye que \(\z\) es una variable aleatoria de Poisson con parámetro \(\lambda_1+\lambda_2\), indicando que la suma de variables aleatorias de Poisson independientes es una variable aleatoria de Poisson con parámetro la suma de los parámetros de las variables aleatorias originales.
+
+Como muestra este ejemplo simple, el procedimiento es en general tedioso para el caso de variables aleatorias discretas. En la sección \ref{sec:joint_characteristic_function} se verá que problemas de este tipo pueden resolverse de forma mucho mas fácil mediante funciones características o funciones generadoras de momentos conjuntas. 
+
 \section{Dos funciones de dos variables aleatorias}\label{sec:two_funcions_of_two_rv}
 
 Se considera ahora una generalización del caso de la sección anterior. Sean \(\x\) e \(\y\) variables aleatorias con densidad de probabilidad conjunta \(f_{xy}(x,\,y)\). Dadas dos funciones \(g(x,\,y)\) y \(h(x,\,y)\), se definen dos nuevas variables aleatorias
@@ -5877,7 +5930,7 @@ Así, \(\mu_{10}=\mu_{01}=0\) y
  \mu_{11}=C_{xy},\qquad \mu_{20}=\sigma_x^2,\qquad \mu_{02}=\sigma_y^2.
 \]
 
-\section{Funciones características conjuntas}
+\section{Funciones características conjuntas}\label{sec:joint_characteristic_function}
 
 La función característica conjunta de las variables aleatorias \(\x\) e \(\y\) es por definición
 \begin{equation}\label{eq:joint_characteristic_function_definition}
@@ -5971,9 +6024,23 @@ donde en \((a)\) se sustituyó \(f_z(z)\) por la convolución, en \((b)\) se int
 \end{align*}
 donde en \((a)\) se sustituyó \(\Phibf_x(\omega)\) por su definición, en \((b)\) se intercambió el orden de integración y en \((c)\) se tuvo en cuenta que el término entre paréntesis rectos es la transformada inversa de la función característica \(\Phibf_y(\omega)\) evaluada en \(z-x\), es decir, \(f_y(z-x)\).
 
+\paragraph{Ejemplo: suma de variables aleatorias de Poisson} Se mostrará que si las variables aleatorias \(\x\) y \(\y\) son independientes y tienen distribución de Poisson con parámetro \(a\) y \(b\) respectivamente, su suma \(\z=\x+\y\) también tiene distribución de Poisson con parámetro \(a+b\).
+
+De la ecuación \ref{eq:poisson_second_moment_function} con \(s=j\omega\) se deduce que las funciones características segundas son
+\[
+ \Psi_x(\omega)=a(e^{j\omega}-1)
+  \qquad\qquad\textrm{y}\qquad\qquad
+ \Psi_y(\omega)=b(e^{j\omega}-1), 
+\]
+por lo que de la ecuación \ref{eq:characteristic_function_convolution_theorem} se concluye que 
+\begin{equation}\label{eq:poisson_sum_characteristic}
+ \Psi_z(\omega)=\Psi_x(\omega)+\Psi_y(\omega)=(a+b)(e^{j\omega}-1),
+\end{equation}
+que es la función característica segunda de una variable aleatoria de Poisson con parámetro \(a+b\). Puede demostrarse que lo recíproco también es cierto: si las variables \(\x\) y \(\y\) son independientes y su suma es una variable aleatoria de Poisson, \(\x\) y \(\y\) son variables aleatorias de Poisson.
+
 \paragraph{Ejemplo: variables aleatorias normales independientes}
 
-Como se indicó previamente (ver la ecuación \ref{eq:jointly_normal_linear_transformation}), si las variables aleatorias \(\x\) e \(\y\) son conjuntamente normales, cualquier combinación lineal \(a\x+b\y\) es una variable aleatoria normal. Se demostrará el siguiente caso particular de este resultado: si las variables aleatorias \(\x\) e \(\y\) son normales e independientes, su suma \(\z=\x+\y\) también es normal. Para demostrarlo, se parte de las funciones características de \(\x\) e \(\y\), que por ser normales son (ver la ecuación \ref{eq:normal_rv_characteristic_function}),
+Como se indicó previamente (ver la ecuación \ref{eq:jointly_normal_linear_transformation}), si las variables aleatorias \(\x\) e \(\y\) son conjuntamente normales, cualquier combinación lineal \(a\x+b\y\) es una variable aleatoria normal. Se demostrará el siguiente caso particular de este resultado: si las variables aleatorias \(\x\) e \(\y\) son normales e independientes, su suma \(\z=\x+\y\) también es normal. Para hacerlo, se parte de las funciones características de \(\x\) e \(\y\), que por ser normales son (ver la ecuación \ref{eq:normal_rv_characteristic_function}),
 \[
  \Phi_x(\omega)=e^{j\eta_x\omega-\frac{1}{2}\sigma_x^2\omega^2},\qquad \Phi_y(\omega)=e^{j\eta_y\omega-\frac{1}{2}\sigma_y^2\omega^2}.
 \]
@@ -6585,7 +6652,7 @@ Sean las variables aleatorias \(\x\) e \(\y\) conjuntamente normales de distribu
 
 Se parte teniendo en cuenta que (ver ecuación \ref{eq:gaussian_rv_moments})
 \[
- E\{\x^2\}=\sigma_1^2,\qquad E\{\x^2\}=2\sigma_1^4.
+ E\{\x^2\}=\sigma_1^2,\qquad E\{\x^4\}=3\sigma_1^4.
 \]
 Además, como indica la ecuación \ref{eq:joint_normal_conditional_pdf}, \(f(y\,|\,x)\) es normal con media \(r\sigma_2x/\sigma_1\) y varianza \(\sigma_2^2(1-r^2)\). Por lo tanto, de la ecuación \ref{eq:normal_rv_moments} se tiene que
 \[
@@ -6751,9 +6818,9 @@ Los estadísticos de orden de las variables aleatorias \(\x_i\) son \(n\) variab
  \x_{r_1}(\zeta)\leq\cdots\leq\x_{r_k}(\zeta)\leq\cdots\leq\x_{r_n}(\zeta) 
 \]
 y se define la variable aleatoria \(\y_k\) tal que
-\[
+\begin{equation}\label{eq:ordered_statistic_definition}
  \y_1=\x_{r_1}(\zeta)\leq\cdots\leq\y_k=\x_{r_k}(\zeta)\leq\cdots\leq\y_n=\x_{r_n}(\zeta).
-\]
+\end{equation}
 Se demostrará que la densidad \(f_k(y)\) del \(k\)-ésimo estadístico \(\y_k\) es
 \begin{equation}\label{eq:ordered_statistic_density}
  f_k(y)=\frac{n!}{(k-1)!(n-k)!}F_x^{k-1}(y)[1-F_x(y)]^{n-k}f_x(y).
@@ -7450,7 +7517,7 @@ donde en \((a)\) se usó la generalización de la ecuación \ref{eq:independent_
 \end{equation}
 Aplicando el teorema de la convolución de la transformada de Fourier (ver sección \ref{sec:two_rv_independence_and_convolution}), se obtiene \ref{eq:densities_convolution_random_vector}.
 
-\subsection{Vectores aleatorios normales}
+\subsection{Vectores aleatorios normales}\label{sec:normal_random_vectors}
 
 La normalidad conjunta de \(n\) variables aleatorias puede definirse como una generalización de las ecuaciones \ref{eq:joint_normal_pdf1} y \ref{eq:joint_normal_pdf2}, esto es, su densidad de probabilidad conjunta es una exponencial cuyo exponente es una función cuadrática negativa. A continuación se dará una definición equivalente que expresa la normalidad conjunta de \(n\) variables aleatorias en función de la normalidad de una única variable aleatoria.
 
@@ -8287,7 +8354,7 @@ donde \(a_1,\dots, a_n\) son constantes tales que el valor MS del error de estim
 \end{equation}
 sea mínimo.
 
-Se demostrará el \emph{principio de ortogonalidad} para esto caso, que indica que \(P\) es mínimo si el error \(\s-\hat{\s}\) es ortogonal a los datos \(\x_i\), es decir,
+Se demostrará el \emph{principio de ortogonalidad} para este caso, que indica que \(P\) es mínimo si el error \(\s-\hat{\s}\) es ortogonal a los datos \(\x_i\), es decir,
 \begin{equation}\label{eq:linear_general_case_mse_orthogonality}
   E\{[s-(a_1\x_1+\cdots+a_n\x_n)]\x_i\}=0,\qquad i=1,\dots,\,n.
 \end{equation}
@@ -9587,7 +9654,7 @@ obteniendo el resultado de la ecuación \ref{eq:central_limit_theorem_density_no
 
 \chapter{Estadística}
 
-\section{Introducción}
+\section{Introducción}\label{sec:statistics_introduction}
 
 Probabilidad es una disciplina matemática desarrollada como un modelo abstracto y sus conclusiones son deducciones basadas en axiomas. La estadística trata con las aplicaciones de la teoría de probabilidad en problemas reales y sus conclusiones son inferencias basadas en observaciones. La conexión entre los conceptos probabilísticos y la realidad reside en la aproximación
 \[
@@ -9661,7 +9728,7 @@ En la figura \ref{fig:shortest_prediction_interval} se muestra el intervalo \((c
 \begin{figure}[!htb]
 \begin{center}
 \lstinputlisting{figuras/shortest_prediction_interval_code.py}
-\caption{\label{fig:shortest_prediction_interval_code} Implementación en el lenguaje Python del cálculo del intervalo \((c_1,\,c_2)\) con \(c_2-c_1\) mínimo para un coeficiente de confianza \(\gamma\) dado. Se emplea la función \texttt{fmin} de la biblioteca Scipy para minimizar la función \texttt{interval\_widht}. La función \texttt{interval\_widht} recibe como argumento el área de la cola inferior \texttt{low\_tail\_pr} y retorna el largo \(c_2-c_1\) del intervalo dado el coeficiente de confianza \texttt{confidence\_coef}. El largo del intervalo se calcula como \(c_2-c_1=F^{-1}(\gamma+\alpha)-F^{-1}(\alpha)\), donde \(F(x)\) es la distribución de probabilidad y \(\alpha\) el área de la cola inferior (variable \texttt{low\_tail\_pr}). La condición inicial del algoritmo de optimización es \(\texttt{low\_tail\_pr\_ini}=1-\texttt{confidence\_coef}\), es decir, \(\alpha=1-\gamma\). De esta forma, al inicio, \(c_1=F^{-1}(1-\gamma)\) y \(c_2=F^{-1}(1)\) es la frontera superior de la densidad si es de soporte acotado o infinito si no es de soporte acotado. Observar que el algoritmo no emplea el hecho de que el intevalo de largo mínimo es el que cumple que \(f(c_1)=f(c_2)\).}
+\caption{\label{fig:shortest_prediction_interval_code} Implementación en el lenguaje Python del cálculo del intervalo \((c_1,\,c_2)\) con \(c_2-c_1\) mínimo para un coeficiente de confianza \(\gamma\) dado. Se emplea la función \texttt{fmin} de la biblioteca Scipy para minimizar la función \texttt{interval\_widht}. La función \texttt{interval\_widht} recibe como argumento el área de la cola inferior \texttt{low\_tail\_pr} y retorna el largo \(c_2-c_1\) del intervalo dado el coeficiente de confianza \texttt{confidence\_coef}. El largo del intervalo se calcula como \(c_2-c_1=F^{-1}(\gamma+\alpha)-F^{-1}(\alpha)\), donde \(F(x)\) es la distribución de probabilidad y \(\alpha\) el área de la cola inferior (variable \texttt{low\_tail\_pr}). La condición inicial del algoritmo de optimización es \(\texttt{low\_tail\_pr\_ini}=1-\texttt{confidence\_coef}\), es decir, \(\alpha=1-\gamma\). De esta forma, al inicio, \(c_1=F^{-1}(1-\gamma)\), y \(c_2=F^{-1}(1)\) que es la frontera superior de la densidad si es de soporte acotado o infinito si no es de soporte acotado. Observar que el algoritmo no emplea el hecho de que el intervalo de largo mínimo es el que cumple que \(f(c_1)=f(c_2)\).}
 \end{center}
 \end{figure}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 Una solución subóptima mas simple se obtiene fácilmente si se determina \(c_1\) y \(c_2\) tal que 
@@ -9807,7 +9874,181 @@ como se observa en la figura \ref{fig:poisson_confidence_interval_v3}. El interv
 \end{center}
 \end{figure}
 
-\ref{eq:binomial_interval_probability}
+\subsubsection{Varianza}
+
+Se quiere estimar la varianza \(v=\sigma^2\) de una variable aleatoria normal \(\x\) a partir de \(n\) muestras \(x_i\) de \(\x\).
+
+\paragraph{Media conocida} Se asume primero que la media \(\eta\) de \(\x\) es conocida, por lo que se emplea como estimador puntual de \(v\) el promedio
+\[
+ \hat{\vbf}=\frac{1}{n}\sum_{i=1}^n(\x_i-\eta)^2.
+\]
+De esta forma, la media es
+\[
+ E\{\hat{\vbf}\}=\frac{1}{n}\sum_{i=1}^nE\{(\x_i-\eta)^2\}=\frac{1}{n}n\sigma^2=\sigma^2,
+\]
+y la varianza es
+\begin{align*}
+ \sigma_{\hat{v}}^2=\var\{\hat{\vbf}\}&\overset{(a)}{=}\frac{1}{n^2}\sum_{i=1}^n\var\{(\x_i-\eta)^2\}\\
+   &=\frac{1}{n}\var\{(\x_i-\eta)^2\}\\
+   &=\frac{1}{n}\left(E\{(\x_i-\eta)^4\}-E^2\{(\x_i-\eta)^2\}\right)\\
+   &\overset{(b)}{=}\frac{1}{n}(3\sigma^4-\sigma^2)\\
+   &=\frac{2\sigma^4}{n},
+\end{align*}
+donde en \((a)\) se consideró que las muestras son independientes y en \((b)\) que el momento central cuarto de una variable aleatoria normal es \(3\sigma^2\), como indica la ecuación \ref{eq:normal_rv_central_moments}. Se cumple por lo tanto que
+\[
+ E\{\hat{\vbf}\}=v\qquad\qquad\textrm{y}\qquad\qquad\sigma^2_{\hat{v}}=\frac{2\sigma^4}{n}\xrightarrow[n\to\infty]{}0,
+\]
+lo que implica que \(\hat{\vbf}\) es un estimador consistente de \(\sigma^2\). Se buscará un estimador de intervalo. Considérese la variable aleatoria
+\[
+ \frac{n\hat{\vbf}}{\sigma^2}=\sum_{i=1}^n\frac{(x_i-\eta)^2}{\sigma^2}.
+\]
+Por tratarse de la suma de \(n\) variables aleatorias \((x_i-\eta)/\sigma\sim N(0,\,1)\) al cuadrado, se cumple que \(n\hat{\vbf}/\sigma^2\sim\chi^2(n)\), como se mostró en la sección \ref{sec:normal_random_vectors}. Debido a que la densidad \(\chi^2(n)\) no es simétrica, el estimador de intervalo de \(\sigma^2\) no está centrado en \(\sigma^2\) (ver la figura \ref{fig:variance_interval_estimation_chi_rv}). Para determinarlo, se definen las constantes \(c_1\) y \(c_2\) tal que 
+\[
+ P\left\{\frac{n\hat{\vbf}}{\sigma^2}<c_1\right\}=\frac{\delta}{2}
+  \qquad\qquad\textrm{y}\qquad\qquad
+ P\left\{\frac{n\hat{\vbf}}{\sigma^2}>c_2\right\}=\frac{\delta}{2}. 
+\]
+De esta forma, 
+\[
+ c_1=\chi^2_{\delta/2}(n)\qquad\qquad\textrm{y}\qquad\qquad
+ c_2=\chi^2_{1-\delta/2}(n)
+\]
+y
+\[
+ P\left\{\chi^2_{\delta/2}(n)<\frac{n\hat{\vbf}}{\sigma^2}<\chi^2_{1-\delta/2}(n)\right\}=\gamma=1-\delta,
+\]
+resultando en
+\[
+ P\left\{\frac{n\hat{\vbf}}{\chi^2_{1-\delta/2}(n)}<\sigma^2<\frac{n\hat{\vbf}}{\chi^2_{\delta/2}(n)}\right\}=\gamma=1-\delta.
+\]
+Se concluye que la estimación de intervalo de la varianza es
+\[
+ \frac{n\hat{\vbf}}{\chi^2_{1-\delta/2}(n)}<\sigma^2<\frac{n\hat{\vbf}}{\chi^2_{\delta/2}(n)}.
+\]
+Este intervalo no tiene largo mínimo. El intervalo de largo mínimo es aquel que cumple que \(f(c_1)=f(c_2)\), donde \(f(x)\) es la densidad de probabilidad, como se demostró en la sección \ref{sec:statistics_introduction}, pero no es fácil de determinar analíticamente. En la figura \ref{fig:variance_interval_estimation_chi_rv} se comparan ambos casos.
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=0.95\columnwidth]{figuras/variance_interval_estimation_chi_rv.pdf}
+\caption{\label{fig:variance_interval_estimation_chi_rv} Estimación de intervalo de la varianza con la media conocida. Se muestra la estimación de intervalo de la variable aleatoria \(n\bar{\vbf}/\sigma^2\sim\chi^2(n)\) con un coeficiente de confianza \(\gamma=1-\delta\). Se compara el intervalo con áreas de cola iguales con el intervalo de largo mínimo. Los parámetros empleados en la figura son \(n=6\) y \(\gamma=0.8\). Con estos valores, el intervalo de áreas de cola iguales es \(\chi^2_{1-\delta/2}(n)-\chi^2_{\delta/2}(n)\approx8.44\) mientras que el intervalo de largo mínimo es \(c_2-c_1\approx7.73\). Se observa además que el intervalo no está centrado en la media \(n\) (ver la sección \ref{sec:chi_square_moments}).}
+\end{center}
+\end{figure}
+
+\paragraph{Media desconocida} Si además la media \(\eta\) es desconocida, se emplea como estimador puntual de \(\sigma^2\) a la varianza muestral \(\s^2\) (ver la ecuación \ref{eq:sample_mean_and_variance}). Considerando que la variable aleatoria \((n-1)\s^2/\sigma^2\sim\chi^2(n-1)\), se cumple que 
+\[
+ P\left\{\chi^2_{\delta/2}(n-1)<\frac{(n-1)\s^2}{\sigma^2}<\chi^2_{1-\delta/2}(n-1)\right\}=\gamma=1-\delta,
+\]
+lo que conduce al intervalo
+\[
+ \frac{(n-1)\s^2}{\chi^2_{1-\delta/2}(n-1)}<\sigma^2<\frac{(n-1)\s^2}{\chi^2_{\delta/2}(n-1)}.
+\]
+
+\subsubsection{Percentiles} 
+
+El percentil \(u\) de una variable aleatoria \(\x\) es por definición un número \(x_u\) tal que \(F(x_u)=u\). Por lo tanto, \(x_u\) es la función inversa \(F^{-1}(u)\) de la distribución \(F(x)\) de \(x\). Se desea estimar \(x_u\) a partir de las muestras \(x_i\) de \(\x\). Para hacerlo, se ordenan las \(n\) observaciones \(x_i\) de forma ascendente, y se denota por \(y_k\) la muestra en la posición \(k\)-ésima. Las variables aleatorias \(y_k\) son los estadísticos de orden de la variable aleatoria \(\x\) (ver la ecuación \ref{eq:ordered_statistic_definition}).
+
+De la definición, \(y_k<x_u\) si la menos \(k\) muestras \(x_i\) son menores que \(x_u\). De forma similar, \(y_{k+r}<x_u\) si al menos \(k+r\) muestras son menores que \(x_u\), o \(y_{k+r}>x_u\) si a lo sumo \(k+r-1\) muestras son menores que \(x_u\). Por lo tanto, \(y_k<x_u<y_{k+r}\) si al menos \(k\) muestras y a lo sumo \(k+r-1\) muestras son menores que \(x_u\). Se concluye que ocurre el evento \(\{\y_k<x_u<\y_{k+r}\}\) si la cantidad de ocurrencias del evento \(\{\x<x_u\}\) en \(n\) repeticiones del experimento \(S\) es al menos \(k\) y a lo sumo \(k+r-1\). Como \(P\{\x<x_u\}=u\), de la ecuación \ref{eq:binomial_interval_probability} con \(p=u\) se tiene que 
+\[
+ P\{\y_k<x_u<\y_{k+r}\}=\sum_{m=k}^{k+r-1}\binom{n}{m}u^m(1-u)^{n-m}.
+\]
+Empleando esta relación se buscará el intervalo de confianza \(\gamma\) de \(x_u\) para un valor de \(u\) específico. Para eso, hay que encontrar un entero \(k\) tal que la sumatoria iguale \(\gamma\) para el valor de \(r\) mas pequeño posible. Este es un problema difícil que se resulve mediante ensayo y error. Sin embargo, puede encontrarse una solución simple asumiendo que \(n\) es grande empleando la aproximación normal dada por la ecuación \ref{eq:binomial_normal_approximation_correction} con \(p=u\),
+\[
+ P\{\y_k<x_u<\y_{k+r}\}\approx G\left(\frac{k+r+0.5-nu}{\sqrt{nu(1-u)}}\right)-G\left(\frac{k-0.5-nu}{\sqrt{nu(1-u)}}\right)=\gamma.
+\]
+Para un valor dado de \(\gamma\), \(r\) es mínimo si \(nu\) está cercano al centro del intervalo \((k,\,k+r)\). Esto conduce a 
+\[
+ k\approx nu-z_{1-\delta/2}\sqrt{nu(1-u)}
+ \qquad\qquad\textrm{y}\qquad\qquad
+ k+r\approx nu+z_{1-\delta/2}\sqrt{nu(1-u)}.
+\]
+
+\section{Estimación de parámetros}
+
+Se considera el caso en que \(\x=(\x_1,\,\x_2,\,\dots,\,\x_n)\) denota \(n\) variables aleatorias que representan las observaciones \(\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=x_n\), y supóngase que se desea estimar el parámetro \(\theta\) a partir de esos datos. Concretamente, la densidad de probabilidad conjunta de \(\x_1,\,\x_2,\,\dots,\,\x_n\) dada por \(f_x(x_1,\,x_2,\,\dots,\,x_n;\,\theta)\) depende del parámetro \(\theta\) que se quiere estimar, y se construye un estimador como una función de las observaciones. El problema de estimación puntual consiste en elegir un estadístico unidimensional \(T(\x_1,\,\x_2,\,\dots,\,\x_n)\) que mejor estime \(\theta\) en algún sentido óptimo. El método de máxima verosimilitud es usualmente empleado en este contexto.
+
+\subsection{Método de máxima verosimilitud}
+
+En el método de máxima verosimilitud se elige el valor de \(\theta\) mas probable de haber ocasionado las observaciones. Una vez que se dispone de las observaciones \(x_1,\,x_2,\,\dots,\,x_n\), \(f_x(x_1,\,x_2,\,\dots,\,x_n;\,\theta)\) es una función únicamente de \(\theta\). El valor que maximiza dicha p.d.f. es el valor mas probable de \(\theta\), y es el escogido como estimador \(\hat{\theta}_\textrm{ML}\) de máxima verosimilitud (ML, \emph{maximum likelihood}).
+
+Dadas las observaciones \(\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=x_n\), la p.d.f. conjunta \(f_x(x_1,\,x_2,\,\dots,\,x_n;\,\theta)\) se define como la \emph{función de verosimilitud}, y el estimador ML puede determinarse tanto a partir de la función de verosimilitud como
+\begin{equation}\label{eq:mle_definition}
+ \hat{\theta}_\textrm{ML}=\sup_\theta f_x(x_1,\,x_2,\,\dots,\,x_n;\,\theta), 
+\end{equation}
+o a partir de la función de verosimilitud logarítmica
+\[
+ L(x_1,\,x_2,\,\dots,\,x_n;\,\theta)\triangleq\log f_x(x_1,\,x_2,\,\dots,\,x_n;\,\theta).
+\]
+Si \(L(x_1,\,x_2,\,\dots,\,x_n;\,\theta)\) es diferenciable y existe un supremo \(\hat{\theta}_\textrm{ML}\), debe satisfacer la ecuación
+\[
+ \frac{\partial\log f_x(x_1,\,x_2,\,\dots,\,x_n;\,\theta)}{\partial\theta}\bigg|_{\theta=\hat{\theta}_\textrm{ML}}=0.
+\]
+
+\paragraph{Ejemplo 8-10} Sean \(\x_1,\,\x_2,\,\dots,\,\x_n\) variables aleatorias uniformemente distribuidas en el intervalo \((0,\,\theta)\), es decir,
+\[
+ f_{x_i}(x_i,\,\theta)=\frac{1}{\theta},\qquad 0<x_i<\theta,
+\]
+donde \(\theta\) es desconocido. En este caso, la función de verosimilitud está dada por 
+\begin{align*}
+ f(\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=x_n;\,\theta)&=\frac{1}{\theta^n},\qquad 0<x_i<\theta,\qquad i=1,\,\dots,\,n,\\
+  &=\frac{1}{\theta^n},\qquad 0<\min(\x_1,\,\dots,\,\x_n)<\max(\x_1,\,\dots,\,\x_n)<\theta.
+\end{align*}
+La función de verosimilitud es maximizada por el mínimo valor posible de \(\theta\), y como \(\theta>\max(\x_1,\,\x_2,\,\dots,\,\x_n)\), se obtiene que
+\[
+ \hat{\theta}_\textrm{ML}(\x)=\max(\x_1,\,\x_2,\,\dots,\,\x_n)
+\]
+es el estimador ML para \(\theta\).
+
+En general, la función de verosimilitud puede tener mas de una solución o no tener soluciones. Además, puede no ser diferenciable o difícil de resolver analíticamente. Como indica la ecuación \ref{eq:mle_definition}, el método de máxima verosimilitud busca la moda de la p.d.f. \(f_x(x_1,\,x_2,\,\dots,\,x_n;\,\theta)\). Como en general la moda es un peor estimador que la media o la mediana, el estimador ML suele ser pobre cuando se emplean pocas muestras.
+
+\subsection{Estadísticos suficientes}
+
+Se dice que una función \(T(\x)=T(\x_1,\,\x_2,\,\dots,\,\x_n)\) es un \emph{estadístico suficiente} para \(\theta\) si \(T(\x)\) brinda la misma información sobre \(\theta\) que está contenida en el conjunto de datos. De esta forma, dada la densidad de probabilidad
+\[
+ P\{\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=x_n;\,\theta\},
+\]
+si la densidad condicional 
+\[
+ P\{\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=x_n;\,\theta\,|\,T(\x)=t\},
+\]
+no depende de \(\theta\) para todos los valores posibles de \(x_i\), \(T(\x)\) debe contener toda la información sobre \(\theta\) que está contenida en el conjunto de datos \(\x\). Una vez que se conoce \(T(\x)\), el conjunto de datos \(\x\) no contiene información adicional sobre \(\theta\), y por lo tanto, es un estadístico suficiente para \(\theta\).
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=0.95\columnwidth]{figuras/sufficient_statistic_conditional_pdf.pdf}
+\caption{\label{fig:sufficient_statistic_conditional_pdf} Definición de estadístico suficiente. El estadístico \(T_1(\x)\) no es suficiente, ya que luego de observar \(T_1(\x)\), si \(\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=x_n\), los valores de \(\theta\) cercanos a \(\theta_0\) son mas probables. En la densidad condicionada al estadístico \(T_2(\x)\), todos los valores de \(\theta\) son equiprobables, y por lo tanto, luego de observar \(T_2(\x)\), los datos no brindan información adicional sobre \(\theta\).}
+\end{center}
+\end{figure}
+En la figura \ref{fig:sufficient_statistic_conditional_pdf} se muestra la densidad condicional en el caso de un estadístico que no es suficiente y otro que es suficiente.
+
+Observar que el conjunto de datos \(\x_1,\,\x_2,\,\dots,\,\x_n\), es siempre trivialmente suficiente, pero si una función \(T(\x)\) es suficiente, alcanza con concentrarse solo en ella, ya que agota toda la información sobre \(\theta\) que contiene el conjunto de datos.
+
+\paragraph{Ejemplo 8-12} Sean la variables aleatorias \(\x_1,\,\x_2,\,\dots,\,\x_n\) i.i.d. con distribución de Poisson con parámetro \(\lambda\), y se considera la función 
+\[
+ T(\x_1,\,\x_2,\,\dots,\,\x_n)=\sum_{i=1}^nx_i.
+\]
+De esta forma,
+\begin{align*}
+ P\{\x_1=x_1,\,\x_2=x_2&,\,\dots,\,\x_n=x_n\,|\,T(\x)=t\}\\
+  &\overset{(a)}{=}\frac{P\{\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=x_n,\,T(\x)=t\}}{P\{T(\x)=t\}}\\
+  &=\left\{\begin{array}{ll}
+      \dfrac{P\{\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=t-(x_1+\dots+x_{n-1})\}}{\displaystyle P\left\{T=\sum_{i=1}^nx_i\right\}} &\displaystyle\textrm{si }t=\sum_{i=1}^nx_i\\
+      0 & \displaystyle\textrm{si }t\neq\sum_{i=1}^nx_i,
+    \end{array}\right. 
+\end{align*}
+donde en \((a)\) se empleó la ecuación \ref{eq:conditional_joint_distribution_definition}.
+Como \(T(\x)\sim P(n\lambda)\), como indican las ecuaciones \ref{eq:poisson_sum_pmf} y \ref{eq:poisson_sum_characteristic}, se tiene que (ver la ecuación \ref{eq:pdf_poisson})
+\[
+ P\left\{T=\sum_{i=1}^nx_i\right\}=e^{-n\lambda}\frac{(n\lambda)^{\sum_{i=1}^nx_i}}{\left(\displaystyle\sum_{i=1}^nx_i\right)!}=e^{-n\lambda}\frac{(n\lambda)^t}{t!}.
+\]
+Por lo tanto
+\begin{align*}
+ &\dfrac{P\{\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=t-(x_1+\dots+x_{n-1})\}}{\displaystyle P\left\{T=\sum_{i=1}^nx_i\right\}}\\
+ &\qquad\qquad\qquad=\dfrac{e^{-\lambda}\dfrac{\lambda^{x_1}}{x_1!}e^{-\lambda}\dfrac{\lambda^{x_2}}{x_2!}\dots e^{-\lambda}\dfrac{\lambda^{t-x_1-x_2-\dots-x_{n-1}}}{(t-x_1-x_2-\dots-x_{n-1})!}}{e^{-n\lambda}\dfrac{(n\lambda)^t}{t!}}\\
+ &\qquad\qquad\qquad=\dfrac{e^{-n\lambda}\dfrac{\lambda^t}{x_1!x_2!\dots x_n!}}{{e^{-n\lambda}\dfrac{(n\lambda)^t}{t!}}}\\
+ &\qquad\qquad\qquad=\dfrac{\displaystyle\left(\displaystyle\sum_{i=1}^nx_i\right)!}{x_1!x_2!\dots x_n!n^t}.
+\end{align*}
+Se concluye que \(P\{\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=x_n\,|\,T(\x)=t\}\) es independiente de \(\theta=\lambda\), y por lo tanto, \(T(\x)=\sum_{i=1}^nx_i\) es suficiente para \(\lambda\).
+
+
+
 
 
 \bibliographystyle{ieeetr}
