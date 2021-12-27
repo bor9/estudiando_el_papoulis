@@ -6613,9 +6613,13 @@ Considerando que \(f(x,\,y)=f(x)f(y\,|\,x)\), se obtiene que
  E\{E\{\y\,|\,\x\}\}&=\int_{-\infty}^{\infty}\int_{-\infty}^{\infty}yf(x,\,y)\,dx\,dy\\
    &=\int_{-\infty}^{\infty}y\left[\int_{-\infty}^{\infty}f(x,\,y)\,dx\right]\,dy\\
    &=\int_{-\infty}^{\infty}yf_y(y)\,dy\\
-   &=E\{\y\}.
+   &=E\{\y\},
 \end{align*}
-Este resultado puede generalizarse. La media condicional \(E\{g(\x,\,\y)\,|\,x\}\) de \(g(\x,\,\y)\) dado \(\x=x\) es una función de la variable real \(x\). A partir de esta función, puede definirse una nueva variable aleatoria \(E\{g(\x,\,\y)\,|\,\x\}\),
+es decir,
+\begin{equation}\label{eq:law_of_total_expectation}
+ E\{E\{\y\,|\,\x\}\}=E\{\y\}.
+\end{equation}
+Este resultado se denomina \emph{ley de la esperanza total}\footnote{Ver \url{https://en.wikipedia.org/wiki/Law_of_total_expectation}, por ejemplo.} y puede generalizarse. La media condicional \(E\{g(\x,\,\y)\,|\,x\}\) de \(g(\x,\,\y)\) dado \(\x=x\) es una función de la variable real \(x\). A partir de esta función, puede definirse una nueva variable aleatoria \(E\{g(\x,\,\y)\,|\,\x\}\),
 \[
  E\{g(\x,\,\y)\,|\,\x\}=\int_{-\infty}^{\infty}g(\x,\,y)f(y\,|\,\x)\,dy.
 \]
@@ -6909,9 +6913,9 @@ La \emph{media muestral} y la \emph{varianza muestral} de las variables aleatori
  \bar{\x}=\frac{1}{n}\sum_{i=1}^{n}\x_i, \qquad \bar{\mathbf{v}}=\frac{1}{n-1}\sum_{i=1}^{n}(\x_i-\bar{\x})^2
 \end{equation}
 respectivamente. Se demostrará que si las variables aleatorias \(\x_i\) son no correlacionadas, todas con media \(E\{\x_i\}=\eta\) y varianza \(\sigma_i^2=\sigma^2\), la media y la varianza de la media muestral es
-\[
- E\{\bar{\x}\}=\eta,\qquad \sigma_{\bar{x}}^2=\frac{\sigma^2}{n}
-\]
+\begin{equation}\label{eq:sample_mean_mean_and_variance}
+  E\{\bar{\x}\}=\eta,\qquad \sigma_{\bar{x}}^2=\frac{\sigma^2}{n}
+\end{equation}
 y la media y la varianza de la varianza muestral es
 \[
  E\{\bar{\mathbf{v}}\}=\sigma^2,\qquad \sigma^2_{\bar{v}}=\frac{1}{n}\left(\mu_4-\frac{n-3}{n-1}\sigma^4\right).
@@ -9965,7 +9969,7 @@ Para un valor dado de \(\gamma\), \(r\) es mínimo si \(nu\) está cercano al ce
 
 Se considera el caso en que \(\x=(\x_1,\,\x_2,\,\dots,\,\x_n)\) denota \(n\) variables aleatorias que representan las observaciones \(\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=x_n\), y supóngase que se desea estimar el parámetro \(\theta\) a partir de esos datos. Concretamente, la densidad de probabilidad conjunta de \(\x_1,\,\x_2,\,\dots,\,\x_n\) dada por \(f_x(x_1,\,x_2,\,\dots,\,x_n;\,\theta)\) depende del parámetro \(\theta\) que se quiere estimar, y se construye un estimador como una función de las observaciones. El problema de estimación puntual consiste en elegir un estadístico unidimensional \(T(\x_1,\,\x_2,\,\dots,\,\x_n)\) que mejor estime \(\theta\) en algún sentido óptimo. El método de máxima verosimilitud es usualmente empleado en este contexto.
 
-\subsection{Método de máxima verosimilitud}
+\subsection{Método de máxima verosimilitud}\label{sec:statistics_mle}
 
 En el método de máxima verosimilitud se elige el valor de \(\theta\) mas probable de haber ocasionado las observaciones. Una vez que se dispone de las observaciones \(x_1,\,x_2,\,\dots,\,x_n\), \(f_x(x_1,\,x_2,\,\dots,\,x_n;\,\theta)\) es una función únicamente de \(\theta\). El valor que maximiza dicha p.d.f. es el valor mas probable de \(\theta\), y es el escogido como estimador \(\hat{\theta}_\textrm{ML}\) de máxima verosimilitud (ML, \emph{maximum likelihood}).
 
@@ -9978,9 +9982,9 @@ o a partir de la función de verosimilitud logarítmica
  L(x_1,\,x_2,\,\dots,\,x_n;\,\theta)\triangleq\log f_x(x_1,\,x_2,\,\dots,\,x_n;\,\theta).
 \]
 Si \(L(x_1,\,x_2,\,\dots,\,x_n;\,\theta)\) es diferenciable y existe un supremo \(\hat{\theta}_\textrm{ML}\), debe satisfacer la ecuación
-\[
+\begin{equation}\label{eq:mle}
  \frac{\partial\log f_x(x_1,\,x_2,\,\dots,\,x_n;\,\theta)}{\partial\theta}\bigg|_{\theta=\hat{\theta}_\textrm{ML}}=0.
-\]
+\end{equation}
 
 \paragraph{Ejemplo 8-10} Sean \(\x_1,\,\x_2,\,\dots,\,\x_n\) variables aleatorias uniformemente distribuidas en el intervalo \((0,\,\theta)\), es decir,
 \[
@@ -9999,7 +10003,7 @@ es el estimador ML para \(\theta\).
 
 En general, la función de verosimilitud puede tener mas de una solución o no tener soluciones. Además, puede no ser diferenciable o difícil de resolver analíticamente. Como indica la ecuación \ref{eq:mle_definition}, el método de máxima verosimilitud busca la moda de la p.d.f. \(f_x(x_1,\,x_2,\,\dots,\,x_n;\,\theta)\). Como en general la moda es un peor estimador que la media o la mediana, el estimador ML suele ser pobre cuando se emplean pocas muestras.
 
-\subsection{Estadísticos suficientes}
+\subsection{Estadísticos suficientes}\label{sec:statistics_sufficient_statistic}
 
 Se dice que una función \(T(\x)=T(\x_1,\,\x_2,\,\dots,\,\x_n)\) es un \emph{estadístico suficiente} para \(\theta\) si \(T(\x)\) brinda la misma información sobre \(\theta\) que está contenida en el conjunto de datos. De esta forma, dada la densidad de probabilidad
 \[
@@ -10046,6 +10050,542 @@ Por lo tanto
  &\qquad\qquad\qquad=\dfrac{\displaystyle\left(\displaystyle\sum_{i=1}^nx_i\right)!}{x_1!x_2!\dots x_n!n^t}.
 \end{align*}
 Se concluye que \(P\{\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=x_n\,|\,T(\x)=t\}\) es independiente de \(\theta=\lambda\), y por lo tanto, \(T(\x)=\sum_{i=1}^nx_i\) es suficiente para \(\lambda\).
+
+El siguiente teorema permite determinar si un estadístico es suficiente.
+
+\paragraph{El teorema de factorización de Fisher-Neyman} El teorema de factorización de Fisher-Neyman provee una caracterización conveniente de un estadístico suficiente. Si la p.d.f. de los datos es \(f_x(x_1,\,\dots,\,x_n;\,\theta)\), \(T(\x)\) es suficiente para \(\theta\) si y solo si existen las funciones \(g\) y \(h\) no negativas tal que
+\[
+ f_x(x_1,\,\dots,\,x_n;\,\theta)=h(x_1,\,\dots,\,x_n)\,g_{\theta }(T(\x)=t),
+\]
+es decir, la p.d.f. puede ser factorizada en un producto donde un factor no depende de \(\theta\) y otro factor depende de \(\theta\) y de los datos, pero solo a través de \(T(\x)\). A continuación se incluye una prueba simple pero ilustrativa para el caso de variables aleatorias discretas. Una prueba mas general puede encontrarse en \cite{kay93fundamentals}.
+
+Sean \(\x_1,\,\x_2,\,\dots,\,\x_n\) un conjunto de variables aleatorias discretas con p.m.f. \(P\{\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=x_n;\,\theta\}\). Entonces, \(T(\x_1,\,\x_2,\,\dots,\,\x_n)\) es suficiente para \(\theta\) si y solo si
+\[
+ P\{\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=x_n;\,\theta\}=h(x_1,\,x_2,\,\dots,\,x_n)g_\theta(T(\x)=t),
+\]
+donde \(h\) es una función no negativa de \(\x_1,\,\x_2,\,\dots,\,\x_n\) que no depende de \(\theta\), y \(g_\theta\) es una función no negativa de \(\theta\) y de los datos solo a través de \(T\) y no de alguna otra forma.
+\begin{itemize}
+ \item \emph{Suficiencia}: supóngase que
+  \[
+   P\{\x;\,\theta\}=h(\x)g_\theta(T(\x)).
+  \]
+  De esta forma,
+  \begin{align*}
+   P\{\x=x;\,\theta\,|\,T(\x)=t\}&\overset{(a)}{=}\left\{
+    \begin{array}{ll}
+     \dfrac{P\{\x=x;\,\theta,\,T(\x)=t\}}{P\{T(\x)=t\}} & T(\x)=t\\
+     0 & T(\x)\neq t
+    \end{array}\right.\\
+    &\overset{(b)}{=}\left\{
+    \begin{array}{ll}
+     \dfrac{P\{\x=x;\,\theta\}}{P\{T(\x)=t\}} & T(\x)=t\\
+     0 & T(\x)\neq t,
+    \end{array}\right.
+  \end{align*}
+  donde en \((a)\) se empleó la generalización de la ecuación \ref{eq:conditional_joint_distribution_definition} y en \((b)\) se consideró que como \(T(\x)\) es una función de \(\x\), \(P\{\x=x;\,\theta,\,T(\x)=t\}=P\{\x=x;\,\theta\}\) siempre y cuando \(T(\x)=t\) y cero en otro caso. Si \(T(\x)=t\), el denominador es
+  \begin{align*}
+    P\{T(\x)=t\}=\sum_{T(\x)=t}P\{\x=x;\,\theta\}=\sum_{T(\x)=t}h(\x)g_\theta(T(\x)=t)=g_\theta(T(\x)=t)\sum_{T(\x)=t}h(\x).
+  \end{align*}
+  Se concluye que 
+  \[
+    P\{\x=x;\,\theta\,|\,T(\x)=t\}=\left\{
+       \begin{array}{ll}
+       \dfrac{h(\x)}{\displaystyle\sum_{T(\x)=t}h(\x)} & T(\x)=t\\
+       0 & T(\x)\neq t,
+    \end{array}\right.
+\]
+que no depende de \(\theta\), y por lo tanto, \(T\) es suficiente.
+\item \emph{Necesariedad}: supóngase que \(T(\x)=t\) es suficiente. Por lo tanto, si \(T(\x)=t\), por los mismos argumentos de antes, se cumple que
+  \begin{align*}
+   P\{\x=x;\,\theta\}&=P\{\x=x;\,\theta,\,T(\x)=t\}\\
+    &=P\{\x=x;\,\theta\,|\,T(\x)=t\}P\{T(\x)=t\}.
+  \end{align*}
+  Como \(T\) es suficiente, \(P\{\x=x;\,\theta\,|\,T(\x)=t\}\) es independiente de \(\theta\), digamos \(h(\x)\). Así,
+  \[
+   P\{\x=x;\,\theta\}=h(\x)P\{T(\x)=t\}.
+  \]
+  Además,
+  \[
+   P\{T(\x)=t\}=\sum_{T(\x)=t}P\{\x=x;\,\theta\}=g_\theta(T(\x)=t).
+  \]
+  Se concluye que si \(T\) es suficiente, se cumple que 
+  \[
+   P\{T(\x)=t\}=h(\x)g_\theta(T(\x)=t).
+  \]
+\end{itemize}
+
+\subsection{Estimadores insesgados}
+
+Un estimador \(T(\x)\) se dice insesgado para \(\theta\) si
+\[
+ E\{T(\x)\}=\theta.
+\]
+Si los estimadores \(T_1(\x)\) y \(T_2(\x)\) son ambos insesgados para \(\theta\), es preferible el que tiene menor varianza. Por lo tanto, sería útil encontrar el estimador insesgado con la menor varianza posible. La cota inferior de Cramér-Rao provee una expresión de la cota inferior de la varianza de todos los estimadores insesgados.
+
+\paragraph{Cota inferior de Cramér-Rao} Sea \(T(\x)\) cualquier estimador insesgado para el parámetro desconocido \(\theta\) basado en las observaciones de las variables aleatorias \(\x_1,\,\x_2,\,\dots,\,\x_n\) con densidad de probabilidad conjunta \(f(\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=x_n;\,\theta)\), denotada como \(f(\x;\,\theta)\). Entonces, se cumple que 
+\[
+ \var\{T(\x)\}\geq\dfrac{1}{E\left\{\left[\dfrac{\partial}{\partial\theta}\log f(\x;\,\theta)\right]^2\right\}}
+  =\dfrac{1}{E\left\{\dfrac{\partial^2}{\partial\theta^2}\log f(\x;\,\theta)\right\}}
+\]
+sujeto a que se satisfagan las siguientes condiciones de regularidad:
+\begin{gather}
+ \frac{\partial}{\partial\theta}\int f(\x;\,\theta)\,dx=\int\frac{\partial f(\x;\,\theta)}{\partial\theta} \,dx=0\label{eq:crlb_regularity_1}\\
+ \frac{\partial}{\partial\theta}\int T(\x)f(\x;\,\theta)\,dx=\int T(\x)\frac{\partial f(\x;\,\theta)}{\partial\theta} \,dx=0,\label{eq:crlb_regularity_2}
+\end{gather}
+donde las integrales representan integrales de multiplicidad \(n\).
+
+Para la demostración, se parte de la propiedad de insesgado del estimador \(T(\x)\),
+\[
+ E\{T(\x)-\theta\}=\int_{-\infty}^\infty(T(\x)-\theta)f(\x;\,\theta)\,dx=0.
+\]
+Diferenciando respecto a \(\theta\) se obtiene que 
+\[
+ \int_{-\infty}^\infty (T(\x)-\theta)\frac{\partial f(\x;\,\theta)}{\partial\theta}\,dx-\int_{-\infty}^\infty f(\x;\,\theta)\,dx=0,
+\]
+resultando en
+\[
+ \int_{-\infty}^\infty (T(\x)-\theta)\frac{\partial f(\x;\,\theta)}{\partial\theta}\,dx=1,
+\]
+en donde se emplearon las condiciones de regularidad dadas por las ecuaciones \ref{eq:crlb_regularity_1} y \ref{eq:crlb_regularity_2} para intercambiar el orden de diferencianción e integración. Considerando que
+\[
+ \frac{\partial \log f(\x;\,\theta)}{\partial\theta}=\frac{1}{f(\x;\,\theta)}\frac{\partial f(\x;\,\theta)}{\partial\theta}
+\]
+y por lo tanto
+\begin{equation}\label{eq:crlb_loglikelihood_derivative}
+ \frac{\partial f(\x;\,\theta)}{\partial\theta}=f(\x;\,\theta)\frac{\partial \log f(\x;\,\theta)}{\partial\theta},
+\end{equation}
+se obtiene que 
+\[
+ \int_{-\infty}^\infty (T(\x)-\theta)f(\x;\,\theta)\frac{\partial \log f(\x;\,\theta)}{\partial\theta}\,dx=1.
+\]
+Esta expresión se puede escribir como
+\[
+ \int_{-\infty}^\infty\left[(T(\x)-\theta)\sqrt{f(\x;\,\theta)}\right]\left[\sqrt{f(\x;\,\theta)}\frac{\partial \log f(\x;\,\theta)}{\partial\theta}\right]\,dx=1,
+\]
+Empleando la desigualdad de Cuachy-Schwarz, que indica que\footnote{Ver \href{https://en.wikipedia.org/wiki/Cauchy\%E2\%80\%93Schwarz_inequality}{\texttt{https://en.wikipedia.org/wiki/Cauchy-Schwarz\_inequality}}, por ejemplo.}
+\begin{equation}\label{eq:cauchy_schwarz_inequality}
+ \left|\int _{\mathbb {R} ^{n}}f(x){\overline {g(x)}}\,dx\right|^{2}\leq \int _{\mathbb {R} ^{n}}|f(x)|^{2}\,dx\int _{\mathbb {R} ^{n}}|g(x)|^{2}\,dx,
+\end{equation}
+resulta en 
+\begin{equation}\label{eq:crlb_deduction_cauchy_schwarz_condition}
+ \int_{-\infty}^\infty\left[(T(\x)-\theta)\sqrt{f(\x;\,\theta)}\right]^2\,dx\int_{-\infty}^\infty\left[\sqrt{f(\x;\,\theta)}\frac{\partial \log f(\x;\,\theta)}{\partial\theta}\right]^2\,dx\geq1,
+\end{equation}
+o
+\[
+ \int_{-\infty}^\infty(T(\x)-\theta)^2 f(\x;\,\theta)\,dx\int_{-\infty}^\infty\left(\frac{\partial \log f(\x;\,\theta)}{\partial\theta}\right)^2f(\x;\,\theta)\,dx\geq1.
+\]
+Teniendo en cuenta que 
+\[
+ \int_{-\infty}^\infty(T(\x)-\theta)^2 f(\x;\,\theta)\,dx=\var\{T(\x)\}
+\]
+y
+\[
+ \int_{-\infty}^\infty\left(\frac{\partial \log f(\x;\,\theta)}{\partial\theta}\right)^2f(\x;\,\theta)\,dx=E\left\{\left(\frac{\partial \log f(\x;\,\theta)}{\partial\theta}\right)^2\right\} 
+\]
+resulta en
+\[
+ \var\{T(\x)\}E\left\{\left(\frac{\partial \log f(\x;\,\theta)}{\partial\theta}\right)^2\right\}\geq1,
+\]
+obteniendo la cota buscada
+\[
+ \var\{T(\x)\}\geq\dfrac{1}{E\left\{\left(\dfrac{\partial \log f(\x;\,\theta)}{\partial\theta}\right)^2\right\}}.
+\]
+Además, integrando la ecuación \ref{eq:crlb_loglikelihood_derivative}, se obtiene que
+\[
+ \int_{-\infty}^\infty f(\x;\,\theta)\frac{\partial \log f(\x;\,\theta)}{\partial\theta}\,dx=\int_{-\infty}^\infty\frac{\partial f(\x;\,\theta)}{\partial\theta}\,dx
+ \overset{(a)}{=}\frac{\partial}{\partial\theta}\int_{-\infty}^\infty f(\x;\,\theta)\,dx=0,
+\]
+donde en \((a)\) se empleó la condición de regularidad dada por la ecuación \ref{eq:crlb_regularity_1}. Diferenciando respecto a \(\theta\) resulta en 
+\[
+ \int_{-\infty}^\infty \frac{\partial f(\x;\,\theta)}{\partial\theta}\frac{\partial \log f(\x;\,\theta)}{\partial\theta}\,dx+
+ \int_{-\infty}^\infty f(\x;\,\theta)\frac{\partial^2 \log f(\x;\,\theta)}{\partial\theta^2}\,dx=
+ 0,
+\]
+donde se asumió que \(\partial f(\x;\,\theta)/\partial\theta\) es nuevamente diferenciable. Sustituyendo la ecuación \ref{eq:crlb_loglikelihood_derivative} en esta expresión se obtiene que 
+\[
+ \int_{-\infty}^\infty f(\x;\,\theta)\left(\frac{\partial \log f(\x;\,\theta)}{\partial\theta}\right)^2\,dx+
+ \int_{-\infty}^\infty f(\x;\,\theta)\frac{\partial^2 \log f(\x;\,\theta)}{\partial\theta^2}\,dx=
+ 0,
+\]
+es decir,
+\begin{equation}\label{eq:crlb_fisher_information}
+ E\left\{\left(\frac{\partial \log f(\x;\,\theta)}{\partial\theta}\right)^2\right\}=-E\left\{\frac{\partial^2 \log f(\x;\,\theta)}{\partial\theta^2}\right\}\triangleq J_{11}(\theta).
+\end{equation}
+\(J_{11}(\theta)\) es referida como la \emph{información de Fisher} contenida en el conjunto de datos sobre el parámetro \(\theta\). Se obtuvo que 
+\begin{equation}\label{eq:crlb}
+ \var\{T(\x)\}\geq\dfrac{1}{E\left\{\left(\dfrac{\partial \log f(\x;\,\theta)}{\partial\theta}\right)^2\right\}}=\dfrac{-1}{E\left\{\dfrac{\partial^2 \log f(\x;\,\theta)}{\partial\theta^2}\right\}}.
+\end{equation}
+Si \(\x_1,\,\x_2,\,\dots,\,\x_n\) son variables aleatorias i.i.d., se cumple que 
+\[
+ \log f(x_1,\,x_2,\,\dots,\,x_n;\,\theta)=\log f(x_1;\,\theta)f(x_2;\,\theta)\dots f(x_n;\,\theta)=
+ \sum_{i=1}^n\log f(x_i;\,\theta),
+\]
+y por lo tanto,
+\begin{align*}
+ E\left\{\dfrac{\partial^2 \log f(\x_1,\,\x_2,\,\dots,\,\x_n;\,\theta)}{\partial\theta^2}\right\}&=
+  \sum_{i=1}^n E\left\{\dfrac{\partial^2 \log f(\x_i;\,\theta)}{\partial\theta^2}\right\}\\
+  &=nE\left\{\dfrac{\partial^2 \log f(\x_i;\,\theta)}{\partial\theta^2}\right\}\\
+  &=-nE\left\{\left(\dfrac{\partial\log f(\x_i;\,\theta)}{\partial\theta}\right)^2\right\},
+\end{align*}
+por lo que la cota se simplifica a 
+\[
+ \var\{T(\x)\}\geq\dfrac{1}{nE\left\{\left(\dfrac{\partial \log f(\x_i;\,\theta)}{\partial\theta}\right)^2\right\}}=\dfrac{-1}{nE\left\{\dfrac{\partial^2 \log f(\x_i;\,\theta)}{\partial\theta^2}\right\}}.
+\]
+Retornando a la situación general de la ecuación \ref{eq:crlb}, en la desigualdad de Cauchy-Schwarz de la ecuación \ref{eq:cauchy_schwarz_inequality} la igualdad se cumple si y solo si \(g(x)=af(x)\), donde \(a\) es una constante. Por lo tanto, la condición de igualdad en las ecuaciones \ref{eq:crlb_deduction_cauchy_schwarz_condition} y \ref{eq:crlb} es
+\begin{equation}\label{eq:crlb_efficiency_condition}
+ \frac{\partial \log f(\x;\,\theta)}{\partial\theta}=[T(\x)-\theta]a(\theta).
+\end{equation}
+En ese caso, el estimador \(T(\x)\) tiene la menor varianza posible y se dice que es un estimador \emph{eficiente} para \(\theta\). Claramente, si existe un estimador eficiente, es el mejor estimador respecto al punto de vista de la varianza.  En general, un estimador eficiente puede existir o no, según el problema.
+
+Se mostrará que si existe un estimador eficiente, es el estimador ML. Para hacerlo, se observa que el estimador ML cumple la ecuación \ref{eq:mle}, que indica que 
+\[
+ \frac{\partial\log f(\x;\,\theta)}{\partial\theta}\bigg|_{\theta=\hat{\theta}_\textrm{ML}}=0.
+\]
+Sustituyendo este resultado en la condición de eficiencia, dada por la ecuación \ref{eq:crlb_efficiency_condition}, se obtiene que 
+\[
+ \frac{\partial\log f(\x;\,\theta)}{\partial\theta}\bigg|_{\theta=\hat{\theta}_\textrm{ML}}=[T(\x)-\theta]a(\theta)\bigg|_{\theta=\hat{\theta}_\textrm{ML}}=0.
+\]
+Considerando que \(a(\theta)>0\), como se mostrará, se concluye que 
+\[
+ \hat{\theta}_\textrm{ML}=T(\x),
+\]
+lo que muestra que si existe un estimador eficiente, necesariamente es el estimador ML. Para completar la prueba, hay que mostrar que \(a(\theta)>0\). La diferenciación de la ecuación \ref{eq:crlb_efficiency_condition} resulta en 
+\[
+ \frac{\partial^2 \log f(\x;\,\theta)}{\partial\theta^2}=-a(\theta)+[T(\x)-\theta]a'(\theta),
+\]
+y tomando esperanza se obtiene que 
+\[
+ a(\theta)=-E\left\{\frac{\partial^2 \log f(\x;\,\theta)}{\partial\theta^2}\right\}
+  =E\left\{\left(\dfrac{\partial \log f(\x;\,\theta)}{\partial\theta}\right)^2\right\}
+  =J_{11}>0,
+\]
+donde se empleó que \(E\{T(\x)-\theta\}=0\) por la hipótesis de no sesgo de \(T(\x)\), además de la ecuación \ref{eq:crlb_fisher_information}.
+
+Sustituyendo \(a(\theta)=J_{11}\) en la ecuación \ref{eq:crlb_efficiency_condition}, se obtiene que la p.d.f. de un estimador eficiente tiene la forma 
+\begin{equation}\label{eq:crlb_efficient_estimator_exponential_family}
+ f(\x;\,\theta)=h(\x)e^{\int J_{11}[T(\x)-\theta]\,d\theta}.
+\end{equation}
+Efectivamente, integrando la ecuación \ref{eq:crlb_efficiency_condition} respecto a \(\theta\) se obtiene que 
+\[
+ \log f(\x;\,\theta)=\int J_{11}[T(\x)-\theta]\,d\theta + g(\x), 
+\]
+y al tomar exponencial se obtiene la ecuación \ref{eq:crlb_efficient_estimator_exponential_family}. La ecuación \ref{eq:crlb_efficient_estimator_exponential_family} representa la familia de p.d.f. exponencial\footnote{Ver \url{https://en.wikipedia.org/wiki/Exponential_family}, por ejemplo.}. En particular, si \(J_{11}\) es independiente de \(\theta\), se reduce a una p.d.f. gaussiana. Para verlo, se parte observando que en ese caso, el exponente es
+\[
+ J_{11}\int[T(\x)-\theta]\,d\theta=J_{11}\left[T(x)\theta-\frac{\theta^2}{2}\right],
+\]
+y se puede escribir como
+\[
+ J_{11}\left[T(x)\theta-\frac{\theta^2}{2}\right]=-\frac{J_{11}}{2}[T(\x)-\theta]^2+\frac{J_{11}}{2}T^2(\x),
+\]
+por lo que la ecuación \ref{eq:crlb_efficient_estimator_exponential_family} queda 
+\[
+ f(\x;\,\theta)=h(\x)e^{J_{11}T^2(\x)/2}e^{-J_{11}[T(\x)-\theta]^2/2}
+\]
+La función \(h(\x)\) debe ser tal que la p.d.f. integre a 1, y por lo tanto,
+\[
+ h(\x)e^{J_{11}T^2(\x)/2}=\frac{J_{11}}{\sqrt{2\pi}},
+\]
+resultando en que 
+\[
+ f(\x;\,\theta)=\frac{J_{11}}{\sqrt{2\pi}}e^{-J_{11}[T(\x)-\theta]^2/2},
+\]
+concluyendo que \(T(\x)\sim N(\theta,\,1/J_{11})\).
+
+No necesariamente existe un estimador eficiente en todos los casos. Sin embargo, el parámetro puede tener diversos estimadores insesgados, y entre ellos, alguno tiene menor varianza que el resto. Surge la pregunta de como proseguir para obtener dicho estimador.
+
+\paragraph{Ejemplo 8-17} Sea \(\x_i\sim N(\mu,\,\sigma^2)\), donde \(\mu\) es desconocido y \(\sigma^2\) es conocido. Además, las muestras \(\x_i\) son i.i.d. para \(i=1,\,\dots,\,n\). Es fácil verificar que 
+\[
+ T(\x)=\frac{\x_1+\x_2+\dots+\x_n}{n}=\bar{\x}
+\]
+es un estimador insesgado para \(\mu\), y también eficiente. De hecho, \(\bar{\x}\sim N(\mu,\,\sigma^2/n)\) (ver la ecuación \ref{eq:sample_mean_mean_and_variance}). Pero supóngase que el parámetro de interés no es \(\mu\) sino \(\mu^2\). De esta forma, \(\theta=\mu^2\) es desconocido y se necesita un estimador para \(\theta\). Se comenzará calculando la cota de Cramér-Rao. La p.d.f. de los datos es
+\begin{equation}\label{eq:example_8_17_pdf}
+ f(x_1,\,x_2,\,\dots,\,x_n;\,\theta)=\left(\frac{1}{2\pi\sigma^2}\right)^{n/2}e^{-\sum_{i=1}^n(x_i-\sqrt{\theta})^2/2\sigma^2}
+\end{equation}
+y tomando logaritmo y diferenciando respecto a \(\theta\) se obtiene que
+\[
+ \frac{\partial\log f(x_1,\,x_2,\,\dots,\,x_n;\,\theta)}{\partial\theta}
+  =\frac{\displaystyle\sum_{i=1}^n(x_i-\sqrt{\theta})^2}{2\sigma^2\sqrt{\theta}},
+\]
+y elevar al cuadrado y tomar esperanza resulta en
+\[
+ E\left\{\left(\frac{\partial\log f(x_1,\,x_2,\,\dots,\,x_n;\,\theta)}{\partial\theta}\right)^2\right\}
+ \overset{(a)}{=}\frac{\displaystyle\sum_{i=1}^nE\left\{(x_i-\mu)^2\right\}}{4\sigma^4\mu^2}
+ =\frac{n\sigma^2}{4\sigma^4\mu^2}
+ =\frac{n}{4\sigma^2\mu^2},
+\]
+donde \((a)\) se tuvo en cuenta que como las variables aleatorias \(\x_i\) son independientes, los términos de la forma \(E\{(x_i-\mu)(x_j-\mu)\}\) con \(i\neq j\) que surgen al elevar al cuadrado se anulan.
+Se concluye que la cota de CR para \(\theta=\mu^2\) es
+\[
+ \sigma^2_\textrm{CR}\triangleq\frac{4\sigma^2\mu^2}{n}\leq\var\{\hat{\theta}\},
+\]
+donde \(\hat{\theta}\) representa un estimador insesgado para \(\theta=\mu^2\). Para obtener un estimador insesgado, se examinará el estimador \(\bar{\x}^2\). Como
+\begin{equation}\label{eq:sample_mean_second_moment_normal}
+ E\{\bar{\x}^2\}=\var\{\bar{\x}\}+E^2\{\bar{\x}\}=\frac{\sigma^2}{n}+\mu^2,
+\end{equation}
+no es un estimador insesgado de \(\theta=\mu^2\), pero
+\[
+ \hat{\theta}(\x)=\bar{\x}^2-\frac{\sigma^2}{n}
+\]
+es insesgado. Su varianza es
+\begin{align*}
+ \var\{\hat{\theta}(\x)\}&=E\left\{[\hat{\theta}-\mu^2]^2\right\}\\
+  &=E\left\{\left[\bar{\x}^2-\left(\frac{\sigma^2}{n}+\mu^2\right)\right]^2\right\}\\
+  &=E\left\{\left[\bar{\x}^2-E\{\bar{\x}^2\}\right]^2\right\}\\
+  &=E\{\bar{\x}^4\}-E^2\{\bar{\x}^2\}.
+\end{align*}
+Para continuar, se considera que el momento cuarto de \(\bar{\x}\sim N(\mu,\,\sigma^2/n)\) está dado por la ecuación \ref{eq:normal_rv_moments} reemplazando \(\sigma^2\) por \(\sigma^2/n\), y el momento segundo por la ecuación \ref{eq:sample_mean_second_moment_normal}. Por lo tanto, 
+\begin{align*}
+ \var\{\hat{\theta}(\x)\}&=\left(\mu^4+\frac{6\sigma^2\mu^2}{n}+\frac{3\sigma^4}{n^2}\right)-\left(\mu^4+\frac{2\sigma^2\mu^2}{n}+\frac{\sigma^4}{n^2}\right)\\
+ &=\frac{4\sigma^2\mu^2}{n}+\frac{2\sigma^4}{n^2}.
+\end{align*}
+Se concluye que 
+\[
+ \var\{\hat{\theta}(\x)\}=\frac{4\sigma^2\mu^2}{n}+\frac{2\sigma^4}{n^2}>\frac{4\sigma^2\mu^2}{n}=\sigma^2_\textrm{CR}.
+\]
+Se obtuvo que la varianza del estimador insesgado para \(\theta=\mu\) supera la cota de CR, y por lo tanto, no es un estimador eficiente. ¿Será posible obtener un mejor estimador para \(\theta=\mu^2\)? Para responder esta pregunta, se introduce el concepto de estimador insesgado de varianza mínima.
+
+\subsection{Estimador insesgado de varianza mínima}
+
+Llámese \(\{T(\x)\}\) al conjunto de todos los estimadores insesgados de \(\theta\) y supóngase que \(T_0(\x)\in\{T(\x)\}\). Si
+\[
+ E\{(T_0(\x)-\theta)^2\}\leq E\{(T(\x)-\theta)^2\}
+\]
+para todo \(T(\x)\in\{T(\x)\}\), \(T_0(\x)\) se denomina el estimador insesgado de varianza mínima (UMVUE, \emph{uniformly minimum variance unbiased estimator}) para \(\theta\). El UMVUE para \(\theta\) es el estimador insesgado con la menor varianza posible. Es fácil mostrar que el UMVUE es único. El teorema de Rao-Blackwell indica la forma de encontrar el UMUVE para un parámetro \(\theta\).
+ 
+\paragraph{Teorema de Rao-Blackwell} Sea \(h(\x)\) un estimador insesgado para \(\theta\) y \(T(\x)\) un estadísitco suficiente para \(\theta\). Bajo estás hipótesis, la esperanza condicional \(E[h(\x)\,|\,T(\x)]\) es independiente de \(\theta\) y es el UMVUE para \(\theta\).
+
+Se realiza a continuación la demostración basada en \cite{papoulis2002probability}, pero se incluye la expresión explícita de las esperanzas como integrales para mayor claridad. La demostración también puede encontrarse en \cite{kay93fundamentals}.
+
+Sea el estimador
+\begin{equation}\label{eq:umvue_from_sufficient_statistic}
+ T_0(\x)=E[h(\x)\,|\,T(\x)].
+\end{equation}
+Observar que de esta forma, \(T_0(\x)\) solo depende de \(T(\x)=t\) y no del parámetro \(\theta\) ni de otra función de los datos, ya que
+\begin{align*}
+ T_0(\x)&=E[h(\x)\,|\,T(\x)]\\
+  &=\int h(\x)f(\x;\,\theta\,|\,T(\x))\,d\x\\
+  &\overset{(a)}{=}\int h(\x)f(\x\,|\,T(\x))\,d\x,
+\end{align*}
+y al integrar en \(\x\), el resultado solo depende de los datos a través de \(T(\x)=t\). Notar que en \((a)\) se empleó la hipótesis de que \(T(\x)\) es suficiente, por lo que la p.d.f. condicional no depende del parámetro \(\theta\). Además, se cumple que 
+\[
+ E\{T_0(\x)\}=E\{E[h(\x)\,|\,T(\x)]\}\overset{(a)}{=}E\{h(\x)\}\overset{(b)}{=}\theta.
+\]
+donde en \((a)\) se aplicó la ley de la esperanza total, dada por la ecuación \ref{eq:law_of_total_expectation}, y en \((b)\) se empleó la hipótesis de que el estimador \(h(\x)\) es insesgado. Esto indica que \(T_0(\x)\) también es un estimador insesgado para \(\theta\). Para hacer el razonamiento mas explícito se incluye la misma expresión en términos de integrales:
+\begin{align*}
+ E\{T_0(\x)\}&\overset{(a)}{=}\int T_0(\x)f(T(\x);\,\theta)\,dt\\
+  &=\int E[h(\x)\,|\,T(\x)]f(T(\x);\,\theta)\,dt\\
+  &=\int \left(\int h(\x)f(\x\,|\,T(\x))\,d\x\right) f(T(\x);\,\theta)\,dt\\
+  &=\int h(\x)\int f(\x\,|\,T(\x))f(T(\x);\,\theta)\,dt\,d\x\\
+  &=\int h(\x)\int f(\x;\,\theta,\,T(\x))\,dt\,d\x\\
+  &=\int h(\x)f(\x;\,\theta)\,d\x\\
+  &=E\{h(\x)\},
+\end{align*}
+donde en \((a)\) se tuvo en cuenta que \(T_0(\x)\) solo depende de los datos a través de \(T(\x)=t\) y no de \(\theta\) o de otra función de los datos, como se comentó previamente, y en el resto del razonamiento se emplearon definiciones y propiedades básicas.
+
+Continuando con la demostración, al momento se tiene que \(T_0(\x)\) es un estimador válido ya que no depende del parámetro \(\theta\) y además es insesgado. Para completar la demostración hay que probar que la varianza de \(T_0(\x)\) es menor a la varianza de cualquier otro estimador insesgado, es decir,
+\begin{equation}\label{eq:rao_blackwell_variances_inequality}
+  \var\{T_0(\x)\}\leq\var\{h(\x)\}.
+\end{equation}
+Como
+\[
+ \var\{T_0(\x)\}=E\{T_0^2(\x)\}-\theta^2\qquad\qquad\textrm{y}\qquad\qquad\var\{h(\x)\}=E\{h^2(\x)\}-\theta^2,
+\]
+alcanza con probar que 
+\begin{equation}\label{eq:rao_blackwell_expectations_inequality}
+ E\{T_0^2(\x)\}\leq E\{h^2(\x)\}.
+\end{equation}
+Además
+\begin{equation}\label{eq:rao_blackwell_h_total_expectation}
+ E\{h^2(\x)\}=E\{E[h^2(\x)\,|\,T(\x)]\},
+\end{equation}
+donde nuevamente se empleó la ley de esperanza total. Al igual que antes, se incluye el razonamiento expresando las esperanzas como integrales:
+\begin{align*}
+ E\{h^2(\x)\}&=\int h^2(\x)f(\x;\,\theta)\,d\x\\
+  &=\int h^2(\x)\left(\int f(\x;\,\theta\,|\,T(\x))f(T(\x);\,\theta)\,dt\right)\,d\x\\
+  &\overset{(a)}{=}\int\left(\int h^2(\x)f(\x\,|\,T(\x))\,d\x\right)f(T(\x);\,\theta)\,dt\\
+  &=\int E[h^2(\x)\,|\,T(\x)]f(T(\x);\,\theta)\,dt\\
+  &\overset{(b)}{=}E\{E[h^2(\x)\,|\,T(\x)]\},
+\end{align*}
+donde en \((a)\) se tuvo en cuenta que \(T(\x)\) es suficiente y por lo tanto la densidad condicional no depende del parámetro y en \((b)\) se consideró que \(E[h^2(\x)\,|\,T(\x)]\) solo depende de los datos a través de \(T(\x)\) por el mismo argumento dado antes para \(T_0(\x)=E[h(\x)\,|\,T(\x)]\). A partir de este resultado y la definición de \(T_0(\x)\), la desigualdad de la ecuación \ref{eq:rao_blackwell_expectations_inequality} que se quiere probar es equivalente a 
+\[
+ E\{E^2[h(\x)\,|\,T(\x)]\}\leq E\{E[h^2(\x)\,|\,T(\x)]\}.
+\]
+Como esta expresión en términos de integrales es
+\[
+ \int\left(\int h(\x)f(\x\,|\,T(\x))\,d\x\right)^2f(T(\x);\,\theta)\,dt\leq\int\left(\int h^2(\x)f(\x\,|\,T(\x))\,d\x\right)f(T(\x);\,\theta)\,dt,
+\]
+o
+\[
+ \int E^2[h(\x)\,|\,T(\x)]f(T(\x);\,\theta)\,dt\leq\int E[h^2(\x)\,|\,T(\x)]f(T(\x);\,\theta)\,dt
+\]
+la desigualdad se cumple si se cumple que 
+\[
+ E^2[h(\x)\,|\,T(\x)]\leq E[h^2(\x)\,|\,T(\x)]
+\]
+o
+\[
+ \left(\int h(\x)f(\x\,|\,T(\x))\,d\x\right)^2\leq\int h^2(\x)f(\x\,|\,T(\x))\,d\x.
+\]
+Pero esta desigualdad efectivamente se cumple, ya que
+\begin{align}\label{eq:rao_blackwell_cs_inequality}
+ \left(\int h(\x)f(\x\,|\,T(\x))\,d\x\right)^2&=\left(\int h(\x)\sqrt{f(\x\,|\,T(\x))}\sqrt{f(\x\,|\,T(\x))}\,d\x\right)^2\nonumber\\
+  &\overset{(a)}{\leq} \left(\int h^2(\x)f(\x\,|\,T(\x))\,d\x\right)\left(\int f(\x\,|\,T(\x))\,d\x\right)\\
+  &=\int h^2(\x)f(\x\,|\,T(\x))\,d\x\nonumber,
+\end{align}
+donde en \((a)\) se aplicó la desigualdad de Cauchy-Schwarz, dada por la ecuación \ref{eq:cauchy_schwarz_inequality}. Esto concluye la prueba. El mismo razonamiento en términos de esperanzas es
+\[
+ E^2[h(\x)\,|\,T(\x)]\leq E[h^2(\x)\,|\,T(\x)]E[1\,|\,T(\x)]=E[h^2(\x)\,|\,T(\x)].
+\]
+
+La igualdad en las ecuaciones \ref{eq:rao_blackwell_variances_inequality} y \ref{eq:rao_blackwell_expectations_inequality} es
+\[
+ E\{T_0^2(\x)\}=E\{h^2(\x)\},
+\]
+y a partir de la definición de \(T_0(\x)\) de la ecuación \ref{eq:umvue_from_sufficient_statistic} y de la ecuación \ref{eq:rao_blackwell_h_total_expectation} se puede expresar como 
+\[
+ E\{E^2[h(\x)\,|\,T(\x)]\}=E\{E[h^2(\x)\,|\,T(\x)]\}
+ \qquad\Leftrightarrow\qquad
+ E\{E[h^2(\x)\,|\,T(\x)]\}-E\{E^2[h(\x)\,|\,T(\x)]\}=0.
+\]
+Además, como
+\begin{align*}
+ E\{E[h^2(\x)\,|\,T(\x)]\}-E\{E^2[h(\x)\,|\,T(\x)]\}&=E\{E[h^2(\x)\,|\,T(\x)]-E^2[h(\x)\,|\,T(\x)]\}\\
+  &=E\{\var[h(\x)\,|\,T(\x)]\},
+\end{align*}
+la condición de igualdad es
+\[
+ E\{\var[h(\x)\,|\,T(\x)]\}=0
+ \quad\Leftrightarrow\quad
+ \var[h(\x)\,|\,T(\x)]=0
+ \quad\Leftrightarrow\quad
+ E[h^2(\x)\,|\,T(\x)]=E^2[h(\x)\,|\,T(\x)]=h^2,
+\]
+lo cual se cumple si y solo si
+\[
+ h=E[h(\x)\,|\,T(\x)].
+\]
+El resultado indica que si \(h\) es una función únicamente del estadístico suficiente \(T(\x)=t\), es el UMVUE. 
+
+La condición expresando las esperanzas explícitamente como integrales es la igualdad en la desigualdad de Cauchy-Schwarz,
+\[
+ \left(\int h(\x)f(\x\,|\,T(\x))\,d\x\right)^2=\int h^2(\x)f(\x\,|\,T(\x))\,d\x,
+\]
+que se cumple si \(h(\x)=h\) solo depende de los datos a través de \(T(\x)=t\), y en ese caso,
+\[
+ h^2\left(\int f(\x\,|\,T(\x))\,d\x\right)^2=h^2\int f(\x\,|\,T(\x))\,d\x=h^2.
+\]
+De forma equivalente, la condición de igualdad en la desigualdad de Cauchy-Schwarz en la ecuación \ref{eq:cauchy_schwarz_inequality} es \(f(x)=hg(x)\), por lo que la igualdad en \ref{eq:rao_blackwell_cs_inequality} se da si
+\[
+ h(\x)\sqrt{f(\x\,|\,T(\x))}=h\sqrt{f(\x\,|\,T(\x))},
+\]
+donde \(h\) depende solo de los datos \(\x\) a través de \(T(\x)=t\).
+
+De acuerdo al teorema de Rao-Blackwell, un estimador insesgado para \(\theta\) que es función de su esetadístico suficiente, es el UMVUE para \(\theta\). Además, la esperanza condicional de cualquier estimador insesgado dado el estadístico suficiente provee el UMVUE.
+
+
+\paragraph{Ejemplo 8-17 (continuación)} En el ejemplo 8-17 se obtuvo que un estimador insesgado de \(\theta=\mu^2\) es
+\[
+ \hat{\theta}(\bar{\x})=\bar{\x}^2-\frac{\sigma^2}{n}.
+\]
+La p.d.f de los datos está dada por la ecuación \ref{eq:example_8_17_pdf}, y observando que el exponente se puede escribir como
+\[
+ -\frac{1}{2\sigma^2}\sum_{i=1}^n(x_i-\sqrt{\theta})^2=-\frac{1}{2\sigma^2}\left(\sum_{i=1}^n x_i^2-2\sqrt{\theta}\sum_{i=1}^nx_i+n\theta\right)
+ =-\frac{1}{2\sigma^2}\left(\sum_{i=1}^n x_i^2-2\sqrt{\theta}n\bar{\x}+n\theta\right),
+\]
+la p.d.f. queda 
+\[
+ f(x_1,\,x_2,\,\dots,\,x_n;\,\theta)=\underbrace{\left(\frac{1}{2\pi\sigma^2}\right)^{n/2}e^{-\sum_{i=1}^n x_i^2/2\sigma^2}}_{\displaystyle h(\x)}\underbrace{e^{-n(\theta-2\sqrt{\theta}\bar{\x})/2\sigma^2}\vphantom{\left(\frac{1}{2\pi\sigma^2}\right)^{n/2}}}_{\displaystyle g_\theta(T(\x))},
+\]
+y el teorema de factorización de Fisher-Neyman (ver la sección \ref{sec:statistics_sufficient_statistic}) indica que \(T(\x)=\bar{\x}\) es un estadístico suficiente para \(\theta=\mu^2\). Como el estimador es una función del estadístico suficiente, ya que 
+\[
+ \hat{\theta}(\bar{\x})=T^2(\x)-\frac{\sigma^2}{n},
+\]
+por el teorema de Rao-Blackwell es el UMVUE para \(\theta=\mu^2\).
+
+
+El teorema de Rao-Blackwell establece que todos los UMVUEs dependen únicamente del estadístico suficiente. Esto es consistente con la noción de suficiencia, ya que en ese caso, \(T(\x)\) contiene  la misma información sobre \(\theta\) que está contenida en el conjunto de datos \(\x=(\x_1,\,\x_2,\,\dots,\,\x_n)\), y por lo tanto, el mejor estimador posible debe depender únicamente del estadístico suficiente. De esta forma, si \(h(\x)\) es un estimador insesgado para \(\theta\), por el teorema de Rao-Blackwell es posible reducir su varianza condicionándolo en \(T(\x)\). Comparado con \(h(\x)\),
+\begin{align*}
+  T_0&=E\{h(\x)\,|\,T(\x)=t\}\\
+   &=\int h(\x)f(\x;\,\theta\,|\,T(\x)=t)\,d\x
+\end{align*}
+es un mejor estimador para \(\theta\). Como se mencionó previamente, \(f(\x;\,\theta\,|\,T(\x)=t)\) no depende de \(\theta\) debido a que \(T(\x)\) es suficiente. Por lo tanto, \(T_0=E\{h(\x)\,|\,T(\x)=t\}\) es independiente de \(\theta\) y depende de los datos solo a través de \(T(\x)=t\), y como se demostró en el teorema, es insesgado. Otra forma de ver que reduce la varianza es aplicando la identidad
+\begin{equation}\label{eq:law_of_total_variance}
+ \var\{\x\}=E\{\var[\x\,|\,\y]\}+\var\{E[\x\,|\,\y]\}
+\end{equation}
+a \(h(\x)\). De esta forma,
+\[
+ \var\{h(\x)\}=E\{\var[h(\x)\,|\,T(\x)]\}+\var\{E[h(\x)\,|\,T(\x)]\}
+  =E\{\var[h(\x)\,|\,T(\x)]\}+\var\{T_1\},
+\]
+y como \(\var[h(\x)\,|\,T(\x)]\geq0\), se concluye que 
+\[
+ \var\{T_1\}\leq \var\{h(\x)\}.
+\]
+La ecuación \ref{eq:law_of_total_variance} se denomina \emph{ley de la varianza total}\footnote{Ver \url{https://en.wikipedia.org/wiki/Law_of_total_variance}, por ejemplo.}. Para demostrarla, se parte de que de la definición de varianza, se cumple que 
+\[
+ \var[\x\,|\,\y]=E[\x^2\,|\,\y]+E^2[\x\,|\,\y]
+\]
+y tomando esperanza, se tiene que 
+\[
+ E\{\var[\x\,|\,\y]\}=E\{E[\x^2\,|\,\y]\}-E\{E^2[\x\,|\,\y]\}.
+\]
+Por otro lado, también de la definición de varianza, se cumple que 
+\[
+ \var\{E[\x\,|\,\y]\}=E\{E^2[\x\,|\,\y]\}-E^2\{E[\x\,|\,\y]\}.
+\]
+Sumando estas dos ecuaciones, se obtiene que 
+\begin{align*}
+ E\{\var[\x\,|\,\y]\}+\var\{E[\x\,|\,\y]\}&=E\{E[\x^2\,|\,\y]\}-E^2\{E[\x\,|\,\y]\}\\
+  &\overset{(a)}{=}E(\x^2)-E^2(\x)\\
+  &=\var\{\x\},
+\end{align*}
+donde en \((a)\) se empleó la ley de esperanza total, dada por la ecuación \ref{eq:law_of_total_expectation}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
