@@ -20,6 +20,9 @@
 \usepackage{mathdots}
 \usepackage{multirow}
 \usepackage[table,xcdraw]{xcolor}
+\usepackage{stackengine}
+\stackMath
+\usepackage{csquotes}
 
 % plot a circle
 \usepackage{tikz}
@@ -73,6 +76,11 @@
 \newcommand{\h}{\mathbf{h}}
 \newcommand{\A}{\mathbf{A}}
 \newcommand{\B}{\mathbf{B}}
+\newcommand{\C}{\mathbf{C}}
+\newcommand{\D}{\mathbf{D}}
+\newcommand{\I}{\mathbf{I}}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\T}{\mathbf{T}}
 \newcommand{\x}{\mathbf{x}}
 \newcommand{\y}{\mathbf{y}}
 \newcommand{\w}{\mathbf{w}}
@@ -84,13 +92,14 @@
 \newcommand{\Gammabf}{\mathbf{\Gamma}}
 \newcommand{\thetabf}{\bm{\theta}}
 \newcommand{\var}{\operatorname{var}}
+\newcommand{\cov}{\operatorname{cov}}
 
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 
 \newtheorem*{theorem*}{Teorema}
 
-\title{Estudiando el libro ``Probability, random variables, and stochastic processes''}
+\title{Estudiando el libro ``Probability, random variables, and stochastic processes'' de Athanasios Papoulis y S. Unnikrishna Pillai}
 \author{Ernesto López}
 
 \begin{document} 
@@ -2817,7 +2826,7 @@ Observar que en general, la media es distinta a la mediana. La situación partic
 
 \section{Momentos}
 
-\subsection{Definiciones}
+\subsection{Definiciones}\label{sec:moments_definitions}
 
 \bgroup
 \def\arraystretch{2.5}
@@ -6917,9 +6926,9 @@ respectivamente. Se demostrará que si las variables aleatorias \(\x_i\) son no 
   E\{\bar{\x}\}=\eta,\qquad \sigma_{\bar{x}}^2=\frac{\sigma^2}{n}
 \end{equation}
 y la media y la varianza de la varianza muestral es
-\[
+\begin{equation}\label{eq:sample_variance_mean_and_variance}
  E\{\bar{\mathbf{v}}\}=\sigma^2,\qquad \sigma^2_{\bar{v}}=\frac{1}{n}\left(\mu_4-\frac{n-3}{n-1}\sigma^4\right).
-\]
+\end{equation}
 
 La media de la media muestral se obtiene directamente a partir de la linealidad de la esperanza,
 \[
@@ -7221,9 +7230,9 @@ Notar que
 donde \(\X^t\) es el vector traspuesto de \(\X\), resultando en un vector columna. Se verán algunas propiedades de la matriz de correlación \(R_n\) y su determinante \(\Delta_n\). Las propiedades de la matriz de covarianza \(C_n\) son similares por ser la matriz de correlación de las variables aleatorias centradas \(\x_i-\eta_i\).
 \begin{itemize}
  \item La matriz \(R_n\) es \emph{semidefinida positiva}. Esto significa que para cualquier vector \(A=[a_1,\dots,a_n]\) se cumple que
- \[
-  Q=\sum_{i,\,j}a_ia_j^*R_{ij}=AR_nA^\mathrm{H}\geq 0,
- \]
+ \begin{equation}\label{eq:semidefinite_positive_condition}
+   Q=\sum_{i,\,j}a_ia_j^*R_{ij}=AR_nA^\mathrm{H}\geq 0,
+ \end{equation}
  donde \(A^\mathrm{H}\) es el vector complejo conjugado transpuesto de \(A\). Para demostrarlo, se observa que
  \[
   E\{|a_1\x_1+\cdots+a_n\x_n|^2\}\geq0,
@@ -10114,6 +10123,81 @@ que no depende de \(\theta\), y por lo tanto, \(T\) es suficiente.
   \]
 \end{itemize}
 
+\paragraph{Ejemplo 8-14} Sean \(\x_1,\,\x_2,\,\dots,\,\x_n\) variables aleatorias i.i.d. con distribución \(N(\mu,\,\sigma^2)\). La p.d.f. conjunta es
+\[
+ f(\x;\,\mu,\,\sigma^2)=\left(\frac{1}{2\pi\sigma^2}\right)^{n/2}e^{-\sum_{i=1}^n(x_i-\mu)^2/2\sigma^2}
+\]
+y se puede expresar como
+\[
+ f(\x;\,\mu,\,\sigma^2)=\underbrace{1\vphantom{\left(\frac{1}{2\pi\sigma^2}\right)^{n/2}}}_{\displaystyle h(\x)}\times\underbrace{\left(\frac{1}{2\pi\sigma^2}\right)^{n/2}e^{-\left(\sum_{i=1}^nx^2_i/2\sigma^2-\mu\sum_{i=1}^nx_i/\sigma^2+n\mu/2\sigma^2\right)}}_{\displaystyle g_\theta(T(\x))}.
+\]
+Por lo tanto, el conjunto
+\[
+ \left(\sum_{i=1}^{n}\x_i,\,\sum_{i=1}^{n}\x^2_i\right)
+\]
+es suficiente para el par de parámetros \((\mu,\,\sigma^2)\). Observar que si \(\sigma^2\) es conocido, \(\sum_{i=1}^{n}\x_i\) es suficiente para \(\mu\) y si \(\mu\) es conocido, \(\sum_{i=1}^{n}\x^2_i\) es suficiente para \(\sigma^2\).
+
+
+\paragraph{Ejemplo 8-15} Sean \(\x_1,\,\x_2,\,\dots,\,\x_n\) variables aleatorias i.i.d. con distribución \(U(0,\,\theta)\). La p.d.f. conjunta es
+\[
+ f_x(x_1,\,x_2,\,\dots,\,x_n;\,\theta)=
+ \left\{ 
+ \def\arraystretch{1.8}
+ \begin{array}{ll}
+  \dfrac{1}{\theta^n} & 0<x_1,\,x_2,\,\dots,\,x_n<\theta\\
+  0 & \textrm{en otro caso.}
+ \end{array}\right.
+\]
+Se define la función 
+\[
+ I_{(a,\,b)}=
+ \left\{ 
+ \begin{array}{ll}
+  1 & b\geq a\\
+  0 & \textrm{en otro caso,}
+ \end{array}\right.
+\]
+y las variables aleatorias
+\begin{align*}
+ \max\x&=\max(\x_1,\,\x_2,\,\dots,\,\x_n)\\
+ \min\x&=\min(\x_1,\,\x_2,\,\dots,\,\x_n).
+\end{align*}
+De esta forma
+\[
+ f_x(x_1,\,x_2,\,\dots,\,x_n;\,\theta)=\frac{1}{\theta^n}I_{(0,\,\min\x)}I_{(\max\x,\,\theta)}
+  =h(\x)g_\theta(T),
+\]
+donde
+\[
+ h(\x)=I_{(0,\,\min\x)}\qquad\qquad\textrm{y}\qquad\qquad g_\theta(T)=\frac{1}{\theta^n}I_{(\max\x,\,\theta)}.
+\]
+Por lo tanto,
+\[
+ T(\x_1,\,\x_2,\,\dots,\,\x_n)=\max(\x_1,\,\x_2,\,\dots,\,\x_n)
+\]
+es suficiente para \(\theta\) para variables aleatorias uniformes.
+
+De forma similar, si \(\x_i\) representa una variable aleatoria uniforme con
+\[
+ P\{\x_i=k\}=\frac{1}{N},\qquad k=1,\,2,\,\dots,\,N,
+\]
+y \(\x_1,\,\x_2,\,\dots,\,\x_n\) son i.i.d., la p.m.f. de los datos es
+\begin{align*}
+  P\{\x_1=x_1,\,\x_2=x_2,\,\dots,\,\x_n=x_n;\,N\}&=
+ \left\{ 
+ \def\arraystretch{1.8}
+ \begin{array}{ll}
+  \dfrac{1}{N^n} & 1\leq x_1,\,x_2,\,\dots,\,x_n\leq N\\
+  0 & \textrm{en otro caso.}
+ \end{array}\right.\\
+ &=\frac{1}{N^n}I_{(1,\,\min\x)}I_{(\max\x,\,N)}
+\end{align*}
+y por lo tanto,
+\begin{equation}\label{eq:uniform_maximum_sufficient_statistic_discrete}
+ T(\x)=\max(\x_1,\,\x_2,\,\dots,\,\x_n),
+\end{equation}
+es suficiente para el parámetro \(N\) discreto.
+
 \subsection{Estimadores insesgados}
 
 Un estimador \(T(\x)\) se dice insesgado para \(\theta\) si
@@ -10143,9 +10227,9 @@ Diferenciando respecto a \(\theta\) se obtiene que
  \int_{-\infty}^\infty (T(\x)-\theta)\frac{\partial f(\x;\,\theta)}{\partial\theta}\,dx-\int_{-\infty}^\infty f(\x;\,\theta)\,dx=0,
 \]
 resultando en
-\[
+\begin{equation}\label{eq:crlb_likelihood_expectation}
  \int_{-\infty}^\infty (T(\x)-\theta)\frac{\partial f(\x;\,\theta)}{\partial\theta}\,dx=1,
-\]
+\end{equation}
 en donde se emplearon las condiciones de regularidad dadas por las ecuaciones \ref{eq:crlb_regularity_1} y \ref{eq:crlb_regularity_2} para intercambiar el orden de diferencianción e integración. Considerando que
 \[
  \frac{\partial \log f(\x;\,\theta)}{\partial\theta}=\frac{1}{f(\x;\,\theta)}\frac{\partial f(\x;\,\theta)}{\partial\theta}
@@ -10155,9 +10239,9 @@ y por lo tanto
  \frac{\partial f(\x;\,\theta)}{\partial\theta}=f(\x;\,\theta)\frac{\partial \log f(\x;\,\theta)}{\partial\theta},
 \end{equation}
 se obtiene que 
-\[
+\begin{equation}\label{eq:crlb_loglikelihood_expectation}
  \int_{-\infty}^\infty (T(\x)-\theta)f(\x;\,\theta)\frac{\partial \log f(\x;\,\theta)}{\partial\theta}\,dx=1.
-\]
+\end{equation}
 Esta expresión se puede escribir como
 \[
  \int_{-\infty}^\infty\left[(T(\x)-\theta)\sqrt{f(\x;\,\theta)}\right]\left[\sqrt{f(\x;\,\theta)}\frac{\partial \log f(\x;\,\theta)}{\partial\theta}\right]\,dx=1,
@@ -10191,10 +10275,10 @@ obteniendo la cota buscada
  \var\{T(\x)\}\geq\dfrac{1}{E\left\{\left(\dfrac{\partial \log f(\x;\,\theta)}{\partial\theta}\right)^2\right\}}.
 \]
 Además, integrando la ecuación \ref{eq:crlb_loglikelihood_derivative}, se obtiene que
-\[
+\begin{equation}\label{eq:crlb_deduction_loglikelihood_derivative_expectation}
  \int_{-\infty}^\infty f(\x;\,\theta)\frac{\partial \log f(\x;\,\theta)}{\partial\theta}\,dx=\int_{-\infty}^\infty\frac{\partial f(\x;\,\theta)}{\partial\theta}\,dx
- \overset{(a)}{=}\frac{\partial}{\partial\theta}\int_{-\infty}^\infty f(\x;\,\theta)\,dx=0,
-\]
+ \overset{(a)}{=}\frac{\partial}{\partial\theta}\int_{-\infty}^\infty f(\x;\,\theta)\,dx=\frac{\partial1}{\partial\theta}=0,
+\end{equation}
 donde en \((a)\) se empleó la condición de regularidad dada por la ecuación \ref{eq:crlb_regularity_1}. Diferenciando respecto a \(\theta\) resulta en 
 \[
  \int_{-\infty}^\infty \frac{\partial f(\x;\,\theta)}{\partial\theta}\frac{\partial \log f(\x;\,\theta)}{\partial\theta}\,dx+
@@ -10213,7 +10297,7 @@ es decir,
 \end{equation}
 \(J_{11}(\theta)\) es referida como la \emph{información de Fisher} contenida en el conjunto de datos sobre el parámetro \(\theta\). Se obtuvo que 
 \begin{equation}\label{eq:crlb}
- \var\{T(\x)\}\geq\dfrac{1}{E\left\{\left(\dfrac{\partial \log f(\x;\,\theta)}{\partial\theta}\right)^2\right\}}=\dfrac{-1}{E\left\{\dfrac{\partial^2 \log f(\x;\,\theta)}{\partial\theta^2}\right\}}.
+ \var\{T(\x)\}\geq\dfrac{1}{E\left\{\left(\dfrac{\partial \log f(\x;\,\theta)}{\partial\theta}\right)^2\right\}}=\dfrac{-1}{E\left\{\dfrac{\partial^2 \log f(\x;\,\theta)}{\partial\theta^2}\right\}}=\frac{1}{J_{11}}.
 \end{equation}
 Si \(\x_1,\,\x_2,\,\dots,\,\x_n\) son variables aleatorias i.i.d., se cumple que 
 \[
@@ -10221,16 +10305,16 @@ Si \(\x_1,\,\x_2,\,\dots,\,\x_n\) son variables aleatorias i.i.d., se cumple que
  \sum_{i=1}^n\log f(x_i;\,\theta),
 \]
 y por lo tanto,
-\begin{align*}
+\begin{align}\label{eq:crlb_fisher_information_iid}
  E\left\{\dfrac{\partial^2 \log f(\x_1,\,\x_2,\,\dots,\,\x_n;\,\theta)}{\partial\theta^2}\right\}&=
-  \sum_{i=1}^n E\left\{\dfrac{\partial^2 \log f(\x_i;\,\theta)}{\partial\theta^2}\right\}\\
-  &=nE\left\{\dfrac{\partial^2 \log f(\x_i;\,\theta)}{\partial\theta^2}\right\}\\
+  \sum_{i=1}^n E\left\{\dfrac{\partial^2 \log f(\x_i;\,\theta)}{\partial\theta^2}\right\}\nonumber\\
+  &=nE\left\{\dfrac{\partial^2 \log f(\x_i;\,\theta)}{\partial\theta^2}\right\}\nonumber\\
   &=-nE\left\{\left(\dfrac{\partial\log f(\x_i;\,\theta)}{\partial\theta}\right)^2\right\},
-\end{align*}
+\end{align}
 por lo que la cota se simplifica a 
-\[
+\begin{equation}\label{eq:crlb_iid}
  \var\{T(\x)\}\geq\dfrac{1}{nE\left\{\left(\dfrac{\partial \log f(\x_i;\,\theta)}{\partial\theta}\right)^2\right\}}=\dfrac{-1}{nE\left\{\dfrac{\partial^2 \log f(\x_i;\,\theta)}{\partial\theta^2}\right\}}.
-\]
+\end{equation}
 Retornando a la situación general de la ecuación \ref{eq:crlb}, en la desigualdad de Cauchy-Schwarz de la ecuación \ref{eq:cauchy_schwarz_inequality} la igualdad se cumple si y solo si \(g(x)=af(x)\), donde \(a\) es una constante. Por lo tanto, la condición de igualdad en las ecuaciones \ref{eq:crlb_deduction_cauchy_schwarz_condition} y \ref{eq:crlb} es
 \begin{equation}\label{eq:crlb_efficiency_condition}
  \frac{\partial \log f(\x;\,\theta)}{\partial\theta}=[T(\x)-\theta]a(\theta).
@@ -10494,16 +10578,16 @@ La p.d.f de los datos está dada por la ecuación \ref{eq:example_8_17_pdf}, y o
 \]
 la p.d.f. queda 
 \[
- f(x_1,\,x_2,\,\dots,\,x_n;\,\theta)=\underbrace{\left(\frac{1}{2\pi\sigma^2}\right)^{n/2}e^{-\sum_{i=1}^n x_i^2/2\sigma^2}}_{\displaystyle h(\x)}\underbrace{e^{-n(\theta-2\sqrt{\theta}\bar{\x})/2\sigma^2}\vphantom{\left(\frac{1}{2\pi\sigma^2}\right)^{n/2}}}_{\displaystyle g_\theta(T(\x))},
+ f(x_1,\,x_2,\,\dots,\,x_n;\,\theta)=\underbrace{\left(\frac{1}{2\pi\sigma^2}\right)^{n/2}e^{-\sum_{i=1}^n x_i^2/2\sigma^2}}_{\displaystyle h(\x)}\underbrace{e^{-n(\theta-2\sqrt{\theta}\bar{\x})/2\sigma^2}\vphantom{\left(\frac{1}{2\pi\sigma^2}\right)^{n/2}}}_{\displaystyle g_\theta(T(\x))}=h(\x)g_\theta(T(\x)),
 \]
-y el teorema de factorización de Fisher-Neyman (ver la sección \ref{sec:statistics_sufficient_statistic}) indica que \(T(\x)=\bar{\x}\) es un estadístico suficiente para \(\theta=\mu^2\). Como el estimador es una función del estadístico suficiente, ya que 
+y por el teorema de factorización de Fisher-Neyman (ver la sección \ref{sec:statistics_sufficient_statistic}), \(T(\x)=\bar{\x}\) es un estadístico suficiente para \(\theta=\mu^2\). Como el estimador es una función del estadístico suficiente, ya que 
 \[
  \hat{\theta}(\bar{\x})=T^2(\x)-\frac{\sigma^2}{n},
 \]
-por el teorema de Rao-Blackwell es el UMVUE para \(\theta=\mu^2\).
+por el teorema de Rao-Blackwell, es el UMVUE para \(\theta=\mu^2\).
 
 
-El teorema de Rao-Blackwell establece que todos los UMVUEs dependen únicamente del estadístico suficiente. Esto es consistente con la noción de suficiencia, ya que en ese caso, \(T(\x)\) contiene  la misma información sobre \(\theta\) que está contenida en el conjunto de datos \(\x=(\x_1,\,\x_2,\,\dots,\,\x_n)\), y por lo tanto, el mejor estimador posible debe depender únicamente del estadístico suficiente. De esta forma, si \(h(\x)\) es un estimador insesgado para \(\theta\), por el teorema de Rao-Blackwell es posible reducir su varianza condicionándolo en \(T(\x)\). Comparado con \(h(\x)\),
+El teorema de Rao-Blackwell establece que todos los UMVUEs dependen únicamente del estadístico suficiente. Esto es consistente con la noción de suficiencia, ya que en ese caso, \(T(\x)\) contiene  la misma información sobre \(\theta\) que el conjunto de datos \(\x=(\x_1,\,\x_2,\,\dots,\,\x_n)\), y por lo tanto, el mejor estimador posible debe depender únicamente del estadístico suficiente. De esta forma, si \(h(\x)\) es un estimador insesgado para \(\theta\), por el teorema de Rao-Blackwell es posible reducir su varianza condicionándolo en \(T(\x)\). Comparado con \(h(\x)\),
 \begin{align*}
   T_0&=E\{h(\x)\,|\,T(\x)=t\}\\
    &=\int h(\x)f(\x;\,\theta\,|\,T(\x)=t)\,d\x
@@ -10512,7 +10596,7 @@ es un mejor estimador para \(\theta\). Como se mencionó previamente, \(f(\x;\,\
 \begin{equation}\label{eq:law_of_total_variance}
  \var\{\x\}=E\{\var[\x\,|\,\y]\}+\var\{E[\x\,|\,\y]\}
 \end{equation}
-a \(h(\x)\). De esta forma,
+a \(h(\x)\) condicionado con \(T(\x)\). De esta forma,
 \[
  \var\{h(\x)\}=E\{\var[h(\x)\,|\,T(\x)]\}+\var\{E[h(\x)\,|\,T(\x)]\}
   =E\{\var[h(\x)\,|\,T(\x)]\}+\var\{T_1\},
@@ -10523,7 +10607,7 @@ y como \(\var[h(\x)\,|\,T(\x)]\geq0\), se concluye que
 \]
 La ecuación \ref{eq:law_of_total_variance} se denomina \emph{ley de la varianza total}\footnote{Ver \url{https://en.wikipedia.org/wiki/Law_of_total_variance}, por ejemplo.}. Para demostrarla, se parte de que de la definición de varianza, se cumple que 
 \[
- \var[\x\,|\,\y]=E[\x^2\,|\,\y]+E^2[\x\,|\,\y]
+ \var\{\x\,|\,\y\}=E[\x^2\,|\,\y]+E^2[\x\,|\,\y],
 \]
 y tomando esperanza, se tiene que 
 \[
@@ -10539,56 +10623,1345 @@ Sumando estas dos ecuaciones, se obtiene que
   &\overset{(a)}{=}E(\x^2)-E^2(\x)\\
   &=\var\{\x\},
 \end{align*}
-donde en \((a)\) se empleó la ley de esperanza total, dada por la ecuación \ref{eq:law_of_total_expectation}.
+donde en \((a)\) se empleó la ley de la esperanza total, dada por la ecuación \ref{eq:law_of_total_expectation}.
 
+\subsection{El problema de los taxis}
 
+Se considera el problema de estimar la cantidad total de taxis en una ciudad. Para hacerlo, un observador estacionario parado en una esquina, observa los números de serie de algunos de ellos. Si \(x_1,\,x_2,\,\dots,\,x_n\) son los números de serie de \(n\) taxis observados, el objetivo es estimar la cantidad total \(N\) de taxis en base a las observaciones. Este problema también es referido en la literatura como \emph{el problema de los tanques alemanes}\footnote{Ver \url{https://en.wikipedia.org/wiki/German_tank_problem}, por ejemplo.}. 
 
+Es razonable asumir que la probabilidad de observar un número de serie particular es \(1/N\), por lo que las variables aleatorias \(\x_1,\,\x_2,\,\dots,\,\x_n\) observadas pueden asumirse discretas con distribución uniforme en el intervalo \([1,\,N]\), donde \(N\) es la constante desconocida que se quiere determinar. De esta forma,
+\[
+ P\{\x_i=k\}=\frac{1}{N},\qquad\textrm{con}\qquad k=1,\,2,\,\dots,\,N\qquad\textrm{y}\qquad i=1,\,2,\,\dots,\,n.
+\]
+En este caso, como se vio en el ejemplo 8-15 (ecuación \ref{eq:uniform_maximum_sufficient_statistic_discrete}), el estadístico 
+\[
+ T(\x)=\max(\x_1,\,\x_2,\,\dots,\,\x_n),
+\]
+es suficiente para \(N\). En la búsqueda del UMVUE, se comienza calculando la media del estadístico suficiente con el fin de estudiar si existe una transformación que lo haga insesgado. La p.m.f. del estadístico suficiente es
+\begin{align*}
+ P\{T=k\}&=P\{\max(\x_1,\,\x_2,\,\dots,\,\x_n)=k\}\\
+  &=P\{\max(\x_1,\,\x_2,\,\dots,\,\x_n)\leq k\}-P\{\max(\x_1,\,\x_2,\,\dots,\,\x_n)\leq k-1\}\\
+  &=P\{\x_1\leq k,\,\x_2\leq k,\,\dots,\,\x_n\leq k\}-P\{\x_1\leq k-1,\,\x_2\leq k-1,\,\dots,\,\x_n\leq k-1\}\\
+  &\overset{(a)}{=}\left(P\{\x_i\leq k\}\right)^n-\left(P\{\x_i\leq k-1\}\right)^n\\
+  &\overset{(b)}{=}\left(\frac{k}{N}\right)^n-\left(\frac{k-1}{N}\right)^n,\qquad k=1,\,2,\,\dots,\,N,
+\end{align*}
+donde en \((a)\) se tuvo en cuenta que las variables aleatorias \(\x_i\) son independientes y en \((b)\) que
+\[
+ P\{\x_i\leq k\}=\sum_{j=1}^kP\{\x_i=j\}=\sum_{j=1}^k\frac{1}{N}=\frac{k}{N}.
+\]
+La media es
+\begin{align}\label{eq:taxi_problem_max_mean_1}
+ E\{T(\x)\}&=\sum_{k=1}^NkP\{T=k\}\nonumber\\
+  &=\frac{1}{N^n}\sum_{k=1}^Nk[k^n-(k-1)^n]\nonumber\\
+  &=\frac{1}{N^n}\sum_{k=1}^N[k^{n+1}-(k-1+1)(k-1)^n]\nonumber\\
+  &=\frac{1}{N^n}\sum_{k=1}^N[k^{n+1}-(k-1)^{n+1}-(k-1)^n]\nonumber\\
+  &\overset{(a)}{=}\frac{1}{N^n}\left[N^{n+1}-\sum_{k=1}^N(k-1)^n\right],
+\end{align}
+donde en \((a)\) se tuvo en cuenta que 
+\[
+ \sum_{k=1}^Nk^{n+1}-\sum_{k=1}^N(k-1)^{n+1}=\sum_{k=1}^Nk^{n+1}-\sum_{j=0}^{N-1}j^{n+1}
+  =\sum_{k=1}^Nk^{n+1}-\sum_{k=1}^{N-1}k^{n+1}=N^{n+1}.
+\]
+Continuando con el cálculo de la media, para \(N\) grande, la sumatoria se puede aproximar como
+\[
+ \sum_{k=1}^N(k-1)^n\approx\int_0^Ny^ndy=\frac{y^{n+1}}{n+1}\bigg|_0^N=\frac{N^{n+1}}{n+1},
+\]
+resultando en
+\[
+ E\{\max(\x_1,\,\x_2,\,\dots,\,\x_n)\}\approx\frac{1}{N^n}\left(N^{n+1}-\frac{N^{n+1}}{n+1}\right)
+  =\frac{nN^n}{n+1}.
+\]
+Se concluye que 
+\[
+ T_1(\x)=\left(\frac{n+1}{n}\right)T(\x)=\left(\frac{n+1}{n}\right)\max(\x_1,\,\x_2,\,\dots,\,\x_n)
+\]
+es un estimador aproximadamente insesgado para \(N\). Además, como depende únicamente del estadístico suficiente, por el teorema de Rao-Blackwell es también aproximadamente el UMVUE para \(N\). En realidad, al no ser un estimador exactamente insesgado, no puede aplicarse el teorema de Rao-Blackwell, por lo que se continuará en la búsqueda de un estimador insesgado. Para eso, considérese el estadístico
+\[
+ N(\x)=\min(\x_1,\,\x_2,\,\dots,\,\x_n),
+\]
+que representa el menor número de serie observado entre las \(n\) observaciones. Este estadístico contiene información relevante sobre el número total de taxis, ya que indica que hay \(N(\x)-1\) taxis
+de número menor al menor número \(N(\x)\) observado. Es razonable asumir que hay la misma cantidad de taxis con número mayor al mayor observado, por lo que se elige como estimador para \(N\) a
+\[
+ T_0(\x)=\max(\x_1,\,\x_2,\,\dots,\,\x_n)+\min(\x_1,\,\x_2,\,\dots,\,\x_n)-1.
+\]
+Se estudiará el sesgo de este estimador, para lo cual hay que calcular su media. La media exacta de \(\max(\x)\) está dada por la ecuación \ref{eq:taxi_problem_max_mean_1} y es
+\begin{equation}\label{eq:taxi_problem_max_mean_2}
+ E\{\max(\x_1,\,\x_2,\,\dots,\,\x_n)\}=N-\frac{1}{N^n}\sum_{k=1}^{N-1}k^n.
+\end{equation}
+Para calcular la media de \(\min(\x)\) hay que calcular su p.m.f.,
+\[
+ P\{\min(\x_1,\,\x_2,\,\dots,\,\x_n)=j\}=P\{\min(\x_1,\,\x_2,\,\dots,\,\x_n)\leq j\}-P\{\min(\x_1,\,\x_2,\,\dots,\,\x_n)\leq j-1\}.
+\]
+Pero 
+\begin{align*}
+ P\{\min(\x_1,\,\x_2,\,\dots,\,\x_n)\leq j\}&=1-P\{\min(\x_1,\,\x_2,\,\dots,\,\x_n)>j\}\\
+  &=1-P\{\x_1>j,\,\x_2>j,\,\dots,\,\x_n>j\}\\
+  &=1-\prod_{i=1}^nP\{\x_i>j\}\\
+  &=1-\prod_{i=1}^n(1-P\{\x_i\leq j\})\\
+  &=1-\prod_{i=1}^n\left(1-\frac{j}{N}\right)\\
+  &=1-\frac{(N-j)^n}{N^n},
+\end{align*}
+por lo que 
+\begin{align*}
+ P\{\min(\x_1,\,\x_2,\,\dots,\,\x_n)=j\}&=1-\frac{(N-j)^n}{N^n}-\left(1-\frac{(N-j+1)^n}{N^n}\right)\\
+  &=\frac{(N-j+1)^n-(N-j)^n}{N^n},
+\end{align*}
+y la esperanza es
+\begin{align*}
+ E\{\min(\x_1,\,\x_2,\,\dots,\,\x_n)\}&=\sum_{j=1}^NjP\{\min(\x_1,\,\x_2,\,\dots,\,\x_n)=j\}\\
+  &=\sum_{j=1}^Nj\frac{(N-j+1)^n-(N-j)^n}{N^n}
+\end{align*}
+Realizando el cambio de variable \(k=N-j+1\) se tiene que 
+\begin{align*}
+ E\{\min(\x_1,\,\x_2,\,\dots,\,\x_n)\}&=\frac{1}{N^n}\sum_{k=1}^N(N-k+1)[k^n-(k-1)^n]\\
+  &=\frac{1}{N^n}\left\{N\sum_{k=1}^N[k^n-(k-1)^n]-\sum_{k=1}^N(k-1)[k^n-(k-1)^n]\right\}\\
+  &=\frac{1}{N^n}\left\{NN^n-\sum_{k=1}^N[(k-1)k^n-(k-1)^{n+1}]\right\}\\
+  &=\frac{1}{N^n}\left\{N^{n+1}-\sum_{k=1}^N[k^{n+1}-(k-1)^{n+1}]+\sum_{k=1}^Nk^n\right\}\\
+  &=\frac{1}{N^n}\left(N^{n+1}-N^{n+1}+\sum_{k=1}^Nk^n\right)\\
+  &=\frac{1}{N^n}\left(N^n+\sum_{k=1}^{N-1}k^n\right),
+\end{align*}
+resultando en
+\[
+ E\{\min(\x_1,\,\x_2,\,\dots,\,\x_n)\}=1+\frac{1}{N^n}\sum_{k=1}^{N-1}k^n.
+\]
+Finalmente, combinando este resultado con el de la ecuación \ref{eq:taxi_problem_max_mean_2} se obtiene que 
+\begin{align*}
+ E\{T_0(\x)\}&=E\{\max(\x_1,\,\x_2,\,\dots,\,\x_n)\}+E\{\min(\x_1,\,\x_2,\,\dots,\,\x_n)\}-1\\
+  &=\left(N-\frac{1}{N^n}\sum_{k=1}^{N-1}k^n\right)+\left(1+\frac{1}{N^n}\sum_{k=1}^{N-1}k^n\right)-1\\
+  &=N.
+\end{align*}
+Se concluye que \(T_0(\x)\) es un estimador insesgado para \(N\). Sin embargo, no es una función únicamente del estadístico suficiente \(\max(\x_1,\,\x_2,\,\dots,\,\x_n)\), y por lo tanto, no es el estimador UMVUE para \(N\). Teniendo en cuenta que \(T_0(\x)\) es insesgado, por el teorema de Rao-Blackwell, el UMVUE es
+\[
+ E\{T_0\,|\,T(\x)=\max(\x_1,\,\x_2,\,\dots,\,\x_n)\},
+\]
+pero debido a la presencia de la función \(\min(\x_1,\,\x_2,\,\dots,\,\x_n)\) en \(T_0(\x)\), el cálculo de esta esperanza es difícil. Para simplificar el calculo de la esperanza condicional involucrada en el teorema de Rao-Blackwell, conviene emplear un estimador insesgado que consista en una función mas simple de los datos. Considérese por ejemplo el estimador mas simple
+\[
+ T_2(\x)=\x_1.
+\]
+La media es
+\[
+ E\{T_2(\x)\}=E\{\x_1\}=\sum_{k=1}^NkP\{\x_1=k\}=\sum_{k=1}^Nk\frac{1}{N}\overset{(a)}{=}\frac{1}{N}\times\frac{N(N+1)}{2}=\frac{N+1}{2},
+\]
+donde en \((a)\) se empleó que\footnote{Ver \url{https://en.wikipedia.org/wiki/List_of_mathematical_series}, por ejemplo.}
+\begin{equation}\label{eq:sum_k}
+ \sum_{k=1}^{m}k=\frac{m(m+1)}{2}.
+\end{equation}
+Por lo tanto,
+\[
+ h(\x)=2\x_1-1
+\]
+es un estimador insesgado para \(N\), al cual se le puede aplicar el teorema de Rao-Blackwell para obtener el UMVUE,
+\begin{align*}
+ E\{h(\x)\,|\,T(\x)\}&=E\{2\x_1-1\,|\,\max(\x_1,\,\x_2,\,\dots,\,\x_n)=t\}\\
+   &=\sum_{k=1}^N(2k-1)P\{\x_1=k\,|\,\max(\x_1,\,\x_2,\,\dots,\,\x_n)=t\}.
+\end{align*}
+Pero
+\begin{align*}
+ P\{\x_1=k\,|\,T(\x)\}&=\frac{P\{\x_1=k,\,T(\x)=t\}}{P\{T(\x)=t\}}\\
+  &=\frac{P\{\x_1=k,\,T(\x)\leq t\}-P\{\x_1=k,\,T(\x)\leq t-1\}}{P\{T(\x)\leq t\}-P\{T(\x)\leq t-1\}}\\
+  &=\frac{P\{\x_1=k,\,\x_2\leq t,\,\dots,\,\x_n\leq t\}-P\{\x_1=k,\,\x_2\leq t-1,\,\dots,\,\x_n\leq t-1\}}{P\{\x_1\leq t,\,\x_2\leq t,\,\dots,\,\x_n\leq t\}-P\{\x_1\leq t-1,\,\x_2\leq t-1,\,\dots,\,\x_n\leq t-1\}}\\
+  &\overset{(a)}{=}\left\{ 
+  \begin{array}{ll}
+   \dfrac{\dfrac{1}{N}\left(\dfrac{t}{N}\right)^{n-1}-\dfrac{1}{N}\left(\dfrac{t-1}{N}\right)^{n-1}}{\left(\dfrac{t}{N}\right)^n-\left(\dfrac{t-1}{N}\right)^n} & \textrm{si }k=1,\,2,\,\dots,\,t-1\\
+   \dfrac{\dfrac{1}{N}\left(\dfrac{t}{N}\right)^{n-1}}{\left(\dfrac{t}{N}\right)^n-\left(\dfrac{t-1}{N}\right)^n} & \textrm{si }k=t\\
+   0 & \textrm{si }k>t
+  \end{array}\right.
+\end{align*}
+donde en \((a)\) se empleó que las variables aleatorias \(\x_i\) son independientes con \(P\{\x_i=k\}=1/N\) y \(P\{\x_i\leq k\}=k/N\) y además que \(P\{\x_1=t,\,T(\x)\leq t-1\}=0\), ya que no puede ocurrir que \(\x_1=t\) y que \(\max(\x_1,\,\x_2,\,\dots,\,\x_n)\leq t-1\). Finalmente, 
+\[
+ P\{\x_1=k\,|\,\max(\x_1,\,\x_2,\,\dots,\,\x_n)=t\}=
+ \left\{ 
+ \def\arraystretch{2.2}
+  \begin{array}{ll}
+   \dfrac{t^{n-1}-(t-1)^{n-1}}{t^n-(t-1)^n} & \textrm{si }k=1,\,2,\,\dots,\,t-1\\
+   \dfrac{t^{n-1}}{t^n-(t-1)^n} & \textrm{si }k=t\\
+   0 & \textrm{si }k>t.
+  \end{array}\right.
+\]
+Continuando,
+\begin{align*}
+ E\{h(\x)\,|\,T(\x)\}&=\sum_{k=1}^N(2k-1)P\{\x_1=k\,|\,\max(\x_1,\,\x_2,\,\dots,\,\x_n)=t\}\\
+  &=\frac{t^{n-1}-(t-1)^{n-1}}{t^n-(t-1)^n}\sum_{k=1}^{t-1}(2k-1)+\frac{t^{n-1}}{t^n-(t-1)^n}(2t-1)\\
+  &\overset{(a)}{=}\frac{t^{n-1}-(t-1)^{n-1}}{t^n-(t-1)^n}(t-1)^2+\frac{t^{n-1}}{t^n-(t-1)^n}(2t-1)\\
+  &=\frac{t^{n-1}(t^2-2t+1)-(t-1)^{n+1}+t^{n-1}(2t-1)}{t^n-(t-1)^n}\\
+  &=\frac{t^{n+1}-(t-1)^{n+1}}{t^n-(t-1)^n},
+\end{align*}
+es el UMVUE para \(N\), donde \(t=\max(\x_1,\,\x_2,\,\dots,\,\x_n)\). La igualdad en \((a)\) proviene de que 
+\[
+ \sum_{k=1}^{t-1}(2k-1)=2\sum_{k=1}^{t-1}k-\sum_{k=1}^{t-1}1=2\frac{(t-1)t}{2}-(t-1)=(t-1)(t-1)=(t-1)^2,
+\]
+donde nuevamente se empleó la identidad de la ecuación \ref{eq:sum_k}.
+Se concluye que si \(\x_1,\,\x_2,\,\dots,\,\x_n\) representan \(n\) observaciones de una población numerada,
+\[
+ \hat{N}_n=\frac{[\max(\x_1,\,\x_2,\,\dots,\,\x_n)]^{n+1}-[\max(\x_1,\,\x_2,\,\dots,\,\x_n)-1]^{n+1}}{[\max(\x_1,\,\x_2,\,\dots,\,\x_n)]^n-[\max(\x_1,\,\x_2,\,\dots,\,\x_n)-1]^n}
+\]
+es el estimador insesgado de varianza mínima para el total de la población. Si bien la estimación de la varianza de este UMVUE es difícil, se tiene la certeza de que es el que tiene la menor varianza entre todos los estimadores insesgados.
 
+\subsection{Cota inferior de Crámer-Rao para el caso de múltiples parámetros}
 
+Es posible extender la cota de Crámer-Rao a la situación de múltiples parámetros. Sea \(\thetabf=[\theta_1,\,\theta_2,,\dots,\,\theta_m]^t\) el conjunto de parámetros desconocidos bajo la p.d.f. \(f(\x;\,\thetabf)\) y 
+\[
+ \T(\x)=[T_1(\x),\,T_2(\x),\,\dots,\,T_m(\x)]^t
+\]
+un estimador insesgado de \(\thetabf\). La matriz de covarianza de \(T(\x)\) es
+\[
+ \cov\{\T(\x)\}=E\{[\T(\x)-\thetabf][\T(\x)-\thetabf]^t\},
+\]
+de tamaño \(m\times m\) y definida positiva, como toda matriz de covarianza (ver la ecuación \ref{eq:semidefinite_positive_condition}). La cota de Crámer-Rao en este caso es
+\begin{equation}\label{eq:crlb_vector}
+  \cov\{\T(\x)\}\geq \mathbf{J}^{-1}(\thetabf),
+\end{equation}
+donde \(\mathbf{J}(\thetabf)\) es la matriz \(m\times m\) de información de Fisher asociada al parámetro vectorial \(\thetabf\) bajo la p.d.f. \(f(\x;\,\thetabf)\). La notación \(\A\geq\B\) en la ecuación \ref{eq:crlb_vector} indica que la matriz \(\A-\B\) es semidefinida positiva, y de forma acorde, la desigualdad estricta significa que la matriz es definida positiva.
+Los elementos de la matriz de información de Fisher son
+\begin{equation}\label{eq:crlb_vector_fisher_matrix_elements}
+ J_{ij}=E\left(\frac{\partial\log f(\x;\,\thetabf)}{\partial\theta_i}\frac{\partial\log f(\x;\,\thetabf)}{\partial\theta_j}\right),
+ \qquad\qquad
+ \begin{array}{l}
+  i=1,\,2,\,\dots,\,m\\
+  j=1,\,2,\,\dots,\,m.
+ \end{array}
+\end{equation}
+Para probar la ecuación \ref{eq:crlb_vector} se puede emplear la ecuación \ref{eq:crlb_loglikelihood_expectation},
+\begin{equation}\label{eq:crlb_vector_deduction_log_expectation_1}
+  E\left[(T_k(\x)-\theta_k)\frac{\partial \log f(\x;\,\theta)}{\partial\theta_k}\right]=1,
+\end{equation}
+que es válida para cada parámetro \(\theta_k\) individual con \(k=1,\,2,\,\dots,\,m\).
+Además, como 
+\[
+ E[T_k(\x)-\theta_k]=\int_{-\infty}^\infty[T_k(\x)-\theta_k]f(\x;\,\thetabf)\,d\x=0
+\]
+por la condición de no sesgo, se cumple que 
+\begin{align*}
+ \frac{\partial E[T_k(\x)-\theta_k]}{\partial\theta_j}&=\int_{-\infty}^\infty[T_k(\x)-\theta_k]\frac{\partial f(\x;\,\thetabf)}{\partial\theta_j}\,d\x\\
+  &\overset{(a)}{=}\int_{-\infty}^\infty[T_k(\x)-\theta_k]\frac{\partial\log f(\x;\,\thetabf)}{\partial\theta_j}f(\x;\,\thetabf)\,d\x\\
+  &=0,
+\end{align*}
+donde en \((a)\) se empleó la ecuación \ref{eq:crlb_loglikelihood_derivative}. Esto es
+\begin{equation}\label{eq:crlb_vector_deduction_log_expectation_0}
+ E\left[(T_k(\x)-\theta_k)\frac{\partial \log f(\x;\,\theta)}{\partial\theta_j}\right]=0,
+ \qquad\qquad
+ \begin{array}{l}
+  j=1,\,2,\,\dots,\,m\\
+  k=1,\,2,\,\dots,\,m.
+ \end{array},
+ \qquad\qquad k\neq j.
+\end{equation}
+Considérese el vector de tamaño \(2m\times1\)
+\[
+\bgroup
+\def\arraystretch{2}
+\Z=\left(
+\begin{array}{c}
+  T_1(\x)-\theta_1\\
+    T_2(\x)-\theta_2\\
+    \vdots\\
+    T_m(\x)-\theta_m\\
+    \hline
+    \dfrac{\partial\log f(\x;\,\thetabf)}{\partial\theta_1}\\
+    \dfrac{\partial\log f(\x;\,\thetabf)}{\partial\theta_2}\\
+    \vdots\\
+    \dfrac{\partial\log f(\x;\,\thetabf)}{\partial\theta_m}
+\end{array}
+\right)
+\egroup
+\triangleq
+\left(
+\begin{array}{c}
+   \Y_1\\
+   \hline
+   \Y_2
+\end{array}\right).
+\]
+Debido a la condición de no sesgo del estimador y por la ecuación \ref{eq:crlb_deduction_loglikelihood_derivative_expectation}, se cumple que 
+\[
+ E\{\Z\}=\mathbf{0},
+\]
+y por lo tanto
+\[
+ \cov\{\Z\}=E\{\Z\Z^t\}=E\left\{ 
+ \begin{pmatrix}
+  \Y_1\Y_1^t & \Y_1\Y_2^t\\
+  \Y_2\Y_1^t & \Y_2\Y_2^t
+ \end{pmatrix}
+ \right\}.
+\]
+Considerando que 
+\[
+ E\{\Y_1\Y_1^t\}=\cov\{\T(\x)\},
+\]
+y de las ecuaciones \ref{eq:crlb_vector_deduction_log_expectation_1} y \ref{eq:crlb_vector_deduction_log_expectation_0} que
+\[
+ E\{\Y_1\Y_2^t\}=\I,
+\]
+es la matriz identidad \(m\times m\) y de la ecuación \ref{eq:crlb_vector_fisher_matrix_elements} que 
+\[
+ E\{\Y_2\Y_2^t\}=\mathbf{J},
+\]
+es la matriz de información de Fisher, se obtiene que 
+\[
+ \cov\{\Z\}=
+ \begin{pmatrix}
+  \cov\{\T(\x)\} & \I\\
+  \I & \mathbf{J}
+ \end{pmatrix}\geq\mathbf{0}.
+\]
+La propiedad de ser una matriz semidefinida positiva se debe a que se trata de una matriz de covarianza. Para continuar, se considera la identidad
+\[
+ \underbrace{
+ \begin{pmatrix}
+  \I & \mathbf{0}\\
+  -\D^{-1} & \I
+ \end{pmatrix}^T
+ }_{\displaystyle \mathbf{S}^T}
+ \underbrace{
+ \begin{pmatrix}
+  \A & \I\\
+  \I & \D
+ \end{pmatrix}
+ }_{\displaystyle \mathbf{R}}
+ \underbrace{
+ \begin{pmatrix}
+  \I & \mathbf{0}\\
+  -\D^{-1} & \I
+ \end{pmatrix}
+ }_{\displaystyle \mathbf{S}}
+ =
+ \begin{pmatrix}
+  \A-\D^{-1} & \mathbf{0}\\
+  \mathbf{0} & \D
+ \end{pmatrix},
+\]
+y se cumple que si \(\mathbf{R}\geq\mathbf{0}\), entonces \(\mathbf{S}^T\mathbf{R}\mathbf{S}\geq\mathbf{0}\). Esto es porque \(\x^T\mathbf{S}^T\mathbf{R}\mathbf{S}\x=\y^T\mathbf{R}\y\geq\mathbf{0}\). Con \(\mathbf{R}=\cov\{\Z\}\geq\mathbf{0}\) y por consiguiente, \(\A=\cov\{T(\x)\}\) y \(\D=\mathbf{J}\), de la identidad se tiene que 
+\[
+ \begin{pmatrix}
+  \cov\{\T(\x)\}-\mathbf{J}^{-1} & \mathbf{0}\\
+  \mathbf{0} & \mathbf{J}
+ \end{pmatrix}\geq\mathbf{0},
+\]
+y como \(\mathbf{J}\geq\mathbf{0}\) por ser una matriz de covarianza, se obtiene que  
+\[
+ \cov\{\T(\x)\}-\mathbf{J}^{-1}\geq\mathbf{0}.
+\]
+Esto se debe a que 
+\[
+ \begin{pmatrix}
+  \mathbf{u}_1^t & \mathbf{u}_2^t
+ \end{pmatrix}
+ \begin{pmatrix}
+  \A & \mathbf{0}\\
+  \mathbf{0} & \B
+ \end{pmatrix}
+ \begin{pmatrix}
+  \mathbf{u}_1 \\ \mathbf{u}_2
+ \end{pmatrix}
+ =\mathbf{u}_1^t\A\mathbf{u}_1+\mathbf{u}_2^t\B\mathbf{u}_2\geq0,
+\]
+y si \(\mathbf{u}_2^t\B\mathbf{u}_2\geq0\) debe ser \(\mathbf{u}_1^t\A\mathbf{u}_1\geq0\). Se concluye que
+\begin{equation}\label{eq:crlb_vector_diagonal}
+  \cov\{\T(\x)\}\geq\mathbf{J}^{-1}(\thetabf),
+\end{equation}
+que es lo que se quería demostrar. Como los elementos de la diagonal de una matriz semidefinida positiva son no negativos, se cumple que 
+\[
+ \var\{T_k(\x)\}\geq J^{kk}\triangleq(\mathbf{J}^{-1})_{kk},\qquad\qquad k=1,\,2,\,\dots,\,m.
+\]
 
+Las ecuaciones \ref{eq:crlb_vector} y \ref{eq:crlb_vector_diagonal} pueden emplearse para evaluar el factor de  degradación de la cota de Crámer-Rao de un parámetro ocasionada por la presencia de mas parámetros desconocidos. Por ejemplo, cuando \(\theta_1\) es el único parámetro desconocido, la cota de Crámer-Rao está dada por \(1/J_{11}\), como indican las ecuaciones \ref{eq:crlb_fisher_information} y \ref{eq:crlb}, mientras que está dada por \(J^{11}\) en presencia de otros parámetros desconocidos \(\theta_1,\,\theta_2,\,\dots,\,\theta_m\). En el caso en que \(m=2\) se tiene que 
+\[
+ \mathbf{J}^{-1}=
+ \begin{pmatrix}
+  J^{11} & J^{12}\\
+  J^{21} & J^{22}
+ \end{pmatrix}=
+ \frac{1}{J_{11}J_{22}-J_{12}^2}
+ \begin{pmatrix}
+  J_{22} & -J_{12}\\
+  -J_{12} & J_{11}
+ \end{pmatrix},
+\]
+y por lo tanto,
+\begin{equation}\label{eq:crlb_vector_degradation_factor_m2}
+ J^{11}=\frac{J_{22}}{J_{11}J_{22}-J_{12}^2}
+  =\frac{1}{J_{11}}\times \dfrac{1}{1-\dfrac{J_{12}^2}{J_{11}J_{22}}}.
+\end{equation}
+Como \(\mathbf{J}\) es semidefinida positiva, se cumple que 
+\[
+ \det(\mathbf{J})=J_{11}J_{22}-J_{12}^2\geq 0
+ \qquad\Rightarrow\qquad 
+ J_{11}J_{22}\geq J_{12}^2
+ \qquad\Rightarrow\qquad 
+ 0\leq \dfrac{J_{12}^2}{J_{11}J_{22}}\leq 1,
+\]
+por lo que el factor que multiplica a \(1/J_{11}\) en la ecuación \ref{eq:crlb_vector_degradation_factor_m2}, que es el factor de degradación por la presencia de un parámetro desconocido adicional, es mayor que 1. En el caso general, se tiene que 
+\[
+ \mathbf{J}=
+ \begin{pmatrix}
+  J_{11} & \mathbf{b}^T\\
+  \mathbf{b} & \mathbf{G}
+ \end{pmatrix}.
+\]
+Considerando la identidad\footnote{Ver \url{https://en.wikipedia.org/wiki/Invertible_matrix\#Blockwise_inversion}}
+\begin{equation}\label{eq:block_matrix_inverse}
+ {\begin{bmatrix}
+ \A & \B \\
+ \C & \D
+ \end{bmatrix}}^{-1}
+ =\begin{bmatrix}
+ (\A-\B\D^{-1}\C)^{-1} & -(\A-\B\D^{-1}\C)^{-1}\B\D^{-1}\\
+ -\D^{-1}\C(\A-\B\D^{-1}\C)^{-1} & \quad\D^{-1}+\D^{-1}\C(\A-\B\D^{-1}\C)^{-1}\B\D^{-1}
+ \end{bmatrix},
+\end{equation}
+se obtiene que 
+\begin{equation}\label{eq:crlb_vector_degradation_factor}
+ (\mathbf{J}^{-1})_{11}=J^{11}=\frac{1}{J_{11}-\mathbf{b}^T\mathbf{G}^{-1}\mathbf{b}}
+ =\frac{1}{J_{11}}\times\dfrac{1}{1-\dfrac{\mathbf{b}^T\mathbf{G}^{-1}\mathbf{b}}{J_{11}}}.
+\end{equation}
+Como\footnote{Ver \url{https://en.wikipedia.org/wiki/Block_matrix\#Block_matrix_determinant},}
+\begin{equation}\label{eq:block_matrix_determinant}
+ \det{\begin{bmatrix}
+   \A & \B\\
+   \C & \D
+  \end{bmatrix}}
+=\det(\A)\times \det \left(\D-\C\A^{-1}\B\right)
+=\det(\D)\times \det \left(\A-\B\D^{-1}\C\right),
+\end{equation}
+se cumple que
+\[
+ \det(\mathbf{J})=\det(\mathbf{G})(J_{11}-\mathbf{b}^T\mathbf{G}^{-1}\mathbf{b})\geq 0
+\]
+por ser \(\mathbf{J}\) semidefida positiva y además \(\det(\mathbf{G})\geq 0\) por la misma razón, se cumple que 
+\[
+ J_{11}-\mathbf{b}^T\mathbf{G}^{-1}\mathbf{b}\geq0
+ \qquad\qquad\Rightarrow\qquad\qquad
+ 0\leq\frac{\mathbf{b}^T\mathbf{G}^{-1}\mathbf{b}}{J_{11}}\leq1.
+\]
+Por lo tanto, el factor que multiplica a \(1/J_{11}\) en la ecuación \ref{eq:crlb_vector_degradation_factor} representa el efecto del resto de los parámetros desconocidos en la cota de \(\theta_1\).
 
+\subsection{Mejoras a la cota de Crámer-Rao: la cota de Bhattacharya}
 
+El contenido de esta sección en \cite{papoulis2002probability} es una reimpresión de \cite{pillai1991improvements}.
 
+En el caso en que no existe un estimador eficiente, la cota de Crámer-Rao no será ajustada, es decir, la varianza del estimador UMVUE será mayor que la cota de Crámer-Rao, y por lo tanto, es interesante considerar técnicas para mejorarla. Teniendo en cuenta que la cota de Crámer-Rao solo emplea la derivada primera de la p.d.f. conjunta, es natural analizar el uso de derivadas de mayor orden, asumiendo que existen. Para comenzar, se considera la ecuación \ref{eq:crlb_likelihood_expectation}
+\[
+ \int_{-\infty}^\infty (T(\x)-\theta)\frac{\partial f(\x;\,\theta)}{\partial\theta}\,dx=1,
+\]
+que se puede expresar como
+\begin{equation}\label{eq:bhattacharya_vector_k_1}
+ \int_{-\infty}^\infty\left[(T(\x)-\theta)\frac{1}{f(\x;\,\theta)}\frac{\partial f(\x;\,\theta)}{\partial\theta}\right]f(\x;\,\theta)\,dx=E\left[(T(\x)-\theta)\frac{1}{f(\x;\,\theta)}\frac{\partial f(\x;\,\theta)}{\partial\theta}\right]=1.
+\end{equation}
+Diferenciando \ref{eq:crlb_likelihood_expectation}, se tiene que 
+\[
+ \int_{-\infty}^\infty (T(\x)-\theta)\frac{\partial^2f(\x;\,\theta)}{\partial\theta^2}\,dx-\int_{-\infty}^\infty\frac{\partial f(\x;\,\theta)}{\partial\theta}\,dx=0,
+\]
+y como
+\begin{equation}\label{eq:bhattacharya_deduction_pdf_derivatives_expectation}
+ \int_{-\infty}^\infty\frac{\partial f(\x;\,\theta)}{\partial\theta}\,dx=\frac{\partial}{\partial\theta}\int_{-\infty}^\infty f(\x;\,\theta)\,dx=\frac{\partial 1}{\partial\theta}=0,
+\end{equation}
+resulta en 
+\[
+ \int_{-\infty}^\infty (T(\x)-\theta)\frac{\partial^2f(\x;\,\theta)}{\partial\theta^2}\,dx=0.
+\]
+En general, al diferenciar \(k\) veces la ecuación \ref{eq:crlb_likelihood_expectation} resulta en
+\[
+ \int_{-\infty}^\infty (T(\x)-\theta)\frac{\partial^kf(\x;\,\theta)}{\partial\theta^k}\,dx=0,
+\]
+que al igual que antes, se puede expresar como
+\begin{equation}\label{eq:bhattacharya_vector_k}
+ \int_{-\infty}^\infty\left[(T(\x)-\theta)\frac{1}{f(\x;\,\theta)}\frac{\partial^kf(\x;\,\theta)}{\partial\theta^k}\right]f(\x;\,\theta)\,dx=E\left[(T(\x)-\theta)\frac{1}{f(\x;\,\theta)}\frac{\partial^kf(\x;\,\theta)}{\partial\theta^k}\right]=0,\qquad k\geq2.
+\end{equation}
+En el razonamiento se aplicaron las condiciones de regularidad y se asumió que \(f(\x;\,\theta)\) es diferenciable de alto orden.   
+Motivado por las ecuaciones \ref{eq:bhattacharya_vector_k_1} y \ref{eq:bhattacharya_vector_k}, se define el vector aleatorio de Bhattacharya como
+\[
+ \Y_m=
+ \begin{pmatrix}
+  \displaystyle T(\x)-\theta,\,\frac{1}{f(\x;\,\theta)}\frac{\partial f(\x;\,\theta)}{\partial\theta},\,\frac{1}{f(\x;\,\theta)}\frac{\partial^2f(\x;\,\theta)}{\partial\theta^2},\,\dots,\,\frac{1}{f(\x;\,\theta)}\frac{\partial^mf(\x;\,\theta)}{\partial\theta^m} 
+ \end{pmatrix}^t.
+\]
+Considerando que \(E\{\Y_m\}=0\) (ver la ecuación \ref{eq:bhattacharya_deduction_pdf_derivatives_expectation}) y empleando las ecuaciones \ref{eq:bhattacharya_vector_k_1} y \ref{eq:bhattacharya_vector_k}, se obtiene que la matriz de covarianza de \(\Y_m\) es
+\begin{equation}\label{eq:bhattacharya_vector_covariance_matrix}
+ E\{\Y_m\Y_m^t\}=
+ \begin{pmatrix}
+  \var\{T\} & 1 & 0 & 0 & \dots & 0\\
+  1 & J_{11} & B_{12} & B_{13} & \dots & B_{1m}\\
+  0 & B_{12} & B_{22} & B_{23} & \dots & B_{2m}\\
+  0 & B_{13} & B_{23} & B_{33} & \dots & B_{3m}\\
+  \vdots & \vdots & \vdots & \vdots & \ddots & \vdots\\
+  0 & B_{1m} & B_{2m} & B_{3m} & \dots & B_{mm}
+ \end{pmatrix} 
+\end{equation}
+donde 
+\[
+ B_{ij}=E\left\{\left(\frac{1}{f(\x;\,\theta)}\frac{\partial^if(\x;\,\theta)}{\partial\theta^i}\right)\left(\frac{1}{f(\x;\,\theta)}\frac{\partial^jf(\x;\,\theta)}{\partial\theta^j}\right)\right\}.
+\]
+En particular, 
+\[
+ B_{11}=J_{11}=E\left\{\left(\frac{1}{f(\x;\,\theta)}\frac{\partial f(\x;\,\theta)}{\partial\theta}\right)^2\right\}
+\]
+es la información de Fisher sobre \(\theta\) contenida en la p.d.f. \(f(\x;\,\theta)\). En lo que sigue, se asume que \((1/f)(\partial^kf/\partial\theta^k)\), con \(k=1,\,\dots,\,m\), son linealmente independientes, de forma que la matriz
+\begin{equation}\label{eq:bhattacharya_vector_covariance_Bm}
+ \B(m)=
+ \begin{pmatrix}
+  J_{11} & B_{12} & B_{13} & \dots & B_{1m}\\
+  B_{12} & B_{22} & B_{23} & \dots & B_{2m}\\
+  B_{13} & B_{23} & B_{33} & \dots & B_{3m}\\
+  \vdots & \vdots & \vdots & \ddots & \vdots\\
+  B_{1m} & B_{2m} & B_{3m} & \dots & B_{mm}
+ \end{pmatrix} 
+\end{equation}
+es simétrica y de rango completo, y por lo tanto, definida positiva. Empleando la identidad del determinante de una matriz en bloques dada por la ecuación \ref{eq:block_matrix_determinant} a la ecuación \ref{eq:bhattacharya_vector_covariance_matrix} con 
+\[
+ \A=\var\{T\},\qquad\qquad 
+ \B=[1,\,0,\,\dots,\,0]=\C^t\qquad\qquad\textrm{y}\qquad\qquad
+ \D=\B(m)
+\]
+se obtiene que 
+\begin{align*}
+ \det(E\{\Y_m\Y_m^t\})&=\det[\B(m)][\var\{T\}-\B\B^{-1}(m)\C]\\
+   &=\det[\B(m)][\var\{T\}-B^{11}(m)]\\
+   &\overset{(a)}{\geq}0,
+\end{align*}
+donde en \((a)\) se consideró que \(\det(E\{\Y_m\Y_m^t\})\geq0\) por ser \(E\{\Y_m\Y_m^t\}\) semidefinida positiva por tratarse de una matriz de covarianza. Se concluye que
+\begin{equation}\label{eq:bhattacharya_bound}
+ \var\{T(\x)\}\geq B^{11}(m)\triangleq[\B^{-1}(m)]_{11}. 
+\end{equation}
+Como se cumple que (ver la ecuación \ref{eq:crlb_vector_degradation_factor})
+\[
+ B^{11}(m)\geq\frac{1}{B_{11}(m)}=\frac{1}{J_{11}},
+\]
+la ecuación \ref{eq:bhattacharya_bound} representa una mejora a la cota de Crámer-Rao.
 
+Se mostrará a continuación que al incrementar \(m\) la cota de Bhattacharya no decrece. De la definición de \(\B(m)\) de la ecuación \ref{eq:bhattacharya_vector_covariance_Bm},
+\[
+ \B(m+1)=
+ \begin{pmatrix}
+  \B(m) & \mathbf{b}\\
+  \mathbf{b}^t & B_{m+1,\,m+1}
+ \end{pmatrix}
+\]
+con 
+\[
+ \mathbf{b}=(B_{1,\,m+1},\,B_{2,\,m+1},\,\dots,\,B_{m,\,m+1})^t.
+\]
+Considerando la identidad matricial\footnote{Ver \url{https://en.wikipedia.org/wiki/Invertible_matrix\#Blockwise_inversion}} 
+\[
+ {\begin{bmatrix}\mathbf {A} &\mathbf {B} \\\mathbf {C} &\mathbf{D} \end{bmatrix}}^{-1}=\begin{bmatrix}\mathbf {A} ^{-1}+\mathbf {A} ^{-1}\mathbf {B} (\mathbf{D} -\mathbf {CA} ^{-1}\mathbf {B} )^{-1}\mathbf {CA} ^{-1}&-\mathbf {A} ^{-1}\mathbf {B} (\mathbf{D} -\mathbf {CA} ^{-1}\mathbf {B} )^{-1}\\-(\mathbf {D} -\mathbf {CA} ^{-1}\mathbf {B} )^{-1}\mathbf {CA} ^{-1}&(\mathbf {D} -\mathbf {CA} ^{-1}\mathbf {B})^{-1}\end{bmatrix},
+\]
+en este caso se tiene que 
+\[
+ (\D-\C\A^{-1}\B)^{-1}=\frac{1}{B_{m+1,\,m+1}-\mathbf{b}^t\B^{-1}(m)\mathbf{b}}\triangleq q_m
+\]
+y
+\[
+ \A^{-1}\B=(\C\A^{-1})^t=\B^{-1}(m)\mathbf{b}\triangleq\mathbf{c}=(c_1,\,c_2,\,\dots,\,c_m)^t,
+\]
+resultando en que 
+\[
+ \B^{-1}(m+1)=
+ \begin{pmatrix}
+  \B^{-1}(m)+q_m\mathbf{c}\mathbf{c}^t & -q_m\mathbf{c}\\
+  -q_m\mathbf{c}^t & q_m
+ \end{pmatrix}.
+\]
+Por lo tanto,
+\[
+ B^{11}(m+1)=B^{11}(m)+c_1^2q_m.
+\]
+Como \(q_m\geq0\) por ser un elemento de la diagonal de una matriz semidefinida positiva, se concluye que 
+\[
+ B^{11}(m+1)\geq B^{11}(m),\qquad m=1,\,2,\,\dots,
+\]
+lo que indica que la cota dada por la ecuación \ref{eq:bhattacharya_bound} es una secuencia no decreciente con \(m\).
 
+\paragraph{Factores de mayor orden de la mejora} Para obtener \(B^{11}(m)\) explícitamente en la ecuación \ref{eq:bhattacharya_bound}, se recurre a la definición de \(\B(m)\) de la ecuación \ref{eq:bhattacharya_vector_covariance_Bm}. Si \(M_{ij}\) es el menor complementario \((i,\,j)\) de \(\B(m)\), se cumple que 
+\[
+ B^{11}(m)\overset{(a)}{=}\frac{M_{11}}{\det[\B(m)]}\overset{(b)}{=}\frac{M_{11}}{\displaystyle J_{11}M_{11}-\sum_{k=2}^m(-1)^kB_{1k}M_{1k}}=\frac{1}{J_{11}}\left(\frac{1}{1-\epsilon}\right),
+\]
+con 
+\[
+ \epsilon=\sum_{k=2}^m\frac{(-1)^kB_{1k}M_{1k}}{J_{11}M_{11}}.
+\]
+En \((a)\) se empleó la regla de Crámer para calcular la inversa de una matriz\footnote{Ver \href{https://en.wikipedia.org/wiki/Cramer\%27s_rule\#Finding_inverse_matrix}{\texttt{https://en.wikipedia.org/wiki/Cramer's\_rule\#Finding\_inverse\_matrix}}.} y en \((b)\) la expansión de Laplace\footnote{Ver \url{https://en.wikipedia.org/wiki/Laplace_expansion}.} para expresar el determinante. Como \(B^{11}\geq1/J_{11}\), se cumple que \(0\leq\epsilon<1\). Además, \(\epsilon\) es una función de \(m\) y la cantidad de observaciones \(n\). Realizando un expansión de Taylor en torno a \(\epsilon=0\), se tiene que 
+\[
+ \frac{1}{1-\epsilon}=\sum_{k=0}^\infty \epsilon^k.
+\]
+ya que 
+\[
+ \textrm{si}\qquad f(\epsilon)=\frac{1}{1-\epsilon}\qquad\Rightarrow\qquad f^{(n)}(\epsilon)=\frac{n!}{(1-\epsilon)^{n+1}}\qquad\textrm{y}\qquad f^{(n)}(0)=n!.
+\]
+De esta forma,
+\[
+ B^{11}(m)=\frac{1}{J_{11}}+\frac{\epsilon(n,\,m)}{J_{11}}+\frac{\epsilon^2(n,\,m)}{J_{11}}+\dots.
+\]
+Se observa que el primer término es independiente de \(m\), y el resto de los términos consisten en la mejora en la cota de Crámer-Rao. Si \(T(\x)\) es eficiente, \(\epsilon=0\), y los términos de mayor orden están presentes solo si no existe un estimador eficiente. Es posible encontrar una expresión explícita para los términos de mayor orden para valores de \(m\) pequeños. Por ejemplo, si \(m=2\),
+\[
+ \B(2)=
+ \begin{pmatrix}
+  J_{11} & B_{12}\\
+  B_{12} & B_{22}
+ \end{pmatrix} 
+ \qquad\qquad\Rightarrow\qquad\qquad
+ \B^{-1}(2)=\frac{1}{J_{11}B_{22}-B_{12}^2}
+ \begin{pmatrix}
+  B_{22} & -B_{12}\\
+  -B_{12} & J_{11}
+ \end{pmatrix},
+\]
+y por lo tanto, 
+\[
+ B^{11}(2)=\frac{B_{22}}{J_{11}B_{22}-B_{12}^2}=\frac{1}{J_{11}}+\frac{B_{12}^2}{J_{11}(J_{11}B_{22}-B_{12}^2)},
+\]
+por lo que la ecuación \ref{eq:bhattacharya_bound} indica que 
+\[
+ \var\{T(\x)\}\geq\frac{1}{J_{11}}+\frac{B_{12}^2}{J_{11}(J_{11}B_{22}-B_{12}^2)}.
+\]
+Si las observaciones son independientes e idénticamente distribuidas, se cumple que 
+\begin{equation}\label{eq:bhattacharya_matrix_iid_observations}
+ \begin{aligned}
+  J_{11}&=nj_{11}\\
+  B_{12}&=nb_{12}\\
+  B_{22}&=nb_{22}+2n(n-1)j_{11}^2,
+ \end{aligned}
+\end{equation}
+donde \(j_{11},\,b_{12},\,b_{22},\,b_{13},\,\dots\) corresponden a los valores \(J_{11},\,B_{12},\,B_{22},\,B_{13},\,\dots\) en el caso de una única observación, es decir, cuando \(n=1\). Este resultado se demostrará al final del razonamiento. Por lo tanto,
+\begin{align*}
+ \var\{T(\x)\}&\geq\frac{1}{nj_{11}}+\frac{nb_{12}^2}{nj_{11}[nj_{11}(nb_{22}+2n(n-1)j_{11}^2)-nb_{12}^2]}\\
+ &=\frac{1}{nj_{11}}+\frac{b_{12}^2}{2n^2j_{11}^4+nj_{11}^2(nb_{22}-2j_{11}^2)-j_{11}b_{12}^2}\\
+ &=\frac{1}{nj_{11}}+\frac{b_{12}^2}{2n^2j_{11}^4}+o\left(\frac{1}{n^2}\right).
+\end{align*}
+Se obtuvo que si \(n\) es grande y las observaciones son i.i.d.,
+\begin{equation}\label{eq:bhattacharya_second_order_efficiency}
+ \var\{T(\x)\}\geq\frac{1}{nj_{11}}+\frac{b_{12}^2}{2n^2j_{11}^4}.
+\end{equation}
+Si un estimador \(T(\x)\) no es eficiente pero su varianza es tal que la ecuación \ref{eq:bhattacharya_second_order_efficiency} se cumple con igualdad, se dice que es \emph{eficiente de segundo orden}.
 
+Falta demostrar la propiedad dada por la ecuación \ref{eq:bhattacharya_matrix_iid_observations}. Se mostrará que si \(x\) y \(y\) son variables aleatorias independientes, se cumple que \cite{bhattacharyya1946some}
+\begin{equation}\label{eq:bhattacharya_matrix_independent_observations}
+ \begin{gathered}
+  J_{11}(x,\,y)=J_{11}(x)+J_{11}(y)\\
+  B_{12}(x,\,y)=B_{12}(x)+B_{12}(y)\\
+  B_{22}(x,\,y)-2J_{11}^2(x,\,y)=B_{22}(x)-2J_{11}^2(x)+B_{22}(y)-2J_{11}^2(y).
+ \end{gathered}
+\end{equation}
+En la ecuación \ref{eq:crlb_fisher_information_iid} ya se demostró que se cumple para la información de Fisher \(J_{11}\). Se mostrará la propiedad para \(B_{22}\), ya que la demostración para \(B_{12}\) es análoga. Por definición,
+\[
+ B_{22}(x,\,y)=E\left\{\left(\frac{1}{f(x,\,y;\,\theta)}\frac{\partial^2f(x,\,y;\,\theta)}{\partial\theta^2}\right)^2\right\}.
+\]
+Como las variables aleatorias \(x\) y \(y\) son independientes, la p.d.f conjunta cumple que \(f(x,\,y;\,\theta)=f(x;\,\theta)f(y;\,\theta)\) y sus derivadas primera y segunda son
+\[
+ \frac{\partial f(x,\,y)}{\partial\theta}=\frac{\partial f(x)f(y)}{\partial\theta}
+ =\frac{\partial f(x)}{\partial\theta}f(y)+f(x)\frac{\partial f(y)}{\partial\theta}
+\]
+y
+\[
+ \frac{\partial^2f(x,\,y)}{\partial\theta^2}=\frac{\partial^2f(x)f(y)}{\partial\theta^2}
+ =\frac{\partial^2f(x)}{\partial\theta^2}f(y)+2\frac{\partial f(x)}{\partial\theta}\frac{\partial f(y)}{\partial\theta}+f(x)\frac{\partial^2f(y)}{\partial\theta^2},
+\]
+donde se omitió la parametrización con \(\theta\) por claridad.
+Por lo tanto,
+\begin{align*}
+ B_{22}(x,\,y)&=E\left\{\left[\frac{1}{f(x)f(y)}\left(\frac{\partial^2f(x)}{\partial\theta^2}f(y)+2\frac{\partial f(x)}{\partial\theta}\frac{\partial f(y)}{\partial\theta}+f(x)\frac{\partial^2f(y)}{\partial\theta^2}\right)\right]^2\right\}\\
+ &=E\Bigg\{\frac{1}{f^2(x)f^2(y)}\bigg[\left(\frac{\partial^2f(x)}{\partial\theta^2}\right)^2f^2(y)+4\left(\frac{\partial f(x)}{\partial\theta}\right)^2\left(\frac{\partial f(y)}{\partial\theta}\right)^2+f^2(x)\left(\frac{\partial^2f(y)}{\partial\theta^2}\right)^2\\
+ &\qquad+4\frac{\partial f(x)}{\partial\theta}\frac{\partial^2f(x)}{\partial\theta^2}\frac{\partial f(y)}{\partial\theta}f(y)+4f(x)\frac{\partial f(x)}{\partial\theta}\frac{\partial f(y)}{\partial\theta}\frac{\partial^2f(y)}{\partial\theta}+2f(x)\frac{\partial^2f(x)}{\partial\theta^2}\frac{\partial^2f(y)}{\partial\theta^2}f(y)\Bigg]\Bigg\}\\
+ &=E\left\{\left(\frac{1}{f(x)}\frac{\partial^2f(x)}{\partial\theta^2}\right)^2\right\}
+ +4E\left\{\left(\frac{1}{f(x)}\frac{\partial f(x)}{\partial\theta}\right)^2\right\}E\left\{\left(\frac{1}{f(y)}\frac{\partial f(y)}{\partial\theta}\right)^2\right\}\\
+ &\qquad+E\left\{\left(\frac{1}{f(y)}\frac{\partial^2f(y)}{\partial\theta^2}\right)^2\right\}
+ +4E\left\{\frac{1}{f^2(x)}\frac{\partial f(x)}{\partial\theta}\frac{\partial^2f(x)}{\partial\theta^2}\right\}E\left\{\frac{1}{f(y)}\frac{\partial f(y)}{\partial\theta}\right\}\\
+ &\qquad+4E\left\{\frac{1}{f(x)}\frac{\partial f(x)}{\partial\theta}\right\}E\left\{\frac{1}{f^2(y)}\frac{\partial f(y)}{\partial\theta}\frac{\partial^2f(y)}{\partial\theta^2}\right\}
+ +2E\left\{\frac{1}{f(x)}\frac{\partial^2f(x)}{\partial\theta^2}\right\}\left\{\frac{1}{f(y)}\frac{\partial^2f(y)}{\partial\theta^2}\right\},
+\end{align*}
+donde se empleó el hecho de que \(x\) y \(y\) son variables aleatorias independientes. Considerando que (ver la ecuación \ref{eq:bhattacharya_deduction_pdf_derivatives_expectation})
+\[
+ E\left\{\frac{1}{f(x)}\frac{\partial^kf(x)}{\partial\theta^k}\right\}=0,
+\]
+los tres últimos sumandos son nulos, resultando en que 
+\[
+ B_{22}(x,\,y)=B_{22}(x)+4J_{11}(x)J_{11}(y)+B_{22}(y),
+\]
+y como \(J_{11}(x,\,y)=J_{11}(x)+J_{11}(y)\), resulta en que 
+\[
+ B_{22}(x,\,y)-2J_{11}^2(x,\,y)=B_{22}(x)-2J_{11}^2(x)+B_{22}(y)-2J_{11}^2(y),
+\]
+que es lo que se quería mostrar. Aplicando la ecuación \ref{eq:bhattacharya_matrix_independent_observations} repetidamente, se obtiene que
+\[
+ \begin{aligned}
+  J_{11}(x_1,\,x_2,\,\dots,\,x_n)&=\sum_{i=1}^nJ_{11}(x_i)\\
+  B_{12}(x_1,\,x_2,\,\dots,\,x_n)&=\sum_{i=1}^nB_{12}(x_i)\\
+  B_{22}(x_1,\,x_2,\,\dots,\,x_n)&=\sum_{i=1}^nB_{22}(x_i)-2\sum_{i=1}^nJ^2_{11}(x_i)+2\left[\sum_{i=1}^nJ_{11}(x_i)\right]^2.
+ \end{aligned}
+\]
+Finalmente, si además de independientes las variables aleatorias son idénticamente distribuidas, se obtiene que 
+\[
+ \begin{aligned}
+  J_{11}(x_1,\,x_2,\,\dots,\,x_n)&=nj_{11}\\
+  B_{12}(x_1,\,x_2,\,\dots,\,x_n)&=nb_{12}\\
+  B_{22}(x_1,\,x_2,\,\dots,\,x_n)&=nb_{22}+2n(n-1)j_{11}^2,
+ \end{aligned} 
+\]
+donde la ecuación de \(B_{22}\) proviene de que 
+\[
+ B_{22}=nb_{22}-2nj^2_{11}+2(nj_{11})^2=nb_{22}+2n(n-1)j_{11}^2.
+\]
 
+\paragraph{Ejemplo 8-20} Sean \(\x_i\sim N(\mu,\,\sigma^2)\), con \(i=1,\,2,\,\dots,\,n\), variables aleatorias i.i.d., con \(\mu\) y \(\sigma^2\) desconocidos. Del ejemplo de la sección \ref{sec:statistics_sufficient_statistic}
+\[
+ \z_1=\bar{\x},\qquad\qquad\textrm{y}\qquad\qquad\z_2=\sum_{i=1}^n\x_i^2
+\]
+forman un\(\z_1\) estadístico suficiente en este problema, y como los estimadores
+\[
+ \hat{\mu}=\frac{1}{n}\sum_{i=1}^n\x_i=\hat{\x}=\z_1
+\]
+y
+\[
+ {\hat{\sigma}}^2=\frac{1}{n-1}\sum_{i=1}^n(\x_i-\hat{\x})^2=\frac{\z_2-n\z_1^2}{n-1}
+\]
+son insesgados e independientes y son funciones únicamente de \(\z_1\) y \(\z_2\), son los estimadores UMVUE para \(\mu\) y \(\sigma^2\) respectivamente. En la sección \ref{sec:mean_and_covariance} se mostró que los estimadores \(\hat{\mu}\) y \({\hat{\sigma}}^2\) son independientes (ver la ecuación \ref{eq:sample_mean_and_variance}), pero igualmente se mostrará de forma alternativa. Sea la matriz
+\[
+ A=
+ \begin{bmatrix}
+  1 & -1 & & & &\\
+  1 & 1 & -2  & & & \text{\Large{0}} \\
+  1 & 1 & 1 & -3  & & \\
+  \vdots & \vdots & \vdots & \ddots & \ddots & \\
+  1 & 1 & 1 & \cdots & 1 & -(n-1) \\ 
+  1 & 1 & 1 & \cdots & 1 & 1 
+ \end{bmatrix}
+\]
+de forma que 
+\begin{align*}
+  AA^t&=
+  \begin{bmatrix}
+  1 & -1 & & & &\\
+  1 & 1 & -2  & & & \text{\Large{0}} \\
+  1 & 1 & 1 & -3  & & \\
+  \vdots & \vdots & \vdots & \ddots & \ddots & \\
+  1 & 1 & 1 & \cdots & 1 & -(n-1) \\ 
+  1 & 1 & 1 & \cdots & 1 & 1 
+ \end{bmatrix}
+ \begin{bmatrix}
+  1 & 1 & 1 & \cdots & 1 & 1\\
+  -1 & 1 & 1 & \cdots & 1 & 1\\
+   & -2 & 1 & \cdots & 1 & 1\\
+   &   &  \ddots & \ddots & \vdots & \vdots\\
+%   &   &   &  &  & \\
+   & \text{\Large{0}} &  & -(n-2) & 1 & 1\\
+   &  &  &  & -(n-1) & 1\\
+ \end{bmatrix}\\
+ &=
+ \begin{bmatrix}
+  2 & & & & & & \\
+    & 6 & & & & \text{\Large{0}} & \\
+    & & \ddots & & & &\\
+    & & & i(i+1) & \\
+    & & &  & \ddots & & \\
+    & \text{\Large{0}} & & & & n(n-1) & \\
+    & & & & & & n
+ \end{bmatrix}
+\end{align*}
+Por lo tanto,
+\begin{align*}
+ U&=
+ \begin{bmatrix}
+  \frac{1}{\sqrt{2}} & & & & & & \\
+    & \frac{1}{\sqrt{6}} & & & & \text{\Large{0}} & \\
+    & & \ddots & & & &\\
+    & & & \frac{1}{\sqrt{i(i+1)}} & \\
+    & & &  & \ddots & & \\
+    & \text{\Large{0}} & & & & \frac{1}{\sqrt{n(n-1)}} & \\
+    & & & & & & \frac{1}{\sqrt{n}} \\
+ \end{bmatrix}A\\
+ &=
+ \begin{bmatrix}
+  \frac{1}{\sqrt{2}} & & & & & & \\
+    & \frac{1}{\sqrt{6}} & & & & \text{\Large{0}} & \\
+    & & \ddots & & & &\\
+    & & & \frac{1}{\sqrt{i(i+1)}} & \\
+    & & &  & \ddots & & \\
+    & \text{\Large{0}} & & & & \frac{1}{\sqrt{n(n-1)}} & \\
+    & & & & & & \frac{1}{\sqrt{n}} \\
+ \end{bmatrix}
+ \begin{bmatrix}
+  1 & -1 & & & &\\
+  1 & 1 & -2  & & & & \text{\Large{0}} & \\
+  1 & 1 & 1 & -3  & & &  & \\
+  \vdots & \vdots & \vdots & \ddots & \ddots & \\
+  1 & 1 & 1 & \cdots & 1 & -i & &  \\ 
+   \vdots & \vdots & \vdots &  & & \ddots & \ddots &\\
+  1 & 1 & 1 & \cdots & \cdots & \cdots & 1 & -(n-1) \\ 
+  1 & 1 & 1 & \cdots & \cdots & \cdots & 1 & 1 
+ \end{bmatrix}\\
+ &=
+ \begin{bmatrix}
+  \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} & & & &\\
+  \frac{1}{\sqrt{6}} & \frac{1}{\sqrt{6}} & -\frac{2}{\sqrt{6}}  & & & \text{\Large{0}} & \\
+  \vdots & \vdots & \ddots & \ddots &  & \\
+  \frac{1}{\sqrt{i(i+1)}} & \frac{1}{\sqrt{i(i+1)}}  & \cdots & \frac{1}{\sqrt{i(i+1)}} & -\frac{i}{\sqrt{i(i+1)}} & &  \\ 
+   \vdots & \vdots & &  & \ddots & \ddots &\\
+  \frac{1}{\sqrt{(n-1)n}} & \frac{1}{\sqrt{(n-1)n}} & \cdots & \cdots & \cdots & \frac{1}{\sqrt{(n-1)n}} & -\frac{n-1}{\sqrt{(n-1)n}} \\ 
+  \frac{1}{\sqrt{n}} & \frac{1}{\sqrt{n}} & \cdots & \cdots & \cdots & \frac{1}{\sqrt{n}} & \frac{1}{\sqrt{n}} 
+ \end{bmatrix}
+\end{align*}
+es una matriz ortonormal. Efectivamente,
+\begin{align*}
+ U_{ij}&=
+ %\begin{bmatrix}
+ % \frac{1}{\sqrt{i(i+1)}} & \cdots & \frac{1}{\sqrt{i(i+1)}} & -\frac{i}{\sqrt{i(i+1)}} & 0 & \cdots & 0 
+ %\end{bmatrix}
+ \Big[
+  \textstyle\frac{1}{\sqrt{i(i+1)}} \; \cdots \; \stackunder[8pt]{\frac{1}{\sqrt{i(i+1)}}{}}{\stackunder{\scriptstyle\big\uparrow}{i}} \; \stackunder[8pt]{-\frac{i}{\sqrt{i(i+1)}}}{\stackunder{\scriptstyle\big\uparrow}{i+1}} \; 0 \; \cdots \; 0
+ \Big]
+ \begin{bmatrix}
+  \frac{1}{\sqrt{j(j+1)}} \\ \vdots \\ \frac{1}{\sqrt{j(j+1)}} \\ -\frac{j}{\sqrt{j(j+1)}} \\ 0 \\ \vdots\\ 0 
+ \end{bmatrix}
+ \begin{array}{l}
+  \vphantom{\frac{1}{\sqrt{j(j+1)}}} \\ \vphantom{\vdots} \\ \vphantom{\frac{1}{\sqrt{j(j+1)}}}\longleftarrow j \\ \vphantom{-\frac{j}{\sqrt{j(j+1)}}}\longleftarrow j+1 \\ \vphantom{0} \\ \vphantom{\vdots}\\ \vphantom{0} 
+ \end{array}
+ %\begin{matrix}
+ % \vphantom{\frac{1}{\sqrt{j(j+1)}}} \\ \vphantom{\vdots} \\ \vphantom{\frac{1}{\sqrt{j(j+1)}}}\leftarrow j \\ \vphantom{-\frac{j}{\sqrt{j(j+1)}}}\leftarrow j+1 \\ \vphantom{0} \\ \vphantom{\vdots}\\ \vphantom{0} 
+ %\end{matrix}
+ \\
+ &=\left\{
+ \begin{array}{ll}
+  j\dfrac{1}{\sqrt{i(i+1)}}\dfrac{1}{\sqrt{j(j+1)}}-\dfrac{1}{\sqrt{i(i+1)}}\dfrac{j}{\sqrt{j(j+1)}}=0, & i\neq j \quad (i>j\textrm{ en este caso.})\\
+  j\dfrac{1}{j(j+1)}+\dfrac{j^2}{j(j+1)}=\dfrac{j(j+1)}{j(j+1)}=1,&i=j.
+ \end{array}
+ \right.
+\end{align*}
+Es fácil verificar que el resultado se mantiene en el caso especial en que \(i\) o \(j\) valen \(n\). Se concluye que \(UU^t=I\). Sea \(\x=[\x_1\,\x_2\,\dots\,\x_n]^t\), y se define
+\[
+ \y=
+ \begin{bmatrix}
+  \y_1\\ \y_2 \\ \vdots \\ \y_n
+ \end{bmatrix}
+ =U\x
+ =
+ \begin{bmatrix}
+  \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} & & & &\\
+  \frac{1}{\sqrt{6}} & \frac{1}{\sqrt{6}} & -\frac{2}{\sqrt{6}}  & & & \text{\Large{0}} & \\
+  \vdots & \vdots & \ddots & \ddots &  & \\
+  \frac{1}{\sqrt{i(i+1)}} & \frac{1}{\sqrt{i(i+1)}}  & \cdots & \frac{1}{\sqrt{i(i+1)}} & -\frac{i}{\sqrt{i(i+1)}} & &  \\ 
+   \vdots & \vdots & &  & \ddots & \ddots &\\
+  \frac{1}{\sqrt{(n-1)n}} & \frac{1}{\sqrt{(n-1)n}} & \cdots & \cdots & \cdots & \frac{1}{\sqrt{(n-1)n}} & -\frac{n-1}{\sqrt{(n-1)n}} \\ 
+  \frac{1}{\sqrt{n}} & \frac{1}{\sqrt{n}} & \cdots & \cdots & \cdots & \frac{1}{\sqrt{n}} & \frac{1}{\sqrt{n}} 
+ \end{bmatrix}
+ \begin{bmatrix}
+  \x_1\\ \x_2 \\ \vdots \\ \x_i \\ \vdots \\ \x_{n-1} \\ \x_n
+ \end{bmatrix},
+\]
+es decir,
+\[
+ \y=
+ \begin{bmatrix}
+  \y_1\\ \y_2 \\ \vdots \\ \y_n
+ \end{bmatrix}
+ =U\x
+ =
+ \begin{bmatrix}
+  \frac{\x_1-\x_2}{\sqrt{2}}\\ \frac{\x_1+\x_2-2\x_3}{\sqrt{6}} \\ \vdots \\ \frac{\x_1+\dots+\x_i-i\x_{i+1}}{\sqrt{i(i+1)}} \\ \vdots \\ \frac{\x_1+\dots+\x_{n-1}-(n-1)\x_n}{\sqrt{(n-1)n}} \\ \frac{\x_1+\dots+\x_n}{\sqrt{n}}
+ \end{bmatrix}.
+\]
+Observar que 
+\[
+ \y_i=\frac{1}{{\sqrt{i(i+1)}}}\left(\sum_{j=1}^i\x_j-i\x_{i+1}\right),\qquad i=1,\,2,\,\dots,\,n-1,
+\]
+y
+\begin{equation}\label{eq:example_8_20_y_n}
+ \y_n=\sqrt{n}\bar{\x}\sim N(\sqrt{n}\mu,\,\sigma^2).
+\end{equation}
+Además, para \(i=1,\,2,\,\dots,\,n-1\),
+\[
+ E\{\y_i\}=\frac{1}{{\sqrt{i(i+1)}}}\left(\sum_{j=1}^iE\{\x_j\}-iE\{\x_{i+1}\}\right)=\frac{iE\{\x_j\}-iE\{\x_i\}}{{\sqrt{i(i+1)}}}=\frac{i\mu-i\mu}{{\sqrt{i(i+1)}}}=0,
+\]
+y
+\[
+ \var\{\y_i\}=\frac{1}{{i(i+1)}}\left(\sum_{j=1}^i\var\{\x_j\}+i^2\var\{\x_{i+1}\}\right)
+  =\frac{i\var\{\x_j\}+i^2\var\{\x_{i+1}\}}{{i(i+1)}}=\frac{i(i+1)}{i(i+1)}\sigma^2=\sigma^2,
+\]
+resultando en que \(\y_i\sim N(0,\,\sigma^2)\). Teniendo esto en cuenta,
+\[
+ E\{\y\y^t\}=UE\{\x\x^t\}U^t=U(\sigma^2I)U^t=\sigma^2I,
+\]
+lo que indica que \((\y_1,\,\y_2,\,\dots,\,\y_n)\) son variables aleatorias no correlacionadas, y como son gaussianas por ser una combinación lineal de variables aleatorias gaussianas, se concluye que son variables aleatorias independientes. Por otro lado,
+\begin{equation}\label{eq:example_8_20_sum_y_square}
+ \sum_{i=1}^n\y_i^2=\y^t\y=\x^tU^tU\x=\x^t\x=\sum_{i=1}^n\x_i^2
+\end{equation}
+y por lo tanto,
+\[
+ (n-1)\hat{\sigma}^2=\sum_{i=1}^n(\x_i-\bar{\x})^2=\sum_{i=1}^n\x_i^2-n\bar{\x}^2\overset{(a)}{=}\sum_{i=1}^n\y_i^2-\y_n^2=\sum_{i=1}^{n-1}\y_i^2,
+\]
+donde en \((a)\) se emplearon los resultados de las ecuaciones \ref{eq:example_8_20_y_n} y \ref{eq:example_8_20_sum_y_square}. Se concluye que 
+\begin{equation}\label{eq:example_8_20_estimators_as_y_function}
+ \hat{\mu}=\bar{\x}=\frac{1}{\sqrt{n}}\y_n\qquad\qquad\textrm{y}\qquad\qquad
+ \hat{\sigma}^2=\frac{1}{n-1}\sum_{i=1}^{n-1}\y_i^2
+\end{equation}
+son variables aleatorias independientes debido a que las variables aleatorias \(\y_i\) son independientes. 
 
+Para determinar si los estimadores son eficientes, se calculará su varianza para compararlos con la cota de Crámer-Rao. De las ecuaciones \ref{eq:example_8_20_y_n} y \ref{eq:example_8_20_estimators_as_y_function}, la varianza de \(\hat{\mu}\) es 
+\begin{equation}\label{eq:example_8_20_sample_mean_variance}
+ \var\{\hat{\mu}\}=\frac{1}{n}\var\{\y_n\}=\frac{\sigma^2}{n}.
+\end{equation}
+Partiendo de la ecuación \ref{eq:example_8_20_estimators_as_y_function} la varianza de \(\hat{\sigma}^2\) es 
+\begin{align*}
+ \var\{\hat{\sigma}^2\}&\overset{(a)}{=}\frac{1}{(n-1)^2}\sum_{i=1}^{n-1}\var\{\y_i^2\}\\
+  &=\frac{1}{n-1}\var\{\y_i^2\}\\
+  &=\frac{1}{n-1}(E\{\y_i^4\}-E^2\{\y_i^2\})\\
+  &\overset{(b)}{=}\frac{1}{n-1}(3\sigma^4-\sigma^4),
+\end{align*}
+donde en \((a)\) se tuvo en cuenta que las variables aleatorias \(\y_i\) son independientes y en \((b)\) que \(\y_i\sim N(0,\,\sigma^2)\) para \(i=1,\,\dots,\,n-1\). Esto resulta en
+\begin{equation}\label{eq:example_8_20_sample_variance_variance}
+ \var\{\hat{\sigma}^2\}=\frac{2\sigma^4}{n-1}.
+\end{equation}
+Observar que el resultado coincide con el de la ecuación \ref{eq:sample_variance_mean_and_variance} teniendo en cuenta que en este caso \(\mu_4=\sigma^4\) por tratarse de variables aleatorias normales.
+Para determinar la cota de Crámer-Rao, sea el parámetro vectorial \(\thetabf=[\mu\;\sigma^2]^t\) y defínase 
+\[
+ \Z_k\triangleq
+ \def\arraystretch{2.4}
+ \begin{bmatrix}
+  \dfrac{1}{f}\dfrac{\partial^k f}{\partial\mu^k}\\ \dfrac{1}{f}\dfrac{\partial^k f}{\partial(\sigma^2)^k}
+ \end{bmatrix}.
+\]
+De esta forma, la matriz de información de Fisher está dada por 
+\[
+ J=E\{\Z_1\Z_1^t\}.
+\]
+Para calcular \(\Z_1\) se considera que la p.d.f. conjunta es
+\[
+ f(\x;\,\theta)=\frac{1}{(2\pi\sigma^2)^\frac{n}{2}}\exp\left[-\frac{1}{2\sigma^2}\sum_{i=1}^n(\x_i-\mu)^2\right].
+\]
+Diferenciando respecto a \(\mu\) se tiene que 
+\begin{equation}\label{eq:example_8_20_mu_derivative}
+ \frac{\partial f}{\partial\mu}=\frac{1}{(2\pi\sigma^2)^\frac{n}{2}}\exp\left[-\frac{1}{2\sigma^2}\sum_{i=1}^n(\x_i-\mu)^2\right]\left[\frac{1}{\sigma^2}\sum_{i=1}^n(\x_i-\mu)\right]
+ =f(\x;\,\theta)\left[\frac{1}{\sigma^2}\sum_{i=1}^n(\x_i-\mu)\right].
+\end{equation}
+resultando en que
+\begin{equation}\label{eq:example_8_20_Z1_1}
+ \frac{1}{f}\frac{\partial f}{\partial\mu}=\frac{1}{\sigma^2}\sum_{i=1}^n(\x_i-\mu).
+\end{equation}
+Diferenciando respecto a \(\sigma^2\) se tiene que 
+\begin{align}\label{eq:example_8_20_var_derivative}
+ \frac{\partial f}{\partial\sigma^2}&=\frac{1}{(2\pi)^\frac{n}{2}}\Bigg\{-\frac{n}{2(\sigma^2)^\frac{n}{2}\sigma^2}\exp\left[-\frac{1}{2\sigma^2}\sum_{i=1}^n(\x_i-\mu)^2\right]\nonumber\\
+ &\qquad+\frac{1}{(\sigma^2)^\frac{n}{2}}\exp\left[-\frac{1}{2\sigma^2}\sum_{i=1}^n(\x_i-\mu)^2\right]\frac{1}{2\sigma^4}\sum_{i=1}^n(\x_i-\mu)^2\Bigg\}\nonumber\\
+ &=f(\x;\,\theta)\left[-\frac{n}{2\sigma^2}+\frac{1}{2\sigma^4}\sum_{i=1}^n(\x_i-\mu)^2\right].
+\end{align}
+resultando en que 
+\begin{equation}\label{eq:example_8_20_Z1_2}
+ \frac{1}{f}\frac{\partial f}{\partial\sigma^2}=-\frac{n}{2\sigma^2}+\frac{1}{2\sigma^4}\sum_{i=1}^n(\x_i-\mu_i)^2.
+\end{equation}
+En estos cálculos no se empleó la propiedad de la ecuación \ref{eq:crlb_loglikelihood_derivative} porque mas adelante se calcularán las derivadas segundas, por lo que se necesita la expresión analítica explícita de las derivadas primeras. Por lo tanto,
+\[
+ \Z_1=
+ \def\arraystretch{2.4}
+ \begin{bmatrix}
+  \dfrac{1}{f}\dfrac{\partial f}{\partial\mu}\\ \dfrac{1}{f}\dfrac{\partial f}{\partial(\sigma^2)}
+ \end{bmatrix}
+ =
+ \begin{bmatrix}
+  \displaystyle\frac{1}{\sigma^2}\sum_{i=1}^n(\x_i-\mu)\\
+  \displaystyle-\frac{n}{2\sigma^2}+\frac{1}{2\sigma^4}\sum_{i=1}^n(\x_i-\mu)^2
+ \end{bmatrix}.
+\]
+De esta forma,
+\begin{align*}
+ J_{11}&=E\left\{\left[\dfrac{1}{f}\dfrac{\partial f}{\partial\mu}\right]^2\right\}\\
+  &=\frac{1}{\sigma^4}E\left\{\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\right\}\\
+  &\overset{(a)}{=}\frac{1}{\sigma^4}\left[nE\{(\x_i-\mu)^2\}+n(n-1)E^2\{\x_i-\mu\}\right]\\
+  &\overset{(b)}{=}\frac{n}{\sigma^2},
+\end{align*}
+donde en \((a)\) se consideró que 
+\[
+ E\left\{\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\right\}=E\left\{\sum_{i=1}^n(\x_i-\mu)\sum_{j=1}^n(\x_j-\mu)\right\}=nE\{(\x_i-\mu)^2\}+n(n-1)E\{(\x_i-\mu)(\x_j-\mu)\},
+\]
+ya que al multiplicar las sumatorias, hay \(n\) sumandos donde el producto cumple que \(i=j\) y \(n(n-1)\) sumandos donde el producto cumple que \(i\neq j\), y en \((b)\) se tuvo en cuenta que \(E\{\x_i-\mu\}=0\). Además,
+\begin{align*}
+ J_{12}=J_{21}&=E\left\{\left[\dfrac{1}{f}\dfrac{\partial f}{\partial\mu}\right]\left[\dfrac{1}{f}\dfrac{\partial f}{\partial\sigma^2}\right]\right\}\\
+  &=E\left\{\left[\frac{1}{\sigma^2}\sum_{i=1}^n(\x_i-\mu)\right]\left[-\frac{n}{2\sigma^2}+\frac{1}{2\sigma^4}\sum_{i=1}^n(\x_i-\mu)^2\right]\right\}\\
+  &=-\frac{n}{2\sigma^4}E\left\{\sum_{i=1}^n(\x_i-\mu)\right\}+\frac{1}{2\sigma^4}E\left\{\sum_{i=1}^n(\x_i-\mu)\sum_{j=1}^n(\x_j-\mu)^2\right\}\\
+  &\overset{(a)}{=}-\frac{n^2}{2\sigma^4}E\{\x_i-\mu\}+\frac{1}{2\sigma^4}\left[nE\{(\x_i-\mu)^3\}+n(n-1)E\{\x_i-\mu\}E\{(\x_j-\mu)^2\}\right]\\
+  &\overset{(b)}{=}-\frac{n^2}{2\sigma^4}\mu_1+\frac{1}{2\sigma^4}\left[n\mu_3+n(n-1)\mu_1\mu_2\right]\\
+  &\overset{(c)}{=}0,
+\end{align*}
+donde en \((a)\) se consideró nuevamente que al multiplicar las sumatorias hay \(n\) sumandos donde el producto cumple que \(i=j\) y \(n(n-1)\) sumandos donde el producto cumple que \(i\neq j\), en \((b)\) \(\mu_k=E\{(\x_i-\mu)^k\}\) denota el momento central \(k\)-ésimo de la variable aleatoria \(\x_i\) (ver la sección \ref{sec:moments_definitions}) y en \((c)\) que los momentos centrales impares de una variable aleatoria gaussiana son nulos, como indica la ecuación \ref{eq:gaussian_rv_moments}. Finalmente,
+\begin{align*}
+ J_{22}&=E\left\{\left[\dfrac{1}{f}\dfrac{\partial f}{\partial\sigma^2}\right]^2\right\}\\
+  &=E\left\{\left[-\frac{n}{2\sigma^2}+\frac{1}{2\sigma^4}\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right\}\\
+  &=E\left\{\frac{n^2}{4\sigma^4}-\frac{n}{2\sigma^6}\sum_{i=1}^n(\x_i-\mu)^2+\frac{1}{4\sigma^8}\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right\}\\
+  &=\frac{1}{2\sigma^4}\left[\frac{n^2}{2}-\frac{n}{\sigma^2}\sum_{i=1}^nE\left\{(\x_i-\mu)^2\right\}+\frac{1}{2\sigma^4}E\left\{\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right\}\right]\\
+  &\overset{(a)}{=}\frac{1}{2\sigma^4}\left\{\frac{n^2}{2}-\frac{n}{\sigma^2}nE\left\{(\x_i-\mu)^2\right\}+\frac{1}{2\sigma^4}\left[nE\{(\x_i-\mu)^4\}+n(n-1)E\{(\x_i-\mu)^2\}E\{(\x_j-\mu)^2\}\right]\right\}\\
+  &=\frac{1}{2\sigma^4}\left\{\frac{n^2}{2}-\frac{n^2}{\sigma^2}\mu_2+\frac{1}{2\sigma^4}\left[n\mu_4+n(n-1)\mu_2^2\right]\right\}\\
+  &\overset{(b)}{=}\frac{1}{2\sigma^4}\left\{\frac{n^2}{2}-\frac{n^2}{\sigma^2}\sigma^2+\frac{1}{2\sigma^4}\left[3n\sigma^4+n(n-1)\sigma^4\right]\right\}\\
+  &=\frac{1}{2\sigma^4}\left(\frac{n^2}{2}-n^2+\frac{n^2+2n}{2}\right)\\
+  &=\frac{n}{2\sigma^4},
+\end{align*}
+donde en \((a)\) se emplearon la mismas consideraciones que antes para calcular la esperanza del cuadrado de la sumatoria y en \((b)\) se tuvo en cuenta que \(\mu_2=\sigma^2\) y \(\mu_4=3\sigma^4\), como indican las ecuaciones \ref{eq:gaussian_rv_moments} y \ref{eq:normal_rv_central_moments}. Por lo tanto, la matriz de información de Fisher es
+\[
+ J=E\{\Z_1\Z_1^t\}=
+ \begin{bmatrix}
+  n/\sigma^2 & 0\\
+  0 & n/2\sigma^4
+ \end{bmatrix}
+ \qquad\qquad\Rightarrow\qquad\qquad 
+ J^{-1}=
+ \begin{bmatrix}
+  \sigma^2/n & 0\\
+  0 & 2\sigma^4/n
+ \end{bmatrix}.
+\]
+De la ecuación \ref{eq:example_8_20_sample_mean_variance}, se observa que \(\var\{\hat{\mu}\}=\sigma^2/n=J^{11}\), mientras que de la ecuación \ref{eq:example_8_20_sample_variance_variance} se ve que \(\var\{\hat{\sigma}^2\}=2\sigma^4/(n-1)>2\sigma^2/n=J^{22}\). Se concluye que el estimador \(\hat{\mu}\) es eficiente mientras que el estimador \(\hat{\sigma}^2\) no es eficiente. Sin embargo, como \(\hat{\sigma}^2\) es una función únicamente de los estadísticos suficientes \(\z_1\) y \(\z_2\), se estudiará si es eficiente de segundo orden. Para hacerlo, hay que calcular la matriz de Bhattacharya, dada por la ecuación \ref{eq:bhattacharya_vector_covariance_Bm}, para \(m=2\),
+\[
+ \B(2)=E\left\{ 
+  \begin{bmatrix}
+   \Z_1\\ \Z_2
+  \end{bmatrix}
+  \begin{bmatrix}
+   \Z_1^t & \Z_2^t
+  \end{bmatrix}
+ \right\},
+ \qquad\qquad\textrm{donde}\qquad\qquad
+ \Z_2=
+ \def\arraystretch{2.4}
+ \begin{bmatrix}
+  \dfrac{1}{f}\dfrac{\partial^2 f}{\partial\mu^2}\\ \dfrac{1}{f}\dfrac{\partial^2 f}{\partial(\sigma^2)^2}
+ \end{bmatrix}.
+\]
+La derivada segunda respecto a \(\mu\) se obtiene diferenciando la ecuación \ref{eq:example_8_20_mu_derivative} respecto a \(\mu\),
+\begin{align*}
+ \frac{\partial^2 f}{\partial\mu^2}&=\frac{\partial f(\x;\,\theta)}{\partial\mu}\left[\frac{1}{\sigma^2}\sum_{i=1}^n(\x_i-\mu)\right]-f(\x;\,\theta)\frac{1}{\sigma^2}\sum_{i=1}^n1\\
+ &=f(\x;\,\theta)\left[\frac{1}{\sigma^2}\sum_{i=1}^n(\x_i-\mu)\right]^2-f(\x;\,\theta)\frac{n}{\sigma^2},
+\end{align*}
+y por lo tanto,
+\begin{equation}\label{eq:example_8_20_Z2_1}
+ \frac{1}{f}\frac{\partial^2 f}{\partial\mu^2}=-\frac{n}{\sigma^2}+\frac{1}{\sigma^4}\left[\sum_{i=1}^n(\x_i-\mu)\right]^2.
+\end{equation}
+Además, diferenciando la ecuación \ref{eq:example_8_20_var_derivative}, se obtiene que la derivada segunda respecto a \(\sigma^2\) es
+\begin{align*}
+ \frac{\partial^2 f}{\partial{\sigma^2}^2}&=\frac{\partial f(\x;\,\theta)}{\partial\sigma^2}\left[-\frac{n}{2\sigma^2}+\frac{1}{2\sigma^4}\sum_{i=1}^n(\x_i-\mu)^2\right]
+  +f(\x;\,\theta)\left[\frac{n}{2\sigma^4}-\frac{1}{\sigma^6}\sum_{i=1}^n(\x_i-\mu)^2\right]\\
+  &=f(\x;\,\theta)\left[-\frac{n}{2\sigma^2}+\frac{1}{2\sigma^4}\sum_{i=1}^n(\x_i-\mu)^2\right]^2
+  +f(\x;\,\theta)\left[\frac{n}{2\sigma^4}-\frac{1}{\sigma^6}\sum_{i=1}^n(\x_i-\mu)^2\right].
+\end{align*}
+Por lo tanto,
+\begin{align*}
+ \frac{1}{f}\frac{\partial^2 f}{\partial{\sigma^2}^2}&=\left\{\frac{n^2}{4\sigma^4}-\frac{n}{2\sigma^6}\sum_{i=1}^n(\x_i-\mu)^2+\frac{1}{4\sigma^8}\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right\}+\left\{\frac{n}{2\sigma^4}-\frac{1}{\sigma^6}\sum_{i=1}^n(\x_i-\mu)^2\right\}\\
+ &=\frac{1}{\sigma^4}\left\{\left(\frac{n^2}{4}+\frac{n}{2}\right)-\frac{1}{\sigma^2}\left(\frac{n}{2}+1\right)\sum_{i=1}^n(\x_i-\mu)^2+\frac{1}{4\sigma^4}\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right\}\\
+ &=\frac{1}{\sigma^4}\left\{\frac{1}{4}n(n+2)-\frac{1}{2\sigma^2}(n+2)\sum_{i=1}^n(\x_i-\mu)^2+\frac{1}{4\sigma^4}\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right\},
+\end{align*}
+resultando en que 
+\begin{equation}\label{eq:example_8_20_Z2_2}
+ \frac{1}{f}\frac{\partial^2 f}{\partial{\sigma^2}^2}=\frac{1}{2\sigma^4}\left\{\frac{1}{2}n(n+2)-\frac{1}{\sigma^2}(n+2)\sum_{i=1}^n(\x_i-\mu)^2+\frac{1}{2\sigma^4}\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right\}.
+\end{equation}
 
+Previo al cálculo de los elementos de la matriz \(\B(2)\) se consideran los siguientes resultados, que se necesitarán:
+\begin{align}
+ E\left\{\sum_{i=1}^n(\x_i-\mu)^2\right\}&=n\sigma^2\label{eq:n_gaussian_rv_sum_square_1}\\
+ E\left\{\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right\}&=n(n+2)\sigma^4\label{eq:n_gaussian_rv_sum_square_2}\\
+ E\left\{\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^3\right\}&=n(n+2)(n+4)\sigma^6\label{eq:n_gaussian_rv_sum_square_3}\\
+ E\left\{\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^4\right\}&=n(n+2)(n+4)(n+6)\sigma^8.\label{eq:n_gaussian_rv_sum_square_4}
+\end{align}
+Además
+\begin{align}
+ E\left\{\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\right\}&=n\sigma^2\label{eq:n_gaussian_rv_sum_1}\\
+ E\left\{\left[\sum_{i=1}^n(\x_i-\mu)\right]^3\right\}&=0\label{eq:n_gaussian_rv_sum_2}\\
+ E\left\{\left[\sum_{i=1}^n(\x_i-\mu)\right]^4\right\}&=3n^2\sigma^4\label{eq:n_gaussian_rv_sum_3}\\
+ E\left\{\sum_{i=1}^n(\x_i-\mu)\sum_{i=1}^n(\x_i-\mu)^2\right\}&=0\label{eq:n_gaussian_rv_sum_4}\\
+ E\left\{\sum_{i=1}^n(\x_i-\mu)\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right\}&=0\label{eq:n_gaussian_rv_sum_5}\\
+ E\left\{\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\sum_{i=1}^n(\x_i-\mu)^2\right\}&=n(n+2)\sigma^4\label{eq:n_gaussian_rv_sum_6}\\
+ E\left\{\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right\}&=n(n+2)(n+4)\sigma^6\label{eq:n_gaussian_rv_sum_7}.
+\end{align}
+Es fácil verificar que se cumple la ecuación \ref{eq:n_gaussian_rv_sum_square_1} y el resultado ya se empleó previamente en el cálculo de la matriz de información de Fisher. El resultado de la ecuación \ref{eq:n_gaussian_rv_sum_square_2} también se empleó antes, y proviene de que 
+\begin{align*}
+ E\left\{\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right\}&\overset{(a)}{=}nE\{(\x_i-\mu)^4\}+n(n-1)E^2\{(\x_i-\mu)^2\}\\
+ &=n\mu_4+n(n-1)\mu_2^2\\
+ &\overset{(b)}{=}3n\sigma^4+n(n-1)\sigma^4\\
+ &=n(n+2)\sigma^4,
+\end{align*}
+donde en \((a)\) se observó que al elevar al cuadrado la sumatoria hay \(n\) sumandos de la forma \((\x_i-\mu)^4\) y \(n(n-1)\) sumandos de la forma \((\x_i-\mu)^2(\x_j-\mu)^2\) con \(i\neq j\) y en \((b)\) se consideró que \(\mu_4=3\sigma^4\) y \(\mu_2=\sigma^2\), como indica la ecuación \ref{eq:gaussian_rv_moments}. Para mostrar la ecuación \ref{eq:n_gaussian_rv_sum_square_3}, se observa que
+\begin{align*}
+ E\left\{\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^3\right\}&\overset{(a)}{=}n\mu_6+3n(n-1)\mu_4\mu_2+n(n-1)(n-2)\mu_2^3\\
+ &=\left[15n+9n(n-1)+n(n-1)(n-2)\right]\sigma^6\\
+ &=n\left[15+(9n-9)+(n^2-3n+2)\right]\sigma^6\\
+ &=n\left(n^2+6n+8\right)\sigma^6\\
+ &=n(n+2)(n+4),
+\end{align*}
+donde en \((a)\) se consideró que al elevar la sumatoria al cubo hay \(n\) sumandos de la forma \((\x_i-\mu)^6\), \(3n(n-1)\) sumandos de la forma \((\x_i-\mu)^2(\x_j-\mu)\) con \(i\neq j\), es decir, con dos índices iguales y uno distinto, y \(n(n-1)(n-2)\) con los tres índices distintos de la forma \((\x_i-\mu)(\x_j-\mu)(\x_k-\mu)\). Para deducir la ecuación \ref{eq:n_gaussian_rv_sum_square_4}, se emplea el resultado 
+\begin{equation}\label{eq:sum_gaussian_rv_fourth_moment}
+ \begin{aligned}
+ E\left\{\left(\sum_{i=1}^{n}\x_i\right)^4\right\}&=nm_4+4n(n-1)m_3m_1+3n(n-1)m_2^2\\
+   &\qquad+6n(n-1)(n-2)m_2m^2_1+n(n-1)(n-2)(n-3)m_1^4,
+\end{aligned}
+\end{equation}
+que es válido para variables aleatorias i.i.d., donde \(m_k\) es el momento \(k\)-ésimo de \(\x_i\). Este resultado se demuestra en el apéndice C de \cite{lopez21estudiando}. Aplicando el resultado de la ecuación \ref{eq:sum_gaussian_rv_fourth_moment} a la ecuación \ref{eq:n_gaussian_rv_sum_square_4} cambiando \(\x_i\) por \((\x_i-\mu)^2\) y por lo tanto \(m_k\) por \(\mu_{2k}\), donde \(\mu_k\) es el momento central \(k\)-ésimo de las variables aleatorias gaussianas \(\x_i\), se tiene que 
+\begin{align*}
+ E\left\{\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^4\right\}&=n\mu_8+4n(n-1)\mu_6\mu_2+3n(n-1)\mu_4^2\\
+   &\qquad+6n(n-1)(n-2)\mu_4\mu_2^2+n(n-1)(n-2)(n-3)\mu_2^4\\
+   &\overset{(a)}{=}\big[105n+60n(n-1)+27n(n-1)\\
+   &\qquad+18n(n-1)(n-2)+n(n-1)(n-2)(n-3)\big]\sigma^8\\
+   &=n\left\{105+(n-1)\left[60+27+18(n-2)+(n-2)(n-3)\right]\right\}\\
+   &=n\left\{105+(n-1)\left[87+(18n-36)+(n^2-5n+6)\right]\right\}\\
+   &=n\left[105+(n-1)(n^2+13n+57)\right]\\
+   &=n\left(n^3+12n^2+44n+48\right)\\
+   &=n(n+2)(n+4)(n+6),
+\end{align*}
+donde en \((a)\) se tuvo en cuenta que \(\mu_6=3\times5\sigma^6=15\sigma^6\) y \(\mu_8=3\times5\times7\sigma^8=105\sigma^8\) (ver la ecuación \ref{eq:gaussian_rv_moments}). Para mostrar la ecuación \ref{eq:n_gaussian_rv_sum_2}, se observa que 
+\begin{align*}
+ E\left\{\left[\sum_{i=1}^n(\x_i-\mu)\right]^3\right\}&\overset{(a)}{=}n\mu_3+3n(n-1)\mu_1\mu_2+n(n-1)(n-2)\mu_1^3\\
+  &\overset{(b)}{=}0,
+\end{align*}
+donde en \((a)\) se consideró que al elevar la sumatoria al cubo hay \(n\) sumandos de la forma \((\x_i-\mu)^3\) con los tres índices iguales, \(3n(n-1)\) sumandos de la forma \((\x_i-\mu)^2(\x_j-\mu)\) con dos índices iguales y uno distinto y \(n(n-1)(n-2)\) con los tres índices distintos, y en \((b)\) se tuvo en cuenta que los momentos centrales impares son nulos, es decir, \(\mu_1=\mu_3=0\), como indica la ecuación \ref{eq:gaussian_rv_moments}. Las ecuaciones \ref{eq:n_gaussian_rv_sum_1}, \ref{eq:n_gaussian_rv_sum_4} y \ref{eq:n_gaussian_rv_sum_5} se obtienen realizando un razonamiento análogo. El resultado de la ecuación \ref{eq:n_gaussian_rv_sum_3} se obtiene directamente de la ecuación \ref{eq:sum_gaussian_rv_fourth_moment} reemplazando los momentos \(m_k\) por los momentos centrales \(\mu_k\) y teniendo en cuenta que los momentos centrales son nulos. La ecuación \ref{eq:n_gaussian_rv_sum_6} proviene de que
+\begin{align*}
+ E\left\{\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\sum_{i=1}^n(\x_i-\mu)^2\right\}&=n\mu_4+n(n-1)\mu_2^2+2n(n-1)\mu_1\mu_3+n(n-1)(n-2)\mu_1^2\mu_2\\
+ &\overset{(a)}{=}\left[3n+n(n-1)\right]\sigma^4\\
+ &=n(n+2)\sigma^4,
+\end{align*}
+donde en \((a)\) nuevamente se empleó el resultado de los momentos centrales de una variable aleatoria gaussiana de la ecuación \ref{eq:gaussian_rv_moments}. Finalmente, para mostrar \ref{eq:n_gaussian_rv_sum_7}, se observa que al desarrollar las sumatorias se obtienen los sumandos con las características mostradas en la siguiente tabla:
+\begin{center}
+\def\arraystretch{1.2}
+  \begin{tabular}{| c | c | c |}
+    \hline
+    \textbf{Sumando} & \textbf{Esperanza} & \textbf{Número de sumandos} \\ \hline
+    \((\x_i-\mu)(\x_i-\mu)(\x_i-\mu)^2(\x_i-\mu)^2\) & \(\mu_6\) & \(n\) \\ \hline
+    \((\x_i-\mu)(\x_i-\mu)(\x_j-\mu)^2(\x_j-\mu)^2\) & \(\mu_2\mu_4\) & \(n(n-1)\) \\ \hline
+    \((\x_i-\mu)(\x_i-\mu)(\x_i-\mu)^2(\x_j-\mu)^2\) & \(\mu_4\mu_2\) & \(2n(n-1)\) \\ \hline
+    \((\x_i-\mu)(\x_i-\mu)(\x_j-\mu)^2(\x_k-\mu)^2\) & \(\mu_2^3\) & \(n(n-1)(n-2)\) \\ \hline
+    \((\x_i-\mu)(\x_j-\mu)(\x_k-\mu)^2(\x_l-\mu)^2\) & \(\mu_1^2\mu_2^2\) & \(n(n-1)(n-2)(n-3)\) \\ \hline
+    \((\x_i-\mu)(\x_j-\mu)(\x_i-\mu)^2(\x_i-\mu)^2\) & \(\mu_5\mu_1\) & \(2n(n-1)\) \\ \hline
+    \((\x_i-\mu)(\x_j-\mu)(\x_i-\mu)^2(\x_j-\mu)^2\) & \(\mu_3\mu_3\) & \(2n(n-1)\) \\ \hline
+    \((\x_i-\mu)(\x_j-\mu)(\x_i-\mu)^2(\x_k-\mu)^2\) & \(\mu_3\mu_1\mu_2\) & \(4n(n-1)(n-2)\) \\ \hline
+    \((\x_i-\mu)(\x_j-\mu)(\x_k-\mu)^2(\x_k-\mu)^2\) & \(\mu_1^2\mu_4\) & \(n(n-1)(n-2)\) \\ \hline
+  \end{tabular}
+\end{center}
+Teniendo en cuenta que los momentos centrales impares son nulos, la esperanza queda,
+\begin{align*}
+ E\left\{\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right\}&\overset{(a)}{=}n\mu_6+n(n-1)\mu_2\mu_4+2n(n+1)\mu_4\mu_2+n(n-1)(n-2)\mu_2^3\\
+  &=n\left[15+9(n-1)+(n-1)(n-2)\right]\sigma^6\\
+  &=n(15+9n-9+n^2-3n+2)\sigma^6\\
+  &=n(n^2+6n+8)\sigma^6\\
+  &=n(n+2)(n+4)\sigma^6.
+\end{align*}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Retornando al cálculo de la matriz \(\B(2)\), se observa que el bloque \(2\times2\) en la posición \((1,\,1)\) es la matriz de información de Fisher y ya fue calculada. Se calcularán los valores del resto de los elementos. Comenzando,
+\begin{align*}
+ [\B(2)]_{13}=[\B(2)]_{31}&=E\left\{\left(\frac{1}{f}\frac{\partial f}{\partial\mu}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial\mu^2}\right)\right\}\\
+  &\overset{(a)}{=}E\left\{\left(\frac{1}{\sigma^2}\sum_{i=1}^n(\x_i-\mu)\right)\left(-\frac{n}{\sigma^2}+\frac{1}{\sigma^4}\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\right)\right\}\\
+  &=-\frac{n}{\sigma^4}\sum_{i=1}^nE\left\{(\x_i-\mu)\right\}+\frac{1}{\sigma^6}E\left\{\left[\sum_{i=1}^n(\x_i-\mu)\right]^3\right\}\\
+  &\overset{(b)}{=}0
+\end{align*}
+donde las derivadas en \((a)\) están dadas por las ecuaciones \ref{eq:example_8_20_Z1_1} y \ref{eq:example_8_20_Z2_1} y en \((b)\) se empleó el resultado de la ecuación \ref{eq:n_gaussian_rv_sum_2}. Luego,
+\[
+ [\B(2)]_{14}=[\B(2)]_{41}=E\left\{\left(\frac{1}{f}\frac{\partial f}{\partial\mu}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial{\sigma^2}^2}\right)\right\}
+\]
+De las ecuaciones \ref{eq:example_8_20_Z1_1} y \ref{eq:example_8_20_Z2_2} se tiene que
+\small
+\begin{align*}
+ \left(\frac{1}{f}\frac{\partial f}{\partial\mu}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial{\sigma^2}^2}\right)&=\frac{1}{2\sigma^6}\left[\sum_{i=1}^n(\x_i-\mu)\right]\left\{\frac{1}{2}n(n+2)-\frac{1}{\sigma^2}(n+2)\sum_{i=1}^n(\x_i-\mu)^2+\frac{1}{2\sigma^4}\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right\}\\
+  &=\frac{1}{2\sigma^6}\Bigg\{\frac{1}{2}n(n+2)\sum_{i=1}^n(\x_i-\mu)-\frac{1}{\sigma^2}(n+2)\sum_{i=1}^n(\x_i-\mu)\sum_{i=1}^n(\x_i-\mu)^2\\
+  &\qquad+\frac{1}{2\sigma^4}\sum_{i=1}^n(\x_i-\mu)\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\Bigg\},
+\end{align*}
+\normalsize
+y al tomar esperanza, de las ecuaciones \ref{eq:n_gaussian_rv_sum_4} y\ref{eq:n_gaussian_rv_sum_5}, se obtiene que 
+\[
+ [\B(2)]_{14}=[\B(2)]_{41}=E\left\{\left(\frac{1}{f}\frac{\partial f}{\partial\mu}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial{\sigma^2}^2}\right)\right\}=0.
+\]
+Continuando,
+\[
+ [\B(2)]_{23}=[\B(2)]_{32}=E\left\{\left(\frac{1}{f}\frac{\partial f}{\partial\sigma^2}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial\mu^2}\right)\right\}
+\]
+y de las ecuaciones \ref{eq:example_8_20_Z1_2} y \ref{eq:example_8_20_Z2_1},
+\small
+\begin{align*}
+ \left(\frac{1}{f}\frac{\partial f}{\partial\sigma^2}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial\mu^2}\right)&=\left(-\frac{n}{2\sigma^2}+\frac{1}{2\sigma^4}\sum_{i=1}^n(\x_i-\mu_i)^2\right)\left(-\frac{n}{\sigma^2}+\frac{1}{\sigma^4}\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\right)\\
+ &=\frac{n^2}{2\sigma^4}-\frac{n}{2\sigma^6}\left[\sum_{i=1}^n(\x_i-\mu)\right]^2-\frac{n}{2\sigma^6}\sum_{i=1}^n(\x_i-\mu_i)^2+\frac{1}{2\sigma^8}\sum_{i=1}^n(\x_i-\mu_i)^2\left[\sum_{i=1}^n(\x_i-\mu)\right]^2
+\end{align*}
+\normalsize
+y al tomar esperanza, se tiene que 
+\begin{align*}
+ E\left\{\left(\frac{1}{f}\frac{\partial f}{\partial\sigma^2}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial\mu^2}\right)\right\}&=
+ \frac{1}{2\sigma^4}\left[n^2-\frac{n}{\sigma^2}E\left\{\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\right\}-\frac{n}{\sigma^2}\sum_{i=1}^nE\{(\x_i-\mu_i)^2\}\right.\\
+ &\qquad\left.+\frac{1}{\sigma^4}E\left\{\sum_{i=1}^n(\x_i-\mu_i)^2\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\right\}\right]\\
+ &\overset{(a)}{=}\frac{1}{2\sigma^4}\left[n^2-n^2-n^2+n(n+2)\right]\\
+ &=\frac{n}{\sigma^4},
+\end{align*}
+donde en \((a)\) se empleó el resultado de la ecuación \ref{eq:n_gaussian_rv_sum_6}.
+Se obtuvo que 
+\[
+ [\B(2)]_{23}=[\B(2)]_{32}=E\left\{\left(\frac{1}{f}\frac{\partial f}{\partial\sigma^2}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial\mu^2}\right)\right\}=\frac{n}{\sigma^4}.
+\]
+Además,
+\[
+ [\B(2)]_{24}=[\B(2)]_{42}=E\left\{\left(\frac{1}{f}\frac{\partial f}{\partial\sigma^2}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial{\sigma^2}^2}\right)\right\},
+\]
+y de las ecuaciones \ref{eq:example_8_20_Z1_2} y \ref{eq:example_8_20_Z2_2},
+\small
+\begin{align*}
+ \left(\frac{1}{f}\frac{\partial f}{\partial\sigma^2}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial{\sigma^2}^2}\right)&=\frac{1}{4\sigma^6}\left(-n+\frac{1}{\sigma^2}\sum_{i=1}^n(\x_i-\mu_i)^2\right)\\
+ &\qquad\times\left(\frac{1}{2}n(n+2)-\frac{1}{\sigma^2}(n+2)\sum_{i=1}^n(\x_i-\mu)^2+\frac{1}{2\sigma^4}\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right)\\
+ &=\frac{1}{4\sigma^6}\left\{-\frac{1}{2}n^2(n+2)+\frac{1}{\sigma^2}n(n+2)\sum_{i=1}^n(\x_i-\mu)^2-\frac{1}{2\sigma^4}n\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right.\\
+ &\qquad\left.
+ +\frac{1}{2\sigma^2}n(n+2)\sum_{i=1}^n(\x_i-\mu_i)^2-\frac{1}{\sigma^4}(n+2)\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2+\frac{1}{2\sigma^6}\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^3
+ \right\}\\
+ &=\frac{1}{4\sigma^6}\left\{-\frac{1}{2}n^2(n+2)+\frac{3}{2\sigma^2}n(n+2)\sum_{i=1}^n(\x_i-\mu)^2-\frac{1}{2\sigma^4}(3n+4)\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right.\\
+ &\qquad\left.
+ +\frac{1}{2\sigma^6}\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^3
+ \right\}
+\end{align*}
+\normalsize
+y al tomar esperanza, se obtiene que
+\begin{align*}
+ E\left\{\left(\frac{1}{f}\frac{\partial f}{\partial\sigma^2}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial{\sigma^2}^2}\right)\right\}&=\frac{1}{8\sigma^6}\left[-n^2(n+2)+3n^2(n+2)-(3n+4)n(n+2)+n(n+2)(n+4)\right]\\
+ &=\frac{1}{8\sigma^6}n(n+2)\left[-n+3n-(3n+4)+(n+4)\right]\\
+ &=0,
+\end{align*}
+donde se emplearon los resultados de las ecuaciones \ref{eq:n_gaussian_rv_sum_square_2} y \ref{eq:n_gaussian_rv_sum_square_3}. Por lo tanto,
+\[
+ [\B(2)]_{24}=[\B(2)]_{42}=E\left\{\left(\frac{1}{f}\frac{\partial f}{\partial\sigma^2}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial{\sigma^2}^2}\right)\right\}=0.
+\]
+Luego,
+\begin{align*}
+ [\B(2)]_{33}&=E\left\{\left(\frac{1}{f}\frac{\partial^2f}{\partial\mu^2}\right)^2\right\}\\
+  &=E\left\{\left(-\frac{n}{\sigma^2}+\frac{1}{\sigma^4}\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\right)^2\right\}\\
+  &=E\left\{\frac{n^2}{\sigma^4}-\frac{2}{\sigma^6}n\left[\sum_{i=1}^n(\x_i-\mu)\right]^2+\frac{1}{\sigma^8}\left[\sum_{i=1}^n(\x_i-\mu)\right]^4\right\}\\
+  &=\frac{1}{\sigma^4}\left[n^2-\frac{2}{\sigma^2}nE\left\{\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\right\}+\frac{1}{\sigma^4}E\left\{\left[\sum_{i=1}^n(\x_i-\mu)\right]^4\right\}\right]\\
+  &\overset{(a)}{=}\frac{1}{\sigma^4}\left[n^2-2n^2+3n^2\right]\\
+  &=\frac{2n^2}{\sigma^4},
+\end{align*}
+donde en \((a)\) se emplearon las ecuaciones \ref{eq:n_gaussian_rv_sum_1} y \ref{eq:n_gaussian_rv_sum_3}. Se obtuvo que  
+\[
+ [\B(2)]_{33}=\frac{2n^2}{\sigma^4}.
+\]
+Continuando,
+\[
+ [\B(2)]_{34}=[\B(2)]_{43}=E\left\{\left(\frac{1}{f}\frac{\partial^2 f}{\partial\mu^2}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial{\sigma^2}^2}\right)\right\},
+\]
+y de las ecuaciones \ref{eq:example_8_20_Z2_1} y \ref{eq:example_8_20_Z2_2},
+\begin{align*}
+ \left(\frac{1}{f}\frac{\partial^2 f}{\partial\mu^2}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial{\sigma^2}^2}\right)&=\frac{1}{2\sigma^6}\left(-n+\frac{1}{\sigma^2}\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\right)\\
+ &\qquad\times\left(\frac{1}{2}n(n+2)-\frac{1}{\sigma^2}(n+2)\sum_{i=1}^n(\x_i-\mu)^2+\frac{1}{2\sigma^4}\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right)\\
+ &=\frac{1}{2\sigma^6}\left\{-\frac{1}{2}n^2(n+2)+\frac{1}{\sigma^2}n(n+2)\sum_{i=1}^n(\x_i-\mu)^2-\frac{1}{2\sigma^4}n\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right.\\
+ &\qquad+\frac{1}{2\sigma^2}n(n+2)\left[\sum_{i=1}^n(\x_i-\mu)\right]^2-\frac{1}{\sigma^4}(n+2)\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\sum_{i=1}^n(\x_i-\mu)^2\\
+ &\qquad\left.+\frac{1}{2\sigma^6}\left[\sum_{i=1}^n(\x_i-\mu)\right]^2\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right\}.
+\end{align*}
+Al tomar esperanza, empleando las ecuaciones \ref{eq:n_gaussian_rv_sum_square_2},  \ref{eq:n_gaussian_rv_sum_1}, \ref{eq:n_gaussian_rv_sum_6} y \ref{eq:n_gaussian_rv_sum_7}, se tiene que  
+\begin{align*}
+ E\left\{\left(\frac{1}{f}\frac{\partial^2 f}{\partial\mu^2}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial{\sigma^2}^2}\right)\right\}&=\frac{1}{2\sigma^6}\left[
+ -\frac{1}{2}n^2(n+2)+n^2(n+2)-\frac{1}{2}n^2(n+2)+\frac{1}{2}n^2(n+2)\right.\\
+ &\qquad\left.-n(n+2)^2+\frac{1}{2}n(n+2)(n+4)\right]\\
+ &=\frac{1}{4\sigma^6}n(n+2)\left[-n+2n-2(n+2)+(n+4)\right]\\
+ &=0,
+\end{align*}
+es decir,
+\[
+ [\B(2)]_{34}=[\B(2)]_{43}=E\left\{\left(\frac{1}{f}\frac{\partial^2 f}{\partial\mu^2}\right)\left(\frac{1}{f}\frac{\partial^2f}{\partial{\sigma^2}^2}\right)\right\}=0.
+\]
+Finalmente,
+\[
+ [\B(2)]_{44}=E\left\{\left(\frac{1}{f}\frac{\partial^2f}{\partial{\sigma^2}^2}\right)^2\right\},
+\]
+y de la ecuación \ref{eq:example_8_20_Z2_2},
+\begin{align*}
+ \left(\frac{1}{f}\frac{\partial^2f}{\partial{\sigma^2}^2}\right)^2&=\frac{1}{4\sigma^8}\left(\frac{1}{2}n(n+2)-\frac{1}{\sigma^2}(n+2)\sum_{i=1}^n(\x_i-\mu)^2+\frac{1}{2\sigma^4}\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\right)^2\\
+ &=\frac{1}{4\sigma^8}\left\{
+ \frac{1}{4}n^2(n+2)^2+\frac{1}{\sigma^4}(n+2)^2\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2+\frac{1}{4\sigma^8}\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^4
+ \right.\\
+ &\qquad-\frac{1}{\sigma^2}n(n+2)^2\sum_{i=1}^n(\x_i-\mu)^2+\frac{1}{2\sigma^4}n(n+2)\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^2\\
+ &\qquad\left.-\frac{1}{\sigma^6}(n+2)\left[\sum_{i=1}^n(\x_i-\mu)^2\right]^3\right\}.
+\end{align*}
+De las ecuaciones \ref{eq:n_gaussian_rv_sum_square_2}, \ref{eq:n_gaussian_rv_sum_square_3} y  \ref{eq:n_gaussian_rv_sum_square_4}, al tomar esperanza se obtiene que 
+\begin{align*}
+ E\left\{\left(\frac{1}{f}\frac{\partial^2f}{\partial{\sigma^2}^2}\right)^2\right\}&=\frac{1}{4\sigma^8}\left[
+ \frac{1}{4}n^2(n+2)^2+n(n+2)^3+\frac{1}{4}n(n+2)(n+4)(n+6)
+ \right.\\
+ &\qquad\left.-n^2(n+2)^2+\frac{1}{2}n^2(n+2)^2-n(n+2)^2(n+4)\right]\\
+ &=\frac{1}{4\sigma^8}\left[-\frac{1}{4}n^2(n+2)^2+n(n+2)^3+\frac{1}{4}n(n+2)(n+4)(n+6)-n(n+2)^2(n+4)\right]\\
+ &=\frac{1}{16\sigma^8}n(n+2)\left[-n(n+2)+4(n+2)^2+(n+4)(n+6)-4(n+2)(n+4)\right]\\
+ &=\frac{1}{16\sigma^8}n(n+2)\left[-(n^2+2n)+4(n^2+4n+4)+(n^2+10n+24)-4(n^2+6n+8)\right]\\
+ &=\frac{1}{16\sigma^8}n(n+2)\left[n^2(-1+4+1-4)+n(-2+16+10-24)+(16+24-32)\right]\\
+ &=\frac{1}{2\sigma^8}n(n+2),
+\end{align*}
+es decir,
+\[
+ [\B(2)]_{44}=E\left\{\left(\frac{1}{f}\frac{\partial^2f}{\partial{\sigma^2}^2}\right)^2\right\}=\frac{1}{2\sigma^8}n(n+2).
+\]
+Combinando los resultados, se concluye que 
+\[
+ \B(2)=E\left\{ 
+  \begin{bmatrix}
+   \Z_1\\ \Z_2
+  \end{bmatrix}
+  \begin{bmatrix}
+   \Z_1^t & \Z_2^t
+  \end{bmatrix}
+ \right\}=
+ \def\arraystretch{2.0}
+ \begin{bmatrix}
+  \dfrac{n}{\sigma^2} & 0 & 0 & 0\\ 
+  0 & \dfrac{n}{2\sigma^4} & \dfrac{n}{\sigma^4} & 0\\
+  0 & \dfrac{n}{\sigma^4} & \dfrac{2n^2}{\sigma^4} & 0\\
+  0 & 0 & 0 & \dfrac{n(n+2)}{2\sigma^8}
+ \end{bmatrix}.
+\]
+La ``matriz de información de Fisher extendida'' es el bloque \(2\times2\) en la posición \((1,\,1)\) de \(\B^{-1}(2)\). Para calcularla, puede emplearse la identidad de la ecuación \ref{eq:block_matrix_inverse}, siendo 
+\[
+ \A=
+ \def\arraystretch{1.6}
+ \begin{bmatrix}
+  \dfrac{n}{\sigma^2} & 0\\ 
+  0 & \dfrac{n}{2\sigma^4}\\
+ \end{bmatrix},\qquad 
+ \B=
+ \begin{bmatrix}
+  0 & 0\\ 
+  \dfrac{n}{\sigma^4} & 0\\
+ \end{bmatrix},\qquad
+ \C=
+ \begin{bmatrix}
+  0 & \dfrac{n}{\sigma^4}\\
+  0 & 0
+ \end{bmatrix}\qquad\textrm{y}\qquad 
+ \D=
+ \begin{bmatrix}
+  \dfrac{2n^2}{\sigma^4} & 0\\
+  0 & \dfrac{n(n+2)}{2\sigma^8}
+ \end{bmatrix}
+\]
+los bloques de \(\B(2)\). De esta forma,
+\[
+ \B\D^{-1}\C=
+ \def\arraystretch{1.6}
+ \begin{bmatrix}
+  0 & 0\\
+  0 & \dfrac{1}{2\sigma^4}
+ \end{bmatrix}
+ \qquad\textrm{y}\qquad 
+ \A-\B\D^{-1}\C=
+ \begin{bmatrix}
+  \dfrac{n}{\sigma^2} & 0\\ 
+  0 & \dfrac{n}{2\sigma^4}
+ \end{bmatrix}-
+ \begin{bmatrix}
+  0 & 0\\
+  0 & \dfrac{1}{2\sigma^4}
+ \end{bmatrix}=
+ \begin{bmatrix}
+  \dfrac{n}{\sigma^2} & 0\\ 
+  0 & \dfrac{n-1}{2\sigma^4}
+ \end{bmatrix}
+\]
+y como \([\B^{-1}(2)]_{11}=(\A-\B\D^{-1}\C)^{-1}\), se obtiene que 
+\[
+ [\B^{-1}(2)]_{11}=
+ \def\arraystretch{1.6}
+ \begin{bmatrix}
+  \dfrac{\sigma^2}{n} & 0\\
+  0 & \dfrac{2\sigma^4}{n-1}
+ \end{bmatrix}.
+\]
+Comparando este resultado con las ecuaciones \ref{eq:example_8_20_sample_mean_variance} y \ref{eq:example_8_20_sample_variance_variance}, se tiene que  
+\[
+ E\left\{(\hat{\thetabf}-\thetabf)(\hat{\thetabf}-\thetabf)^t\right\}=
+ \begin{bmatrix}
+  \var\{\hat{\mu}\} & 0\\
+  0 & \var\{\hat{\sigma}^2\}
+ \end{bmatrix}
+ =[\B^{-1}(2)]_{11}.
+\]
+Por lo tanto, la ecuación \ref{eq:bhattacharya_bound} se cumple con igualdad para \(m=2\), concluyendo que \(\hat{\thetabf}\) es un estimador eficiente de segundo orden.
 
 
 
