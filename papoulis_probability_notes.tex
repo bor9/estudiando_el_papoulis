@@ -81,6 +81,8 @@
 \newcommand{\I}{\mathbf{I}}
 \newcommand{\R}{\mathbf{R}}
 \newcommand{\T}{\mathbf{T}}
+\newcommand{\abf}{\mathbf{a}}
+\newcommand{\bbf}{\mathbf{b}}
 \newcommand{\x}{\mathbf{x}}
 \newcommand{\y}{\mathbf{y}}
 \newcommand{\w}{\mathbf{w}}
@@ -115,6 +117,8 @@ Cuando se estudian tópicos de ingeniería como procesamiento estadístico de se
 El presente documento consiste en apuntes sobre el libro ``Probability, random variables, and stochastic processes'' \cite{papoulis2002probability}. Se seleccionó este texto debido a que desarrolla la teoría de forma profunda pero a su vez desde un enfoque práctico, evitando las formalidades matemáticas de la teoría de la probabilidad moderna basada en la teoría de la medida. El objetivo de este documento es explicar mas detalladamente algunos razonamientos que el autor omite posiblemente por asumir triviales. 
 
 \pagenumbering{arabic}
+
+\part{Probabilidad y variables aleatorias}
 
 \chapter{Conceptos básicos}
 
@@ -967,7 +971,7 @@ Supóngase que ahora se modifica el experimento de la siguiente forma: al minuto
 
 Tal vez sorprendentemente, la respuesta ahora es que la urna está vacía al mediodía. Efectivamente, considérese cualquier bolilla, la \(n\)-ésima por ejemplo. En algún momento previo al mediodía, esta bolilla será extraída. Concretamente, la bolilla \(n\) será extraída \((1/2)^{n-1}\) minutos antes del mediodía. Se concluye que para cada \(n\), la bolilla \(n\) no estará en la urna al mediodía, y por lo tanto, la urna estará vacía a esa hora.
 
-Como se ve, la diferencia de los resultados de los experimentos proviene de la forma en que se extraen las bolillas. Se considera a continuación el caso en que cuando se extrae una bolilla, se hace de forma aleatoria entre las bolillas presentes en la urna. Es decir, 1 minuto antes del mediodía, se introducen las  bolillas numeradas del 1 al 10 y se extrae un bolilla al azar, y así sucesivamente. En este caso, ¿cuantas bolillas hay en la urna al mediodía?
+Como se ve, la diferencia de los resultados de los experimentos proviene de la forma en que se extraen las bolillas. Se considera a continuación el caso en que cuando se extrae una bolilla, se hace de forma aleatoria entre las bolillas presentes en la urna. Es decir, 1 minuto antes del mediodía, se introducen las  bolillas numeradas del 1 al 10 y se extrae una bolilla al azar, y así sucesivamente. En este caso, ¿cuantas bolillas hay en la urna al mediodía?
 
 Considérese la bolilla etiquetada con el número 1, y defínase \(E_n\) al evento que consiste en que la bolilla 1 está aún en la urna luego de \(n\) extracciones. Se comenzará calculando \(P(E_n)\). Para esto, se define \(A_n\) como el evento que consiste que no se extrae la bolilla 1 en el paso \(n\). De esta forma,
 \[
@@ -2934,7 +2938,7 @@ entonces
  \end{array} \right.
 \end{equation}
 
-Se comenzará demostrando la ecuación \ref{eq:gaussian_rv_moments}. Los momentos impares son nulos debido a que si \(n\) es impar, la función \(x^nf(x)\) es impar por ser el producto de una función impar con una función par, por lo que su integral es nula. Esto se cumple para cualquier variable aleatoria de densidad de probabilidad par. Para demostrar el resultado con \(n\) par, se considera la siguiente identidad,
+Se comenzará demostrando la ecuación \ref{eq:gaussian_rv_moments}. Los momentos impares son nulos debido a que si \(n\) es impar, la función \(x^nf(x)\) es impar por ser el producto de una función impar con una función par, por lo que su integral es nula. Esto se cumple para cualquier variable aleatoria con densidad de probabilidad par. Para demostrar el resultado con \(n\) par, se considera la siguiente identidad,
 \begin{equation}\label{eq:gaussian_integral_with_alpha}
  \int_{-\infty}^{\infty}e^{-\alpha x^2}\,dx=\sqrt{\frac{\pi}{\alpha}},
 \end{equation}
@@ -4243,9 +4247,9 @@ Esto indica que la probabilidad de que el punto \((\x,\,\y)\) esté en un rectá
 
 \subsection{Estadísticas marginales}\label{sec:marginal_statisctics_two_rv}
 En el análisis de varias variables aleatorias, la estadística de cada una por separado se llama \emph{marginal}. De esta forma, \(F_x(x)\) es la \emph{distribución marginal} y \(f_x(x)\) es la \emph{densidad marginal} de \(\x\). Se puede demostrar que la estadística marginal de \(\x\) e \(\y\) en función de su estadística conjunta \(F(x,\,y)\) y \(f(x,\,y)\) es
-\[
+\begin{equation}\label{eq:marginal_distributions_definition}
  F_x(x)=F(x,\,\infty),\qquad F_y(y)=F(\infty,\,y)
-\]
+\end{equation}
 \begin{equation}\label{eq:marginal_densities_definition}
  f_x(x)=\int_{-\infty}^{\infty}f(x,\,y)\,dy,\qquad f_y(y)=\int_{-\infty}^{\infty}f(x,\,y)\,dx.
 \end{equation}
@@ -4447,6 +4451,58 @@ Vale la pena tener en cuenta las siguientes consideraciones:
  \item Si dos variables aleatorias son conjuntamente normales, sus marginales son normales, como se acaba de mostrar.  Sin embargo, lo recíproco no es cierto: dos variables aleatorias que tienen marginales normales, no necesariamente son conjuntamente normales.
  \item La definición de variables aleatorias conjuntamente normales puede plantearse también de la siguiente forma: dos variables aleatorias \(\x\) e \(\y\) son conjuntamente normales si la suma \(a\x+b\y\) es normal para todo \(a\) y \(b\).
 \end{itemize}
+
+\subsubsection{Simetría circular}
+
+Se dice que la densidad conjunta de dos variables aleatorias \(\x\) e \(\y\) es simétrica circular si depende únicamente de la distancia al origen, es decir,
+\[
+ f(x,\,y)=g(r),\qquad\qquad r=\sqrt{x^2+y^2}.
+\]
+
+\paragraph{Teorema (6-3)} Si las variables aleatorias \(\x\) e \(\y\) son circularmente simétricas e independientes, son normales de media nula y con igual varianza. Para probarlo, por las hipótesis de independencia y simetría circular, se cumple que (ver la ecuación \ref{eq:independent_rv_density})
+\begin{equation}\label{eq:circular_symmetry_and_independence}
+ f(x,\,y)=g\left(\sqrt{x^2+y^2}\right)=f_x(x)f_y(y).
+\end{equation}
+Como
+\[
+ \frac{\partial g(r)}{\partial x}=\frac{\partial g(r)}{\partial r}\frac{\partial r}{\partial x}
+\]
+y además
+\[
+ \frac{\partial r}{\partial x}=\frac{\partial}{\partial x}\sqrt{x^2+y^2}=\frac{x}{\sqrt{x^2+y^2}}=\frac{x}{r},
+\]
+se obtiene que 
+\[
+ \frac{\partial g(r)}{\partial x}=\frac{x}{r}g'(r).
+\]
+Teniendo en cuenta este resultado, diferenciando la ecuación \ref{eq:circular_symmetry_and_independence} respecto a \(x\) resulta en
+\[
+ \frac{x}{r}g'(r)=f_x'(x)f_y(x).
+\]
+Dividiendo ambos lados de la igualdad entre \(xg(r)=xf_x(x)f_y(y)\) se obtiene que 
+\begin{equation}\label{eq:circular_symmetry_tmp1}
+ \frac{1}{r}\frac{g'(r)}{g(r)}=\frac{1}{x}\frac{f_x'(x)}{f_x(x)}.
+\end{equation}
+Realizando el razonamiento análogo, se deduce que
+\begin{equation}\label{eq:circular_symmetry_tmp2}
+ \frac{1}{r}\frac{g'(r)}{g(r)}=\frac{1}{y}\frac{f_y'(y)}{f_y(y)}.
+\end{equation}
+El lado derecho de la ecuación \ref{eq:circular_symmetry_tmp1} es independiente de \(y\) y el lado derecho de la ecuación \ref{eq:circular_symmetry_tmp2} es independiente de \(x\), y el lado izquierdo de ambas ecuaciones depende de \(r=\sqrt{x^2+y^2}\). Esto muestra que ambos lados de las dos ecuaciones son independientes de \(x\) y de \(y\). Por lo tanto,
+\[
+ \frac{1}{r}\frac{g'(r)}{g(r)}=\alpha=\textrm{constante},
+\]
+y resolviendo esta ecuación diferencial, 
+\[
+ \int\frac{g'(r)}{g(r)}\,dr=\int\alpha r\,dr
+ \qquad\qquad\Rightarrow\qquad\qquad
+ \log g(r)=\frac{\alpha r^2}{2}+k,
+\]
+se concluye que 
+\begin{equation}\label{eq:circular_symmetry_and_independence_distribution}
+  f(x,\,y)=g\left(x^2+y^2\right)=Ae^{\alpha(x^2+y^2)/2}.
+\end{equation}
+Esto indica que las variables aleatorias \(\x\) e \(\y\) son normales con media nula y varianza \(\sigma^2=-1/\alpha\).
+
 
 \section{Función de dos variables aleatorias}
 
@@ -5565,14 +5621,11 @@ Para hacerlo, considerar que
  E\{[a(\x-\eta_x)+(\y-\eta_y)]^2\}\geq 0,\qquad \forall a,
 \]
 ya que la expresión dentro de la esperanza es no negativa. Operando, se ve que
-\small
 \begin{align}\label{eq:covariance_rho_relation_deduction}
  E\{[a(\x-\eta_x)+(\y-\eta_y)]^2\}&=E\{a^2(\x-\eta_x)^2+2a(\x-\eta_x)(\y-\eta_y)+(\y-\eta_y)^2\}\nonumber\\
-   &=a^2E\{(\x-\eta_x)^2\}+2aE\{(\x-\eta_x)(\y-\eta_y)\}\nonumber\\
-   &\quad+E\{(\y-\eta_y)^2\}\nonumber\\
+   &=a^2E\{(\x-\eta_x)^2\}+2aE\{(\x-\eta_x)(\y-\eta_y)\}+E\{(\y-\eta_y)^2\}\nonumber\\
    &=a^2\sigma_x^2+2aC_{xy}+\sigma_y^2\geq0,
 \end{align}
-\normalsize
 donde en la segunda igualdad se empleó la linealidad de la esperanza y en la última igualdad se aplicaron las definiciones de varianza y covarianza. Como el polinomio en \(a\) de la última igualdad es nonegativo, no puede tener raíces, por lo que el discriminante debe ser negativo,
 \[
  \Delta=4C_{xy}^2-4\sigma_x^2\sigma_y^2\leq 0,
@@ -6639,9 +6692,9 @@ La media de esta variable aleatoria es
    &=E\{g(\x,\,\y)\},
 \end{align*}
 es decir
-\[
+\begin{equation}\label{eq:law_of_total_expectation_generalization}
  E\{E\{g(\x,\,\y)\,|\,\x\}\}=E\{g(\x,\,\y)\}.
-\]
+\end{equation}
 Finalmente, se observa que
 \[
  E\{g_1(\x)g_2(\y)\,|\,x\}=E\{g_1(x)g_2(\y)\,|\,x\}=g_1(x)E\{g_2(\y)\,|\,x\}
@@ -8572,7 +8625,7 @@ De esta forma la densidad buscada es
  f(x_3\,|\,x_1,\,x_2)=\frac{1}{\sqrt{2\pi P}}e^{-[x_3-(a_1x_1+a_2x_2)]^2/2P}.
 \]
 
-\section{Convergencia estocástica y teoremas de límite}
+\section{Convergencia estocástica y teoremas de límite}\label{sec:stochastic_convergence}
 
 Un problema importante en la teoría de la probabilidad es el estudio de las propiedades asintóticas de secuencias de variables aleatorias. En esta sección se introducen los conceptos asociados, haciendo énfasis en las definiciones de los distintos modos de convergencia y la relación entre ellos.
 
@@ -11962,6 +12015,679 @@ Comparando este resultado con las ecuaciones \ref{eq:example_8_20_sample_mean_va
  =[\B^{-1}(2)]_{11}.
 \]
 Por lo tanto, la ecuación \ref{eq:bhattacharya_bound} se cumple con igualdad para \(m=2\), concluyendo que \(\hat{\thetabf}\) es un estimador eficiente de segundo orden.
+
+
+\part{Procesos estocásticos}
+
+\chapter{Conceptos generales}
+
+\section{Definiciones}
+
+Como se recordará, una variable aleatoria \(\x\) es un regla para asignar a cada resultado \(\zeta\) de un experimento \(S\) un número \(\x(\zeta)\). Un proceso estocástico \(\x(t)\) es una regla para asignar a cada \(\zeta\) una función \(\x(t,\,\zeta)\). De esta forma, un proceso estocástico es una familia de funciones temporales que dependen del parámetro \(\zeta\), o equivalentemente, una función de \(t\) y \(\zeta\). El dominio de \(\zeta\) es el conjunto de todos los resultados del experimento y el dominio de \(t\) es un conjunto \(R\) de los números reales.
+Si \(R\) es el eje real, \(\x(t)\) es un proceso en \emph{tiempo continuo}, y si \(R\) es el conjunto de los números enteros, \(\x(t)\) es un proceso en \emph{tiempo discreto}. Un proceso en tiempo discreto es por lo tanto, una secuencia de variables aleatorias. Dichas secuencias se denotarán como \(\x_n\), como en la sección \ref{sec:stochastic_convergence}, o como \(\x[n]\). Se dice que \(\x(t)\) es un proceso de \emph{estados discretos} si sus valores son contables. En caso contrario, se dice que es un proceso de \emph{estados continuos}. 
+
+De forma análoga al caso de variables aleatorias, se emplea la notación \(\x(t)\) para representar a un proceso aleatorio, omitiendo su dependencia con \(\zeta\). Teniendo esto en cuenta, \(\x(t)\) admite las siguientes interpretaciones:
+\begin{enumerate}
+ \item Es un familia de funciones \(\x(t,\,\zeta)\) (en la literatura en inglés se suele emplear la palabra \emph{ensemble}). En esta interpretación, \(t\) y \(\zeta\) son variables.
+ \item Es una única función temporal, o una \emph{muestra} del proceso. En este caso, \(t\) es variable y \(\zeta\) es fijo.
+ \item Si \(t\) es fijo y \(\zeta\) es variable, \(\x(t)\) es una variable aleatoria igual al \emph{estado} del proceso en el instante \(t\).
+ \item Si \(t\) y \(\zeta\) son fijos, \(\x(t)\) es un número.
+\end{enumerate}
+
+\paragraph{Igualdad} Dos procesos estocásticos \(\x(t)\) y \(\y(t)\) son iguales si sus respectivas muestras \(\x(t,\,\zeta)\) y \(\y(t,\,\zeta)\) son iguales para todo \(\zeta\). Análogamente, la igualdad \(\z(t)=\x(t)+\y(t)\) significa que \(\z(t,\,\zeta)=\x(t,\,\zeta)+\y(t,\,\zeta)\) para todo \(\zeta\). Derivadas, integrales, o cualquier otra operación que involucra procesos aleatorios, se definen de forma similar como la operación correspondiente sobre cada muestra. Como en el caso de la definición de límite explicado en la sección \ref{sec:convergence_modes}, estas definiciones pueden flexibilizarse, lo cual se mencionará mas adelante en la sección \ref{}. A continuación se define la igualdad en el sentido cuadrático medio (MS). Dos procesos \(\x(t)\) y \(\y(t)\) se dicen iguales en el sentido MS si y solo si
+\begin{equation}\label{eq:process_equality_ms_sense_definition}
+ E\{|\x(t)-\y(t)|^2\}=0
+\end{equation}
+para todo \(t\). La igualdad en el sentido cuadrático medio conduce a las siguientes conclusiones: sea \(A_t\) el conjunto de resultados \(\zeta\) tal que \(\x(t,\,\zeta)=\y(t,\,\zeta)\) para un valor específico de \(t\), y sea \(A_\infty\) el conjunto de resultados \(\zeta\) tal que \(\x(t,\,\zeta)=\y(t,\,\zeta)\) para cada \(t\). La ecuación \ref{eq:process_equality_ms_sense_definition} implica que \(\x(t,\,\zeta)-\y(t,\,\zeta)=0\) con probabilidad 1. Esto es porque \(E\{\x^2\}=\var\{\x\}+E^2\{\x\}\) y por lo tanto, si \(E\{\x^2\}=0\), se cumple que \(\var\{\x\}=0\) y \(E\{\x\}=0\), lo que implica que \(\x\) es una variable aleatoria casi seguramente nula, es decir, \(P\{\x=0\}=1\)\footnote{Ver \url{https://proofwiki.org/wiki/Random_Variable_has_Zero_Variance_iff_Almost_Surely_Constant}, por ejemplo.}. De esta forma, \(P\{A_t\}=1\). Sin embargo, la definición \ref{eq:process_equality_ms_sense_definition} no implica que \(P\{A_\infty\}=1\). De hecho, como \(A_\infty\) es la intersección de todos los conjuntos \(A_t\) con \(t\) extendiéndose sobre todo el eje, \(P\{A_\infty\}\) podría incluso ser 0. La intersección de una cantidad infinita no contable de conjuntos de probabilidad 1 puede ser un conjunto de probabilidad 0.
+
+\subsection{Estadística de procesos estocásticos}
+
+Un proceso estocástico consiste en un cantidad infinita no contable de variables aleatorias, una por cada \(t\). Para un valor de \(t\) específico, \(\x(t)\) es una variable aleatoria con distribución de probabilidad 
+\[
+ F(x,\,t)=P\{\x(t)\leq x\}.
+\]
+Esta función depende de \(t\), y es la probabilidad del evento \(\{\x(t)\leq x\}\), que consiste en todos los resultados \(\zeta\) tales que en un tiempo específico \(t\), las muestras \(\x(t,\,\zeta)\) del proceso no exceden el número \(x\). La función \(F(x,\,t)\) se denomina \emph{distribución de primer orden} del proceso \(\x(t)\). Su derivada respecto a \(x\),
+\[
+ f(x,\,t)=\frac{\partial F(x,\,t)}{\partial x}
+\]
+es la \emph{densidad de primer orden} de \(\x(t)\).
+
+La \emph{distribución de segundo orden} del proceso \(\x(t)\) es la distribución conjunta
+\[
+ F(x_1,\,x_2;\,t_1,\,t_2)=P\{\x(t_1)\leq x_1,\,\x(t_2)\leq x_2\}
+\]
+de las variables aleatorias \(\x(t_1)\) y \(\x(t_2)\). La densidad correspondiente es
+\[
+ f(x_1,\,x_2;\,t_1,\,t_2)=\frac{\partial^2F(x_1,\,x_2;\,t_1,\,t_2)}{\partial x_1\partial x_2}.
+\]
+Se observa que 
+\[
+ F(x_1;\,t_1)=F(x_1,\,\infty;\,t_1,\,t_2)
+  \qquad\textrm{y}\qquad 
+ f(x_1,\,t_1)=\int_{-\infty}^\infty  f(x_1,\,x_2;\,t_1,\,t_2)\,dx_2, 
+\]
+que son las condiciones de consistencia, como las ecuaciones \ref{eq:marginal_distributions_definition} y \ref{eq:marginal_densities_definition}. 
+
+La \emph{distribución de orden n-ésimo} de \(\x(t)\) es la distribución conjunta \(F(x_1,\,\dots,\,x_n;\,t_1,\,\dots,\,t_n)\) de las variables aleatorias \(\x(t_1),\,\dots,\,\x(t_n)\).
+
+\subsubsection{Propiedades de segundo orden} 
+
+Para la caracterización estadística completa de un proceso aleatorio se requiere el conocimiento de la distribución conjunta \(F(x_1,\,\dots,\,x_n;\,t_1,\,\dots,\,t_n)\) para cada \(x_i,\,t_i\) y \(n\). Sin embargo, en muchas aplicaciones solo se emplean algunos promedios, en particular, los valores esperados de \(\x(t)\) y de \(\x^2(t)\). Esas propiedades pueden expresarse en términos de las propiedades de segundo orden de \(\x(t)\), definidas como:
+\begin{description}
+ \item[\textnormal{\textit{Media}}] La media \(\eta(t)\) de \(\x(t)\) es el valor esperado de la variable aleatoria \(\x(t)\):
+ \[
+  \eta(t)=E\{\x(t)\}=\int_{-\infty}^\infty xf(x,\,t)\,dx.
+ \]
+ \item[\textnormal{\textit{Autocorrelación}}] La autocorrelación \(R(t_1,\,t_2)\) de \(\x(t)\) es el valor esperado del producto \(\x(t_1)\x(t_2)\):
+ \[
+  R(t_1,\,t_2)=E\{\x(t_1)\x(t_2)\}=\int_{-\infty}^\infty x_1x_2f(x_1,\,x_2;\,t_1,\,t_2)\,dx_1dx_2.
+ \] 
+ El valor de \(R(t_1,\,t_2)\) en a diagonal \(t_1=t_2=t\) es la \emph{potencia promedio} de \(\x(t)\):
+ \[
+  E\{\x^2(t)\}=R(t,\,t).
+ \]
+ \item[\textnormal{\textit{Autocovarianza}}] La autocovarianza \(C(t_1,\,t_2)\) de \(\x(t)\) es la covarianza (ver la ecuación \ref{eq:covariance_definition}) de las variables aleatorias \(\x(t_1)\) y \(\x(t_2)\): 
+ \[
+  C(t_1,\,t_2)=R(t_1,\,t_2)-\eta(t_1)\eta(t_2),
+ \]
+ y su valor \(C(t,\,t)\) en la diagonal \(t_1=t_2=t\) es la varianza de la variable aleatoria \(\x(t)\).
+\end{description}
+
+\paragraph{Ejemplo (9-3)} La integral
+\[
+ \s=\int_a^b\x(t)\,dt
+\]
+de un proceso estocástico \(\x(t)\) es una variable aleatoria \(\s\) y su valor \(\s(\zeta)\) para un resultado específico \(\zeta\) es el área bajo la curva \(\x(t,\,\zeta)\) en el intervalo \((a,\,b)\) (ver además la sección \ref{}). Interpretando la integral como una integral de Riemann, por la linealidad del valor esperado, se cumple que 
+\begin{equation}\label{eq:integrated_process_mean}
+ \eta_s=E\{\s\}=\int_a^bE\{\x(t)\}\,dt=\int_a^b\eta(t)\,dt.
+\end{equation}
+Además, como
+\[
+ \s^2=\int_a^b\int_a^b\x(t_1)\x(t_2)\,dt_1dt_2,
+\]
+se concluye que 
+\begin{equation}\label{eq:integrated_process_second_moment}
+ E\{\s^2\}=\int_a^b\int_a^bE\{\x(t_1)\x(t_2)\}\,dt_1dt_2=\int_a^b\int_a^bR(t_1,\,t_2)\,dt_1dt_2,
+\end{equation}
+donde nuevamente se empleó la linealidad de la esperanza.
+
+\subsection{Propiedades generales} 
+
+Como ya se mencionó, las propiedades de un proceso estocástico real quedan completamente determinadas por la distribución de orden \(n\)-ésimo
+\[
+ F(x_1,\,\dots,\,x_n;\,t_1,\,\dots,\,t_n)=P\{\x(t_1)\leq x_1,\,\dots,\,\x(t_n)\leq x_n\}.
+\]
+La estadística conjunta de dos procesos reales \(\x(t)\) y \(\y(t)\) está determinada por la distribución conjunta de las variables aleatorias
+\[
+ \x(t_1),\,\dots,\,\x(t_n),\,\y(t'_1),\,\dots,\,\y(t'_m).
+\]
+El \emph{proceso complejo} \(\z(t)=\x(t)+j\y(t)\) se especifica en términos de la estadística conjunta de los procesos reales \(\x(t)\) y \(\y(t)\). Un \emph{proceso vectorial} de dimensión \(n\) es una familia de \(n\) procesos estocásticos. 
+
+\subsubsection{Correlación y covarianza} 
+
+La autocorrelación de un proceso \(\x(t)\) real o complejo, es por definición la media del producto \(\x(t_1)\x^*(t_2)\). Esta función se denota como \(R(t_1,\,t_2)\), \(R_x(t_1,\,t_2)\) o \(R_{xx}(t_1,\,t_2)\). Así,
+\[
+ R_{xx}(t_1,\,t_2)=E\{\x(t_1)\x^*(t_2)\},
+\]
+donde el término conjugado corresponde a la segunda variable en \(R_{xx}(t_1,\,t_2)\). Por lo tanto, se cumple que 
+\begin{equation}\label{eq:autocorrelation_process_definition}
+ R(t_2,\,t_1)=E\{\x(t_2)\x^*(t_1)\}=R^*(t_1,\,t_2).
+\end{equation}
+Además,
+\[
+ R(t,\,t)=E\{|\x(t)|^2\}\geq0.
+\]
+Estas dos ecuaciones son casos particulares de la siguiente propiedad: la autocorrelación \(R(t_1,\,t_2)\) de un proceso estocástico es una función \emph{definida positiva}, es decir, para cualquier \(a_i\) y \(a_j\), cumple que
+\[
+ \sum_{i,\,j}a_ia^*_jR(t_i,\,t_j)\geq0.
+\]
+Esto es consecuencia de la identidad
+\[
+ 0\leq E\left\{\left|\sum_ia_i\x(t_i)\right|^2\right\}=\sum_{i,\,j}a_ia^*_jE\{\x(t_1)\x^*(t_2)\}.
+\]
+Mas adelante se mostrará que lo recíproco también se cumple: dada un función definida positiva \(R(t_1,\,t_2)\), es posible encontrar un proceso con autocorrelación  \(R(t_1,\,t_2)\).
+
+La autocovarianza \(C(t_1,\,t_2)\) de un proceso \(\x(t)\) es la covarianza entre las variables aleatorias \(\x(t_1)\) y \(\x(t_2)\),
+\begin{equation}\label{eq:autocovariance_process_definition}
+ C(t_1,\,t_2)=R(t_1,\,t_2)-\eta(t_1)\eta^*(t_2).
+\end{equation}
+El cociente
+\begin{equation}\label{eq:correlation_coefficient_function_definition}
+ r(t_1,\,t_2)=\frac{C(t_1,\,t_2)}{\sqrt{C(t_1,\,t_1)C(t_2,\,t_2)}}
+\end{equation}
+es el \emph{coeficiente de correlación} del proceso \(\x(t)\) (ver la ecuación \ref{eq:correlation_coefficient_definition}). Observar que la autocovarianza \(C(t_1,\,t_2)\) de un proceso \(\x(t)\) es la autocorrelación del proceso centrado,
+\[
+ \tilde{\x}(t)=\x(t)-\eta(t),
+\]
+y por lo tanto, es un función definida positiva. Además, el coeficiente \(r(t_1,\,t_2)\) de \(\x(t)\) es la autocovarianza del proceso normalizado \(\x(t)/C(t,\,t)\), y por lo tanto, también es una función definida positiva. Además, cumple que 
+\[
+ |r(t_1,\,t_2)|\leq1
+ \qquad\qquad\textrm{y}\qquad\qquad
+ r(t,\,t)=1.
+\]
+
+\paragraph{Ejemplo (9-8)} Si
+\[
+ \s=\int_a^b\x(t)\,dt,
+\]
+se cumple que 
+\[
+ \s-\eta_s\overset{(a)}{=}\int_a^b[\x(t)-\eta_x(t)]\,dt=\int_a^b\tilde{\x}(t)\,dt,
+\]
+donde en \((a)\) se tuvo en cuenta la ecuación \ref{eq:integrated_process_mean}. Empleando la ecuación \ref{eq:integrated_process_second_moment}, se concluye que
+\begin{equation}\label{eq:integrated_process_variance}
+ \sigma^2_s=E\{|\s-\eta_s|^2\}=\int_a^b\int_a^bC_x(t_1,\,t_2)\,dt_1dt_2.
+\end{equation}
+
+La \emph{correlación cruzada} de dos procesos \(\x(t)\) y \(\y(t)\) es la función
+\[
+ R_{xy}(t_1,\,t_2)=E\{\x(t_1)\y^*(t_2)\}=R^*_{yx}(t_2,\,t_1).
+\]
+Análogamente, 
+\[
+ C_{xy}(t_1,\,t_2)=R_{xy}(t_1,\,t_2)-\eta_x(t_1)\eta_y^*(t_2)
+\]
+es la \emph{covarianza cruzada}.
+
+Dos procesos \(\x(t)\) y \(\y(t)\) se dicen \emph{mutuamente ortogonales} si
+\[
+ R_{xy}(t_1,\,t_2)=0\qquad\textrm{para todo }t_1\textrm{ y }t_2,
+\]
+y se dicen \emph{no correlacionados} si
+\[
+ C_{xy}(t_1,\,t_2)=0\qquad\textrm{para todo }t_1\textrm{ y }t_2,
+\]
+de forma análoga a los conceptos definidos en la sección \ref{sec:uncorrelation_and_onthogonality} para variables aleatorias.
+
+\paragraph{Proceso \(a\)-dependiente} En general, los valores \(\x(t_1)\) y \(\x(t_2)\) de un proceso estocástico \(\x(t)\) son estadísticamente dependientes para todo \(t_1\) y \(t_2\). Sin embargo, en muchos casos la dependencia decrece a medida que \(|t_1-t_2|\to\infty\). Esto motiva el siguiente concepto: un proceso estocástico \(\x(t)\) se llama \(a\)-dependiente si todos sus valores \(\x(t)\) para \(t<t_o\) y para \(t>t_o+a\) son \emph{mutuamente independientes}. Por lo tanto, se cumple que 
+\begin{equation}\label{eq:a_dependent_definition}
+ C_{xy}(t_1,\,t_2)=0\qquad\textrm{para }|t_1-t_2|>a.
+\end{equation}
+Un proceso se dice \emph{correlación a-dependiente} si su autocorrelación cumple la ecuación \ref{eq:a_dependent_definition}. Si un proceso \(\x(t)\) es correlación \(a\)-dependiente, cualquier combinación lineal de sus valores para \(t<t_o\) no esta correlacionada con cualquier combinación lineal de sus valores para \(t>t_o+a\).
+
+\paragraph{Ruido blanco} Se dice que un proceso \(\vbf(t)\) es ruido blanco si sus valores \(\vbf(t_i)\) y \(\vbf(t_j)\) son no correlacionados para todo \(t_i\) y \(t_j\neq t_i\), es decir
+\[
+ C(t_i,\,t_j)=0,\qquad t_i\neq t_j.
+\]
+Como se explica mas adelante, la autocovarianza de un proceso ruido blanco no trivial es de la forma
+\begin{equation}\label{eq:white_noise_covariance}
+ C(t_1,\,t_2)=q(t_1)\delta(t_1-t_2),\qquad q(t)\geq0.
+\end{equation}
+Si las variables aleatorias \(\vbf(t_i)\) y \(\vbf(t_j)\) no solo son no correlacionadas sino que además son independientes, \(\vbf(t)\) se llama \emph{ruido blanco estricto}. A menos que se indique explícitamente lo contrario, se asumirá que la media de un proceso ruido blanco es idénticamente nula.
+
+\paragraph{Proceso normal} Un proceso \(\x(t)\) se llama \emph{normal} si las variables aleatorias \(\x(t_1),\,\dots,\,\x(t_n)\) son conjuntamente normales para todo \(n\) y para cualquier \(t_1,\,\dots,\,t_n\) (ver la sección \ref{sec:normal_random_vectors}). La estadística de un proceso normal queda completamente determinada por la media \(\eta(t)\) y la autocovarianza \(C(t_1,\,t_2)\). Efectivamente, como
+\[
+ E\{\x(t)\}=\eta(t)\qquad\qquad\textrm{y}\qquad\qquad\sigma^2_x=C(t,\,t),
+\]
+la densidad de probabilidad \(f(x,\,t)\) de primer orden de \(\x(t)\) es la densidad normal \(N\left[\eta(t),\,C(t,\,t)\right]\). Ademáś, como la función \(r(t_1,\,t_2)\) de la ecuación  \ref{eq:correlation_coefficient_function_definition} es el coeficiente de correlación de las variables aleatorias \(\x(t_1)\) y \(\x(t_2)\), la densidad de probabilidad \(f(x_1,\,x_2;\,t_1,\,t_2)\) de segundo orden de \(\x(t)\) es la densidad de probabilidad normal conjunta
+\[
+ N\left[\eta(t_1),\,\eta(t_2),\,C(t_1,\,t_1),\,C(t_2,\,t_2),\,r(t_1,\,t_2)\right],
+\]
+como se explicó en la sección \ref{sec:joint_normal_pdf}.
+La función característica de orden \(n\) del proceso \(\x(t)\), como indica la ecuación \ref{eq:multivariate_normal_characteristic_funcion} es
+\begin{equation}\label{eq:normal_process_characteristic_function}
+ \exp\left\{j\sum_i\eta(t_i)\omega_i-\frac{1}{2}\sum_{i,\,k}C(t_i,\,t_k)\omega_i\omega_k\right\},
+\end{equation}
+la cual está completamente determinada por \(\eta(t)\) y \(C(t_1,\,t_2)\), y su inversa \(f(x_1,\,\dots,\,x_n;\,t_1,\,\dots,\,t_n)\) es la densidad de probabilidad de orden \(n\)-ésimo de \(\x(t)\).
+
+\subsection{Procesos estacionarios}
+
+\subsubsection{Estacionaridad en sentido estricto} 
+
+Un proceso estocástico \(\x(t)\) se dice \emph{estacionario en sentido estricto} (SSS, \emph{strict-sense stationary}) si sus propiedades estadísticas son invariantes a un desplazamiento del origen. Esto significa que los procesos \(\x(t)\) y \(\x(t+c)\) tienen la misma estadística para cualquier \(c\).
+
+Dos procesos \(\x(t)\) y \(\y(t)\) se llaman \emph{conjuntamente estacionarios} si la estadística conjunta entre \(\x(t)\) y \(\y(t)\) es la misma que la estadística conjunta entre \(\x(t+c)\) y \(\y(t+c)\) para cualquier \(c\). Un proceso complejo \(\z(t)=\x(t)+j\y(t)\) es estacionario si los procesos reales \(\x(t)\) y \(\y(t)\) son conjuntamente estacionarios.
+
+De la definición, la densidad de probabilidad de orden \(n\)-ésimo de un proceso SSS debe ser tal que
+\begin{equation}\label{eq:sss_process_n_order_density}
+  f(x_1,\,\dots,\,x_n;\,t_1,\,\dots,\,t_n)=f(x_1,\,\dots,\,x_n;\,t_1+c,\,\dots,\,t_n+c)
+\end{equation}
+para todo \(c\). Por lo tanto, \(f(x;\,t)=f(x;\,t+c)\) para todo \(c\). De esta forma, la densidad de primer orden de \(\x(t)\) es independiente de \(t\), es decir,
+\begin{equation}\label{eq:sss_process_first_order_density}
+ f(x;\,t)=f(x).
+\end{equation}
+Además, \(f(x_1,\,x_2;\,t_1+c,\,t_2+c)\) es independiente de \(c\) para todo \(c\). En particular, tomando \(c=-t_2\), se cumple que 
+\begin{equation}\label{eq:sss_process_second_order_density}
+ f(x_1,\,x_2;\,t_1+c,\,t_2+c)=f(x_1,\,x_2;\,\tau),\qquad\tau=t_1-t_2.
+\end{equation}
+Por lo tanto, la densidad de probabilidad conjunta de las variables aleatorias \(\x(t+\tau)\) y \(\x(t)\) es independiente de \(t\) y es \(f(x_1,\,x_2;\,\tau)\).
+
+\subsubsection{Estacionaridad en sentido amplio} 
+
+Un proceso estocástico \(\x(t)\) se dice \emph{estacionario en sentido amplio} (WSS, \emph{wide-sense stationary}) si su media es constante,
+\[
+ E\{\x(t)\}=\eta
+\]
+y su autocorrelación depende solo de \(\tau=t_1-t_2\),
+\[
+ E\{\x(t+\tau)\x^*(t)\}=R(\tau).
+\]
+Como \(\tau\) es la distancia entre \(t\) y \(t+\tau\), la función \(R(\tau)\) puede escribirse de forma simétrica como
+\[
+ R(\tau)=E\left\{\x\left(t+\frac{\tau}{2}\right)\x^*\left(t-\frac{\tau}{2}\right)\right\}.
+\]
+Observar que en particular se cumple que 
+\[
+ E\{|\x(t)|^2\}=R(0).
+\]
+Por lo tanto, la potencia promedio de un proceso estacionario es independiente de \(t\) y su valor es \(R(0)\). La autocovarianza de un procesos WSS también depende únicamente de \(\tau=t_1-t_2\),
+\[
+ C(\tau)=R(\tau)-|\eta|^2
+\]
+y su coeficiente de correlación es (ver la ecuación \ref{eq:correlation_coefficient_function_definition})
+\[
+ r(\tau)=\frac{C(\tau)}{C(0)}.
+\]
+De esta forma, \(C(\tau)\) y \(r(\tau)\) son respectivamente la covarianza y el coeficiente de correlación de las variables aleatorias \(\x(t+\tau)\) y \(\x(t)\).
+
+Dos procesos \(\x(t)\) y \(\y(t)\) se dicen conjuntamente WSS si cada uno es WSS y su correlación cruzada depende únicamente de \(\tau=t_1-t_2\),
+\[
+ R_{xy}(\tau)=E\{\x(t+\tau)\y^*(t)\}
+ \qquad\qquad\textrm{y}\qquad\qquad
+ C_{xy}(\tau)=R_{xy}(\tau)-\eta_x\eta^*_y.
+\]
+Si \(\x(t)\) es ruido blanco WSS, se cumple que (ver la ecuación \ref{eq:white_noise_covariance})
+\begin{equation}\label{eq:white_noise_wss_covariance}
+ C(\tau)=q\delta(\tau).
+\end{equation}
+Si \(\x(t)\) es un proceso \(a\)-dependiente, \(C(\tau)=0\) para \(|\tau|>a\). En este caso, la constante \(a\) se llama \emph{tiempo de correlación} de \(\x(t)\). Este término también se emplea para procesos arbitrarios y se define como el cociente
+\[
+ \tau_c=\frac{1}{C(0)}\int_0^\infty C(\tau)\,d\tau.
+\]
+En general, \(C(\tau)\neq0\) para todo \(\tau\). Sin embargo, para la mayoría de los procesos regulares, se cumple que 
+\[
+ C(\tau)\xrightarrow[|\tau| \to \infty]{} 0
+ \qquad\qquad\textrm{y}\qquad\qquad
+ R(\tau)\xrightarrow[|\tau| \to \infty]{} |\eta|^2
+\]
+
+\paragraph{Ejemplo (9-12)} Si \(\x(t)\) es WSS y 
+\[
+ \s=\int_{-T}^T\x(t)\,dt,
+\]
+de la ecuación \ref{eq:integrated_process_variance} se cumple que 
+\begin{equation}\label{eq:integrated_wss_process_variance}
+ \sigma_s^2=\int_{-T}^T\int_{-T}^TC_x(t_1-t_2)\,dt_1dt_2=\int_{-2T}^{2T}C_x(\tau)(2T-|\tau|)\,d\tau.
+\end{equation}
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=0.9\columnwidth]{figuras/example_9_12_wiener_khintchine_integration.pdf}
+\caption{\label{fig:example_9_12_wiener_khintchine_integration} Deducción de la segunda igualdad de la ecuación \ref{eq:integrated_wss_process_variance}. En el plano \((t_1,\,t_2)\), el cuadrado es el dominio  de integración de la integral doble de la ecuación \ref{eq:integrated_wss_process_variance}. En las regiones sombreadas, la función \(C_x(t_1-t_2)\approx C_x(\tau)\) es constante si \(\Delta\tau\to0\). La región sombreada en la parte inferior corresponde a \(\tau>0\) y la superior a \(\tau<0\). El área de la región para \(\tau>0\), que es un trapecio, es \((2T-\tau)\Delta\tau-\Delta\tau^2/2\) y tiende a \((2T-\tau)\Delta\tau\) con \(\Delta\tau\to0\).}
+\end{center}
+\end{figure}
+Se mostrará la conversión de la integral doble a la integral simple de la segunda igualdad. La demostración está basada en la realizada en el capítulo 9 de \cite{lathi2009modern4th} (teorema de Wiener-Khintchine). Se parte observando que la integral doble es el volumen bajo la superficie \(C_x(t_1-t_2)\) en el cuadrado en el plano \((t_1,\, t_2)\) que se muestra en la figura \ref{fig:example_9_12_wiener_khintchine_integration}, y que \(C_x(t_1-t_2)\) es constante en cualquier recta \(t_1-t_2=\tau\) (con \(\tau\) fijo) en el plano \((t_1,\, t_2)\).
+Considérense dos de esas rectas, \(t_1-t_2=\tau\) y \(t_1-t_2=\tau+\Delta\tau\). Con \(\Delta\tau\to0\), la función \(C_x(t_1-t_2)\approx C_x(\tau)\) es constante sobre el área determinada por las rectas, correspondiente a la región sombreada en la figura \ref{fig:example_9_12_wiener_khintchine_integration}. El área de dicho trapecio es \((2T-\tau)\Delta\tau\), y el volumen determinado por \(C_x(t_1-t_2)\) sobre esa área es \(C_x(\tau)(2T-\tau)\Delta\tau\). Puede deducirse también que en el caso en que \(t_1-t_2=\tau'<0\), el volumen determinado por \(C_x(t_1-t_2)\) sobre el área es \(C_x(\tau')(2T+\tau')\Delta\tau\). Por lo tanto, generalizando, el volumen sobre las regiones sombreadas en la figura \ref{fig:example_9_12_wiener_khintchine_integration} es \(C_x(\tau)(2T-|\tau|)\Delta\tau\). El volumen buscado sobre el área cuadrada en la figura, es la suma de los volúmenes sobre las todas franjas sombreadas que abarcan el cuadrado, y se obtiene integrando  \(C_x(\tau)(2T-|\tau|)\) en el rango significativo de \(\tau\), que es  \((-2T,\,2T)\), como se puede ver en la figura \ref{fig:example_9_12_wiener_khintchine_integration}. Esto culmina la prueba. Se consideran los siguiente casos particulares:
+\begin{enumerate}
+ \item Si el proceso \(\x(t)\) es ruido blanco, \(C(\tau)=q\delta(\tau)\), y la ecuación \ref{eq:integrated_wss_process_variance} queda
+\[
+ \sigma_s^2=q\int_{-2T}^{2T}(2T-|\tau|)\delta(\tau)\,d\tau=2Tq.
+\]
+ \item Si el proceso \(\x(t)\) es \(a\)-dependiente y \(a\ll T\), la ecuación \ref{eq:integrated_wss_process_variance} queda
+\[
+ \sigma_s^2=q\int_{-2T}^{2T}C_x(\tau)(2T-|\tau|)\,d\tau\approx2T\int_{-a}^{a}C_x(\tau)\,d\tau.
+\]
+Esto es porque \(2T-|\tau|\approx2T\) en \(\tau\) en torno a cero. Esto muestra que en la evaluación de la varianza de \(\s\), un proceso \(a\)-dependiente con \(a\ll T\) puede ser reemplazado por ruido blanco con
+\[
+ q=\int_{-a}^{a}C_x(\tau)\,d\tau
+\]
+en la ecuación \ref{eq:white_noise_wss_covariance}.
+\end{enumerate}
+
+Si un proceso es SSS, también es WSS. Esto surge inmediatamente de las ecuaciones \ref{eq:sss_process_first_order_density} y \ref{eq:sss_process_second_order_density}. Lo recíproco en general no es cierto, y una excepción son los procesos normales. Efectivamente, sea \(\x(t)\) un proceso normal WSS con media \(\eta\) y covarianza \(C(\tau)\). La función característica de orden \(n\) es (ver la ecuación \ref{eq:normal_process_characteristic_function})
+\[
+ \exp\left\{j\sum_i\eta\omega_i-\frac{1}{2}\sum_{i,\,k}C(t_i-t_k)\omega_i\omega_k\right\}.
+\]
+Esta función es invariante a un desplazamiento del origen, y como determina completamente la estadística de \(\x(t)\), se concluye que \(\x(t)\) es SSS.
+
+\paragraph{Ejemplo (9-13)} Se deducirán las condiciones necesarias y suficientes para la estacionaridad del proceso
+\[
+ \x(t)=\abf\cos\omega t+\bbf\sin\omega t.
+\]
+La media del proceso es
+\[
+ E\{\x(t)\}=E\{\abf\}\cos\omega t+E\{\bbf\}\sin\omega t.
+\]
+Esta función debe ser independiente de \(t\). Por lo tanto, la condición
+\[
+ E\{\abf\}=0\qquad\qquad\textrm{y}\qquad\qquad E\{\bbf\}=0
+\]
+es necesaria para ambas formas de estacionaridad. Se asume que esta condición se cumple.
+
+\noindent\emph{Estacionaridad en sentido amplio.} El proceso \(\x(t)\) es WSS si y solo si las variables aleatorias \(\abf\) y \(\bbf\) son no correlacionadas y con igual varianza, es decir,
+\begin{equation}\label{eq:example_9_13_wss_conditions}
+ E\{\abf\bbf\}=E\{\abf\}\{\bbf\}=0
+  \qquad\qquad\textrm{y}\qquad\qquad
+ E\{\abf^2\}=E\{\bbf^2\}=\sigma^2.
+\end{equation}
+Si esto se cumple, se cumple que 
+\[
+ R(\tau)=\sigma^2\cos\omega t.
+\]
+Para probarlo, se parte considerando que si \(\x(t)\) es WSS, se cumple que 
+\[
+ E\{\x^2(0)\}=E\{\x^2(\pi/2\omega)\}=R(0).
+\]
+Pero como \(\x(0)=\abf\) y \(\x(\pi/2\omega)=\bbf\), se tiene que \(E\{\abf^2\}=E\{\bbf^2\}\). Además,
+\begin{align*}
+ E\{\x(t+\tau)\x(t)\}&=E\{[\abf\cos\omega(t+\tau)+\bbf\sin\omega(t+\tau)][\abf\cos\omega t+\bbf\sin\omega t]\}\\
+  &=E\{\abf^2\}\cos\omega(t+\tau)\cos\omega t+E\{\abf\bbf\}\cos\omega(t+\tau)\sin\omega t\\
+  &\qquad+E\{\bbf\abf\}\sin\omega(t+\tau)\cos\omega t+E\{\bbf^2\}\sin\omega(t+\tau)\sin\omega t\\
+  &=\frac{1}{2}E\{\abf^2\}[\cos\omega\tau+\cos\omega(2t+\tau)]+\frac{1}{2}E\{\abf\bbf\}[\sin\omega(2t+\tau)-\sin\omega\tau]\\
+  &\qquad+\frac{1}{2}E\{\bbf\abf\}[\sin\omega(2t+\tau)+\sin\omega\tau]+\frac{1}{2}E\{\bbf^2\}[\cos\omega\tau-\cos\omega(2t+\tau)]
+\end{align*}
+donde en la última igualdad se emplearon identidades trigonométricas conocidas. Considerando la condición obtenida previamente de que \(E\{\abf^2\}=E\{\bbf^2\}=\sigma^2\), resulta en
+\begin{equation}\label{eq:example_9_13_autocorrelation}
+ R(t+\tau,\,t)=E\{\x(t+\tau)\x(t)\}=\sigma^2\cos\omega\tau+E\{\abf\bbf\}\sin\omega(2t+\tau)
+\end{equation}
+Este resultado es independiente de \(t\) solo si \(E\{\abf\bbf\}=0\), concluyendo la prueba.
+
+Recíprocamente, si se cumple la ecuación \ref{eq:example_9_13_wss_conditions}, la autocorrelación de \(\x(t)\) de la ecuación \ref{eq:example_9_13_autocorrelation} es independiente de \(t\), por lo que \(\x(t)\) es WSS.
+
+
+\noindent\emph{Estacionaridad en sentido estricto.} El proceso \(\x(t)\) es SSS si la densidad conjunta \(f(a,\,b)\) de las variables aleatorias \(\abf\) y \(\bbf\) tiene simetría circular, es decir,
+\begin{equation}\label{eq:cicrular_symmetry_definition}
+ f_{ab}(a,\,b)=g\left(\sqrt{a^2+b^2}\right)
+\end{equation}
+para alguna función \(g\).
+\noindent Efectivamente, si \(\x(t)\) es SSS, las variables aleatorias
+\[
+ \x(0)=\abf,\qquad\qquad\x(\pi/2\omega)=\bbf
+\]
+y
+\[
+ \x(t)=\abf\cos\omega t+\bbf\sin\omega t,\qquad\qquad\x(t+\pi/2\omega)=-\abf\sin\omega t+\bbf\cos\omega t
+\]
+deben tener la misma densidad de probabilidad conjunta. Se denominarán a estas dos últimas variables aleatorias como
+\begin{equation}\label{eq:example_9_13_y1y2}
+\begin{aligned}
+ \y_1&=\abf\cos\omega t+\bbf\sin\omega t\\
+ \y_2&=-\abf\sin\omega t+\bbf\cos\omega t.
+\end{aligned} 
+\end{equation}
+Considerando que 
+\[
+ \begin{bmatrix}
+  \cos\omega t & \sin\omega t\\
+  -\sin\omega t & \cos\omega t
+ \end{bmatrix}^{-1}
+ =
+ \begin{bmatrix}
+  \cos\omega t & -\sin\omega t\\
+  \sin\omega t & \cos\omega t
+ \end{bmatrix}
+\]
+se tiene que 
+\begin{equation}\label{eq:example_9_13_ab}
+ \begin{array}{lllll}
+ \abf&=&g(\y_1,\,\y_2)&=&\y_1\cos\omega t-\y_2\sin\omega t\\
+ \bbf&=&h(\y_1,\,\y_2)&=&\y_1\sin\omega t+\y_2\cos\omega t,
+\end{array}
+\end{equation}
+y sea \(f_{y_1y_2}(y_1,\,y_2)\) la densidad de probabilidad conjunta de \(\y_1\) y \(\y_2\). Se calculará la densidad conjunta \(f_{ab}(a,\,b)\) de \(\abf\) y \(\bbf\) en términos de \(f_{y_1y_2}(y_1,\,y_2)\) como se explicó en la sección \ref{sec:two_funcions_of_two_rv_joint_density}. Teniendo en cuenta que la solución del sistema de la ecuación \ref{eq:example_9_13_ab} está dada por la ecuación \ref{eq:example_9_13_y1y2}, de la ecuación \ref{eq:joint_density_two_funcions_two_rv} se tiene que 
+\begin{equation}\label{eq:example_9_13_joint_densities}
+ f_{ab}(a,\,b)=f_{y_1y_2}(y_{1_1},\,y_{2_1})\frac{1}{\det J(y_{1_1},\,y_{2_1})}
+ =f_{y_1y_2}(a\cos\omega t+b\sin\omega t,\,-a\sin\omega t+b\cos\omega t),
+\end{equation}
+donde en la segunda igualdad se consideró que 
+\[
+ J(y_{1_1},\,y_{2_1})=
+ \bgroup
+ \def\arraystretch{2.4}
+ \begin{bmatrix}
+    \dfrac{\partial g}{\partial y_1} & \dfrac{\partial g}{\partial y_2} \\
+    \dfrac{\partial h}{\partial y_1} & \dfrac{\partial h}{\partial y_2}
+ \end{bmatrix}_{\substack{y_1=y_{1_1}\\y_2=y_{2_1}}}=
+ \egroup
+ \begin{bmatrix}
+    \cos\omega t & -\sin\omega t\\
+    \sin\omega t & \cos\omega t
+ \end{bmatrix}
+ \qquad\qquad\Rightarrow\qquad\qquad 
+ \det J(y_{1_1},\,y_{2_1})=1.
+\]
+Teniendo en cuenta que por la hipótesis de estacionaridad en sentido estricto se cumple que \(f_{ab}(x,\,y)=f_{y_1y_2}(x,\,y)=f(x,\,y)\), se tiene que 
+\[
+ f(a,\,b)=f(a\cos\omega t+b\sin\omega t,\,-a\sin\omega t+b\cos\omega t)
+\]
+para todo \(a\), \(b\) y \(t\). La condición para eso es la ecuación \ref{eq:cicrular_symmetry_definition}, ya que 
+\begin{align*}
+ (a\cos\omega t+b\sin\omega t)^2+(-a\sin\omega t+b\cos\omega t)^2&=a^2\cos^2\omega t+b^2\sin^2\omega t+2ab\cos\omega t\sin\omega t\\
+ &\qquad+a^2\sin^2\omega t+b^2\cos^2\omega t-2ab\sin\omega t\cos\omega t\\
+ &=a^2+b^2,
+\end{align*}
+concluyendo la prueba.
+
+Recíprocamente, si \(f_{ab}(a,\,b)\) tiene simetría circular, \(\x(t)\) es SSS. Para verlo, dado \(\tau\), se consideran las variables aleatorias
+\[
+ \y_1=\abf\cos\omega\tau+\bbf\sin\omega\tau\qquad\qquad\textrm{y}\qquad\qquad\y_2=-\abf\sin\omega\tau+\bbf\cos\omega\tau,
+\]
+y se construye el proceso
+\[
+ \x_1(t)=\y_1\cos\omega t+\y_2\sin\omega t=\x(t+\tau),
+\]
+donde la última igualdad se obtiene mediante identidades trigonométricas conocidas. La estadística de \(\x(t)\) está determinada por la densidad conjunta \(f_{ab}(a,\,b)\) de las variables aleatorias \(\abf\) y \(\bbf\), y la estadística de \(\x_1(t)\) está determinada por la densidad conjunta \(f_{y_1y_2}(y_1,\,y_2)\) de las variables aleatorias \(\y_1\) y \(\y_2\). Pero de la ecuación \ref{eq:example_9_13_joint_densities},
+\[
+ f_{ab}(a,\,b)=f_{y_1y_2}(a\cos\omega\tau+b\sin\omega\tau,\,-a\sin\omega\tau+b\cos\omega\tau),
+\]
+y como por hipótesis
+\[
+ f_{ab}(a,\,b)=g\left(\sqrt{a^2+b^2}\right)=f_{ab}(a\cos\omega\tau+b\sin\omega\tau,\,-a\sin\omega\tau+b\cos\omega\tau),
+\]
+se concluye que \(f_{ab}(a,\,b)=f_{y_1y_2}(y_1,\,y_2)\), es decir, las variables aleatorias \(\abf\) y \(\bbf\), y \(\y_1\) y \(\y_2\) tienen la misma densidad conjunta. Esto implica que los procesos \(\x(t)\) y \(\x(t+\tau)\) tienen la misma estadística para todo \(\tau\), y por lo tanto, \(\x(t)\) es SSS.
+
+\paragraph{Corolario} Si el proceso \(\x(t)\) es SSS y las variables aleatorias \(\abf\) y \(\bbf\) son independientes, se cumple que son normales. Esto es consecuencia directa de las ecuaciones \ref{eq:cicrular_symmetry_definition} y \ref{eq:circular_symmetry_and_independence_distribution}.
+
+\paragraph{Ejemplo (9-14)} Sea una variable aleatoria \(\omega\) con densidad de probabilidad \(f(\omega)\) y una variable aleatoria \(\varphi\) de distribución uniforme en el intervalo \((-\pi,\,\pi)\) independiente de \(\omega\), y se forma el proceso
+\[
+ \x(t)=a\cos(\omega t+\varphi).
+\]
+Se mostrará que el proceso \(\x(t)\) es WSS de media nula y autocorrelación
+\[
+ R(\tau)=\frac{a^2}{2}E\{\cos\omega t\}=\frac{a^2}{2}\operatorname{Re}\Phi_\omega(\tau),
+\]
+donde
+\[
+ \Phi_\omega(\tau)=E\{e^{j\omega\tau}\}=E\{\cos\omega\tau\}+jE\{\sin\omega\tau\}
+\]
+es la función característica de la variable aleatoria \(\omega\) (ver la ecuación \ref{eq:characteristic_function}). 
+
+Para ver que la media es nula, de la ecuación \ref{eq:law_of_total_expectation_generalization} se cumple que 
+\[
+ E\{\cos(\omega t+\varphi)\}=E\{E\{\cos(\omega t+\varphi)\,|\,\omega\}\}.
+\]
+Además,
+\begin{align*}
+ E\{\cos(\omega t+\varphi)\,|\,\omega\}&\overset{(a)}{=}E\{\cos\omega t\cos\varphi-\sin\omega t\sin\varphi\,|\,\omega\}\\
+ &\overset{(b)}{=}\cos\omega tE\{\cos\varphi\}-\sin\omega tE\{\sin\varphi\}\\
+ &\overset{(c)}{=}0,
+\end{align*}
+donde en \((a)\) se empleó una identidad trigonométrica, en \((b)\) se tuvo en cuanta la independencia entre \(\omega\) y \(\varphi\) y en \((c)\) que 
+\[
+ E\{\cos\varphi\}=\frac{1}{2\pi}\int_{-\pi}^\pi\cos\varphi\,d\varphi=0
+ \qquad\qquad\textrm{y}\qquad\qquad
+ E\{\sin\varphi\}=\frac{1}{2\pi}\int_{-\pi}^\pi\sin\varphi\,d\varphi=0.
+\]
+Se concluye que \(E\{\x(t)\}=0\). La autocorrelación de proceso es 
+\begin{align*}
+ R(t+\tau,\,t)&=E\{\x(t+\tau)\x(t)\}\\
+  &=a^2E\{\cos[\omega(t+\tau)+\varphi]\cos(\omega t+\varphi)\}\\
+  &=\frac{a^2}{2}E\{\cos\omega\tau+\cos(2\omega t+\omega\tau+2\varphi)\},
+\end{align*}
+donde nuevamente se empleó una identidad trigonométrica conocida. Razonando de forma similar al cálculo de la media, se observa que 
+\[
+ E\{\cos(2\omega t+\omega\tau+2\varphi)\}=E\{E\{\cos(2\omega t+\omega\tau+2\varphi)\,|\,\omega\}\}
+\]
+y como
+\[
+ E\{\cos(2\omega t+\omega\tau+2\varphi)\,|\,\omega\}=\cos(2\omega t+\omega\tau)E\{\cos2\varphi\}-\sin(2\omega t+\omega\tau)E\{\sin2\varphi\}=0,
+\]
+se concluye que 
+\[
+ R(\tau)=\frac{a^2}{2}E\{\cos\omega\tau\}.
+\]
+Notar que la autocorrelación es independiente de \(t\), por lo que el proceso es WSS. Observar además que con \(\omega\) y \(\varphi\) definidos como antes, el proceso
+\[
+ \z(t)=ae^{j(\omega t+\varphi)}
+\]
+es WSS con media nula y autocorrelación 
+\[
+ R(\tau)=E\{\z(t+\tau)\z^*(t)\}=a^2E\{e^{j\omega\tau}\}=a^2\Phi_\omega(\tau).
+\]
+
+\subsubsection{Proceso centrado}
+
+Dado un proceso \(\x(t)\) con media \(\eta(t)\) y autocovarianza \(C_x(t_1,\,t_2)\), se construye la diferencia
+\[
+ \tilde{\x}(t)=\x(t)-\eta(t).
+\]
+Esta diferencia se llama \emph{proceso centrado} asociado al proceso \(\x(t)\). Observar que se cumple que (ver la ecuación \ref{eq:autocovariance_process_definition})
+\[
+ E\{\tilde{\x}(t)\}=0
+ \qquad\qquad\textrm{y}\qquad\qquad
+ R_{\tilde{x}}(t_1,\,t_2)=C_x(t_1,\,t_2).
+\]
+Por lo tanto, si el proceso \(\x(t)\) es estacionario en la covarianza, es decir, que cumple que \(C_x(t_1,\,t_2)=C_x(t_1-t_2)\), el proceso centrado \(\tilde{\x}(t)\) es WSS.
+
+\subsubsection{Otras formas de estacionaridad}
+
+Un proceso \(\x(t)\) es \emph{asintóticamente estacionario} si la estadística de las variables aleatorias \(\x_1(t+c),\,\dots,\,\x_n(t+c)\) no depende de \(c\) si \(c\) es grande. Mas precisamente, la densidad de probabilidad conjunta 
+\[
+ f(x_1,\,\dots,\,x_n,\,t_1+c,\,\dots,\,t_n+c)
+\]
+tiende a un límite que no depende de \(c\) cuando \(c\to\infty\). 
+
+Un proceso \(\x(t)\) es \emph{estacionario de N-ésimo orden} si la ecuación \ref{eq:sss_process_n_order_density} en lugar de cumplirse para todo \(n\) se cumple para \(n\leq N\).
+
+Un proceso \(\x(t)\) es \emph{estacionario en un intervalo} si la ecuación \ref{eq:sss_process_n_order_density} se cumple para todo \(t_i\) y \(t_i+c\) en dicho intervalo.
+
+\subsubsection{Periodicidad en media cuadrática}
+
+Un proceso \(\x(t)\) se dice periódico en MS si
+\[
+ E\{|\x(t+T)-x(t)|^2\}=0
+\]
+para todo \(t\). Esto significa que para un valor específico de \(t\), se cumple 
+\[
+ \x(t+T)=\x(t)
+\]
+con probabilidad 1. No significa sin embargo que el conjunto de los resultados \(\zeta\) tales que \(\x(t+T,\,\zeta)=x(t,\,\zeta)\) para todo \(t\) tenga probabilidad 1.
+
+La media de un proceso periódico en MS es periódica, ya que 
+\[
+ E\{\x(t+T)\}=E\{\x(t)\}
+\]
+para todo \(t\). En el siguiente teorema se examinan las propiedades de la autocorrelación \(R(t_1,\,t_2)\). 
+
+\paragraph{Teorema} Un proceso \(\x(t)\) es periódico en MS si y solo si su autocorrelación es \emph{doblemente periódica}, es decir, si
+\begin{equation}\label{eq:ms_periodic_process_autocorrelation}
+ R(t_1+mT,\,t_2+nT)=R(t_1,\,t_2)
+\end{equation}
+para todo entero \(m\) y \(n\).
+
+\noindent\emph{Prueba:} Como se cumple que (ver la ecuación \ref{eq:covariance_rho_relation_deduction}),
+\[
+ E^2\{\z\w\}\leq E\{\z^2\}E\{\w^2\},
+\]
+tomando \(\z=\x(t_1)\) y \(\w=\x(t_2+T)-\x(t_2)\), se obtiene que 
+\[
+ E^2\{\x(t_1)[\x(t_2+T)-\x(t_2)]\}\leq E\{\x^2(t_1)\}E\{[\x(t_2+T)-\x(t_2)]^2\}\overset{(a)}{=}0,
+\]
+donde en \((a)\) se empleó que \(\x(t)\) es periódico en MS y por lo tanto, \(E\{[\x(t_2+T)-\x(t_2)]^2\}=0\). Igualando el lado izquierdo de la igualdad a 0 y desarrollando, se obtiene que 
+\[
+ R(t_1,\,t_2+T)-R(t_1,\,t_2)=0.
+\]
+Repitiendo este razonamiento, se obtiene la ecuación \ref{eq:ms_periodic_process_autocorrelation}. Por ejemplo, con \(\z=\x(t_1+T)-\x(t_1)\) y \(\w=\x(t_2+T)\), se tiene que 
+\[
+ E^2\{[\x(t_1+T)-\x(t_1)]\x(t_2+T)\}\leq E\{[\x(t_1+T)-\x(t_1)]^2\}E\{\x^2(t_2+T)\}=0,
+\]
+obteniendo que 
+\[
+ R(t_1+T,\,t_2+T)-R(t_1,\,t_2+T)=0,
+\]
+y por lo tanto,
+\[
+ R(t_1+T,\,t_2+T)=R(t_1,\,t_2+T)=R(t_1,\,t_2),
+\]
+donde en la última igualdad se empleó el resultado anterior.
+
+\noindent Recíprocamente, considerando que 
+\[
+ E\{[\x(t+T)-\x(t)]^2\}=R(t+T,\,t+T)+R(t,\,t)-2R(t+T,\,t)
+\]
+y como si se cumple la ecuación \ref{eq:ms_periodic_process_autocorrelation},
+\[
+ R(t+T,\,t+T)=R(t+T,\,t)=R(t,\,t)
+\]
+se tiene que 
+\[
+ E\{[\x(t+T)-\x(t)]^2\}=0,
+\]
+concluyendo que \(\x(t)\) es periódico en MS.
+
+En la literatura, un proceso con estas características suele llamarse \emph{proceso cicloestacionario}\footnote{Ver \url{https://en.wikipedia.org/wiki/Cyclostationary_process}, por ejemplo.}.
+
+
+\section{Sistemas con entradas estocásticas}
+
+Dado un proceso estocástico \(\x(t)\), se asigna a cada una de sus muestras \(\x(t,\,\zeta_i)\) una función \(\y(t,\,\zeta_i)\) de acuerdo a alguna regla. De esta forma, se creó un nuevo proceso
+\[
+ \y(t)=T[\x(t)]
+\]
+cuyas muestras son funciones \(\y(t,\,\zeta_i)\). Este proceso puede considerarse como la salida de un \emph{sistema} cuya entrada es \(\x(t)\). El sistema queda completamente especificado en términos del operador \(T\), es decir, de la regla de correspondencia entre la entrada \(\x(t)\) y la salida \(\y(t)\).
+
+El sistema es \emph{determinístico} si opera solo en la variable \(t\) considerando a \(\zeta\) como un parámetro. Esto significa que si dos muestras \(\x(t,\,\zeta_1)\) y \(\x(t,\,\zeta_2)\) de la entrada son idénticas en \(t\), las correspondientes muestras de salida \(\y(t,\,\zeta_1)\) y \(\y(t,\,\zeta_2)\) también son idénticas en \(t\). El sistema se dice \emph{estocástico} si \(T\) opera en ambas variables \(t\) y \(\zeta\). Esto significa que pueden existir dos resultados \(\zeta_1\) y \(\zeta_2\) tal que \(\x(t,\,\zeta_1)=\x(t,\,\zeta_2)\) en \(t\) pero \(\y(t,\,\zeta_1)=\y(t,\,\zeta_2)\). Si el sistema es especificado en términos de elementos físicos o mediante una ecuación, es determinístico (estocástico) si los elementos o los coeficientes de la ecuación son determinísticos (estocásticos). En este texto se considerarán únicamente sistemas determinísticos.
+
+En principio, la estadística del proceso de salida puede determinarse en términos de la estadística de la entrada, pero en general suele ser un problema difícil. Se consideran a continuación dos casos importantes.
+
+\subsection{Sistemas sin memoria}
+
+Un sistema se dice \emph{sin memoria} si su salida está dada por 
+\[
+ \y(t)=g[\x(t)],
+\]
+donde \(g(x)\) es una función de \(x\). De esta forma, en un instante \(t=t_1\) dado, la salida \(\y(t_1)\) depende únicamente de \(\x(t_1)\) y no de otros valores pasados o futuros de la entrada \(\x(t)\). Por lo tanto, la densidad de primer orden \(f_y(y;\,t)\) de \(\y(t)\) puede expresarse en términos de la densidad correspondiente \(f_x(x;\,t)\) de \(\x(t)\) como se explicó en la sección \ref{sec:fundamental_theorem} (ver la ecuación \ref{eq:functions_of_rv_fundamental_theorem}).Además (ver la ecuación \ref{eq:mean_of_gx}),
+\[
+ E\{\y(t)\}=E\{g[\x(t)]\}=\int_{-\infty}^\infty g(x)f_x(x;\,t)\,dx.
+\]
+De forma similar, como \(\y(t_1)=g[\x(t_1)]\) y \(\y(t_2)=g[\x(t_2)]\), la densidad de segundo orden \(f_y(y_1,\,y_2;\,t_1,\,t_2)\) de \(\y(t)\) puede ser determinada en función de la correspondiente densidad \(f_x(x_1,\,x_2;\,t_1,\,t_2)\) de \(\x(t)\) como se explicó en la sección \ref{sec:two_funcions_of_two_rv_joint_density}. Adicionalmente, como indica la ecuación \ref{eq:mean_of_gxy},
+\[
+ R_y(t_1,\,t_2)=E\{\y(t_1)\y(t_2)\}=\int_{-\infty}^\infty\int_{-\infty}^\infty g(x_1)g(x_2)f_x(x_1,\,x_2;\,t_1,\,t_2)\,dx_1dx_2.
+\]
+La densidad de orden \(n\)-ésimo \(f_y(y_1,\,\dots,\,y_n;\,t_1,\,\dots,\,t_n)\) de \(\y(t)\) puede ser determinada por la correspondiente densidad de \(\x(t)\) como indica la ecuación \ref{eq:rv_sequence_transformation_density}, donde la transformación es el sistema
+\[
+ \y(t_1)=g[\x(t_1)],\,\dots,\,\y(t_n)=g[\x(t_n)].
+\]
+
+\paragraph{Estacionaridad} Supóngase que la entrada a un sistema sin memoria es un proceso \(\x(t)\) SSS. Se mostrará que la salida \(\y(t)\) también es SSS. 
+
+\noindent\emph{Prueba}: para determinar la densidad de orden \(n\)-ésimo de \(\y(t)\) hay que resolver el sistema (ver la ecuación \ref{eq:rv_sequence_transformation_density})
+\[
+ g(x_1)=y_1,\,\dots,\,g(x_n)=y_n.
+\]
+Si el sistema tiene una única solución, la densidad es
+\[
+ f_y(y_1,\,\dots,\,y_n;\,t_1,\,\dots,\,t_n)=\frac{f_x(x_1,\,\dots,\,x_n;\,t_1,\,\dots,\,t_n)}{|g'(x_1)\cdots g'(x_n)|}
+\]
+De la estacionaridad de \(\x(t)\), el numerador es invariante a un desplazamiento del origen. Además, como el denominador no depende de \(t\), el lado izquierdo de la igualdad no cambia si \(t_i\) es reemplazado por \(t_i+c\). Se concluye que \(\y(t)\) es SSS.Esto es cierto incluso si el sistema tiene múltiples soluciones. 
+
+Observaciones:
+\begin{enumerate}
+ \item Si \(\x(t)\) es estacionario de orden N, \(\y(t)\) es estacionario de orden N.
+ \item Si \(\x(t)\) es estacionario en un intervalo, \(\y(t)\) es estacionario en el mismo intervalo.
+ \item Si \(\x(t)\) es WSS, \(\y(t)\) puede no ser WSS.
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+\subsection{Sistemas lineales}
+
+
 
 
 
