@@ -23,6 +23,7 @@
 \usepackage{stackengine}
 \stackMath
 \usepackage{csquotes}
+\usepackage{appendix}
 
 % plot a circle
 \usepackage{tikz}
@@ -4649,9 +4650,9 @@ y la densidad de probabilidad es
 \]
 
 \paragraph{Caso particular (Ejemplo 6-11)} Se considera el caso en que las variables aleatorias \(\x\) e \(\y\) son conjuntamente normales de media nula y densidad de probabilidad
-\[
+\begin{equation}\label{eq:bivariate_normal_pdf}
  f_{xy}(x,\,y)=\frac{1}{2\pi\sigma_1\sigma_2\sqrt{1-r^2}}\exp\left[-\frac{1}{2(1-r^2)}\left(\frac{x^2}{\sigma_1^2}-\frac{2rxy}{\sigma_1\sigma_2}+\frac{y^2}{\sigma_2^2}\right)\right],
-\]
+\end{equation}
 y se quiere calcular la distribución y densidad de probabilidad de \(\z=\x/\y\).
 
 Como en este caso la densidad de probabilidad cumple que \(f_{xy}(-x,\,-y)=f_{xy}(x,\,y)\), la ecuación \ref{eq:pdf_of_product_of_two_rv} queda
@@ -4747,7 +4748,7 @@ De aquí se deduce que la primitiva de la densidad de probabilidad de la ecuaci�
 \ref{eq:cauchy_density_function} es
 \[
  \frac{d}{dz}\left(\frac{1}{\pi}\arctan \frac{z-z_0}{\gamma}\right)
-  =\dfrac{1}{\pi\gamma\left[\left(\dfrac{z-z_0}{\gamma}\right)^2+1\right]}=f_z(z)
+  =\dfrac{1}{\pi\gamma\left[\left(\dfrac{z-z_0}{\gamma}\right)^2+1\right]}=f_z(z).
 \]
 Por lo tanto, la distribución de probabilidad es
 \begin{align*}
@@ -4758,10 +4759,32 @@ Por lo tanto, la distribución de probabilidad es
 \end{align*}
 donde en \((a)\) se usó que \(\arctan u\to-\pi/2\) con \(u\to-\infty\).
 Sustituyendo \(z_0\) y \(\gamma\) se obtiene que
-\begin{align*}
- F_z(z)&=\frac{1}{\pi}\arctan \frac{z-r\sigma_1/\sigma_2}{\dfrac{\sigma_1}{\sigma_2}\sqrt{1-r^2}}+\frac{1}{2}\\
+\begin{align}\label{eq:normal_rv_quotient_distribution}
+ F_z(z)&=\frac{1}{\pi}\arctan \frac{z-r\sigma_1/\sigma_2}{\dfrac{\sigma_1}{\sigma_2}\sqrt{1-r^2}}+\frac{1}{2}\nonumber\\
    &=\frac{1}{\pi}\arctan \frac{z\sigma_2-r\sigma_1}{\sigma_1\sqrt{1-r^2}}+\frac{1}{2}.
-\end{align*}
+\end{align}
+
+Como aplicación, se empleará la ecuación \ref{eq:normal_rv_quotient_distribution} para calcular la probabilidad total \(m_1\), \(m_2\), \(m_3\) y \(m_4\) en los cuatro cuadrantes del plano \(xy\) para \ref{eq:bivariate_normal_pdf}. Debido a la simetría esférica de \ref{eq:bivariate_normal_pdf}, se cumple que 
+\[
+ m_1=m_3
+ \qquad\qquad\textrm{y}\qquad\qquad
+ m_2=m_4.
+\]
+Pero el segundo y cuarto cuadrante representan la región del plano donde \(x/y<0\). Por lo tanto, la probabilidad de que el punto \((x,\,y)\) esté en esa región es la probabilidad de que la variable aleatoria \(\z=\x/\y\) sea negativa, t es
+\[
+ m_2+m_4=P\{\z\leq0\}=F_z(0)=\frac{1}{2}-\frac{1}{\pi}\arctan\frac{r}{\sqrt{1-r^2}}.
+\]
+Además,
+\[
+ m_1+m_3=1-(m_2+m_4)=\frac{1}{2}+\frac{1}{\pi}\arctan\frac{r}{\sqrt{1-r^2}}.
+\]
+Definiendo \(\alpha=\arctan r/\sqrt{1-r^2}\), se obtiene que 
+\begin{equation}\label{eq:bivariate_normal_quadrants_mass_probability}
+ m_1=m_3=\frac{1}{4}+\frac{\alpha}{2\pi}
+ \qquad\qquad\textrm{y}\qquad\qquad
+ m_2=m_4=\frac{1}{4}-\frac{\alpha}{2\pi}.
+\end{equation}
+Los mismos resultados se obtendrían integrando la ecuación \ref{eq:bivariate_normal_pdf} en cada cuadrante, pero de esta forma es mas simple. 
 
 \subsection{Estadísticos de orden}
 
@@ -6328,7 +6351,7 @@ Es fácil ver que se cumple que
  \frac{\partial^k\partial^r}{\partial s_1^k\partial s_2^r}\Phibf(s_1,\,s_2)\bigg|_{s1=0,\,s_2=0}=m_{kr}.
 \]
 
-\paragraph{Ejemplo} Si \(\x\) e \(\y\) son variables aleatorias conjuntamente normales de media nula, se cumple que
+\paragraph{Ejemplo (6-36)} Si \(\x\) e \(\y\) son variables aleatorias conjuntamente normales de media nula, se cumple que
 \begin{equation}\label{eq:moment22_rv_jointly_normal}
   E\{\x^2\y^2\}=E\{\x^2\}E\{\y^2\}+2E^2\{\x\y\}.
 \end{equation}
@@ -7324,9 +7347,9 @@ A partir de la definición se deduce que si las variables aleatorias \(\x_i\) so
  \]
  que implican que
  \[
-  \det\left(A^h\right)=\det(A)^*.
+  \det\left(A^\dagger\right)=\det(A)^*.
  \]
- Por lo tanto, si \(A\) es hermítica, esto es, \(A^h=A\), se cumple que
+ Por lo tanto, si \(A\) es hermítica, esto es, \(A^\dagger=A\), se cumple que
  \[
   \det(A)=\det(A)^*,
  \]
@@ -7955,10 +7978,10 @@ y \(\Z=\X+j\Y\), se cumple que
  C_{ZZ}=2(C_{XX}-jC_{XY})
 \]
 \begin{equation}\label{eq:multivariate_normal_density_funcion_goodman}
- f_Z(Z)=\frac{1}{\pi^n|C_{ZZ}|}\exp\left\{-ZC_{ZZ}^{-1}Z^h\right\}
+ f_Z(Z)=\frac{1}{\pi^n|C_{ZZ}|}\exp\left\{-ZC_{ZZ}^{-1}Z^{\dagger}\right\}
 \end{equation}
 \begin{equation}\label{eq:multivariate_normal_characteristic_funcion_goodman}
- \Phi_Z(\Omega)=\exp\left\{-\frac{1}{4}\Omega C_{ZZ}\Omega^h\right\}.
+ \Phi_Z(\Omega)=\exp\left\{-\frac{1}{4}\Omega C_{ZZ}\Omega^{\dagger}\right\}.
 \end{equation}
 La ecuación de \(C_{ZZ}\) se obtiene inmediatamente de la ecuación \ref{eq:complex_vector_covariance_matrix} de la matriz de covarianza de un vector aleatorio complejo aplicando las hipótesis.
 Alcanza con demostrar \ref{eq:multivariate_normal_characteristic_funcion_goodman} ya que \ref{eq:multivariate_normal_density_funcion_goodman} se obtiene a través de la transformada inversa de Fourier de \ref{eq:multivariate_normal_characteristic_funcion_goodman}. Por un lado, el exponente de la función característica es \(-Q/2\) (ver ecuación \ref{eq:complex_multivariate_normal_characteristic_funcion_zero_mean}) con 
@@ -8001,7 +8024,7 @@ por lo que
 \end{equation}
 Por otro lado, en el exponente de la ecuación \ref{eq:multivariate_normal_characteristic_funcion_goodman} aparece el término
 \begin{align}\label{eq:goodman_theorem_deduction_tmp1}
- \frac{1}{2}\Omega C_{ZZ}\Omega^h&=\frac{1}{2}(U+jV)2(C_{XX}-jC_{XY})(U^t-jV^t)\nonumber\\
+ \frac{1}{2}\Omega C_{ZZ}\Omega^{\dagger}&=\frac{1}{2}(U+jV)2(C_{XX}-jC_{XY})(U^t-jV^t)\nonumber\\
  &=(U+jV)(C_{XX}U^t-jC_{XX}V^t-jC_{XY}U^t-C_{XY}V^t)\nonumber\\
  &=(UC_{XX}U^t-jUC_{XX}V^t-jUC_{XY}U^t-UC_{XY}V^t)\nonumber\\
  &\qquad +(jVC_{XX}U^t+VC_{XX}V^t+VC_{XY}U^t-jVC_{XY}V^t)\nonumber\\
@@ -8026,12 +8049,12 @@ Esto es porque \({C_{XY}}_{ii}=E\{x_iy_i\}\) y \({C_{YX}}_{ii}=E\{y_ix_i\}\), po
 \end{align*}
 donde en \((a)\) se separó la sumatoria en todos los elementos de la matriz en la sumatoria de los elementos sobre la diagonal sumando a lo largo de las filas, la sumatoria bajo la diagonal sumando a lo largo de las columnas y la sumatoria en la diagonal, en \((b)\) se consideró que los elementos de la diagonal son cero, por lo que la sumatoria simple se anula y se realizó el cambio de variable \(m=i\) y \(l=j\) en la segunda doble sumatoria y en \((c)\) se consideró la hipótesis de que \(C_{YX}=-C_{XY}\), que es equivalente a \(C_{XY}=-C_{XY}^t\). Estas consideraciones permiten concluir que el parte imaginaria de la ecuación \ref{eq:goodman_theorem_deduction_tmp1} se anula, ya que el primer y tercer sumando de la parte imaginaria se anulan entre si, y el segundo y cuarto sumando son nulos. De esta forma, la ecuación \ref{eq:goodman_theorem_deduction_tmp1} queda
 \begin{align*}
- \frac{1}{2}\Omega C_{ZZ}\Omega^h&=UC_{XX}U^t-UC_{XY}V^t+VC_{XX}V^t+VC_{XY}U^t\\
+ \frac{1}{2}\Omega C_{ZZ}\Omega^{\dagger}&=UC_{XX}U^t-UC_{XY}V^t+VC_{XX}V^t+VC_{XY}U^t\\
    &\overset{(a)}{=}UC_{XX}U^t+2VC_{XY}U^t+VC_{XX}V^t
 \end{align*}
 donde en \((a)\) se usó la ecuación \ref{eq:goodman_theorem_deduction_tmp3}. Comparando este resultado con la ecuación \ref{eq:goodman_theorem_deduction_tmp2} se concluye que
 \[
- \frac{1}{2}\Omega C_{ZZ}\Omega^h = Q,
+ \frac{1}{2}\Omega C_{ZZ}\Omega^{\dagger} = Q,
 \]
 por lo que la ecuación característica del vector aleatorio \(\Z\) está dada por la ecuación \ref{eq:multivariate_normal_characteristic_funcion_goodman}, que es lo que se quería demostrar.
 
@@ -8599,7 +8622,7 @@ donde los coeficientes \(a_i\) se obtienen mediante la ecuación \ref{eq:linear_
 
 \paragraph{Ejemplo (7-12)} Se consideran las variables aleatorias \(\x_1\), \(\x_2\) y \(\x_3\) conjuntamente normales y de media nula. Se quiere determinar la densidad de probabilidad \(f(x_3\,|\,x_1,\,x_2)\).
 
-Por la argumentación indicada previamente, \(f(x_3\,|\,x_1,\,x_2)\) es una densidad de probabilidad normal, y para determinarla, alcanza con calcular la media \(\mu_{x_3|x_1,x_2}\) y la varianza \(\sigma^2_{x_3|x_1,x_2}\). La media es el estimador MS lineal,
+Por la argumentación realizada previamente, \(f(x_3\,|\,x_1,\,x_2)\) es una densidad de probabilidad normal, y para determinarla, alcanza con calcular la media \(\mu_{x_3|x_1,x_2}\) y la varianza \(\sigma^2_{x_3|x_1,x_2}\). La media es el estimador MS lineal,
 \[
  \mu_{x_3|x_1,x_2}=E\{\x_3|\x_1,\x_2\}=\hat{\s}=a_1\x_1+a_2\x_2,
 \]
@@ -12034,7 +12057,7 @@ De forma análoga al caso de variables aleatorias, se emplea la notación \(\x(t
  \item Si \(t\) y \(\zeta\) son fijos, \(\x(t)\) es un número.
 \end{enumerate}
 
-\paragraph{Igualdad} Dos procesos estocásticos \(\x(t)\) y \(\y(t)\) son iguales si sus respectivas muestras \(\x(t,\,\zeta)\) y \(\y(t,\,\zeta)\) son iguales para todo \(\zeta\). Análogamente, la igualdad \(\z(t)=\x(t)+\y(t)\) significa que \(\z(t,\,\zeta)=\x(t,\,\zeta)+\y(t,\,\zeta)\) para todo \(\zeta\). Derivadas, integrales, o cualquier otra operación que involucra procesos aleatorios, se definen de forma similar como la operación correspondiente sobre cada muestra. Como en el caso de la definición de límite explicado en la sección \ref{sec:convergence_modes}, estas definiciones pueden flexibilizarse, lo cual se mencionará mas adelante en la sección \ref{}. A continuación se define la igualdad en el sentido cuadrático medio (MS). Dos procesos \(\x(t)\) y \(\y(t)\) se dicen iguales en el sentido MS si y solo si
+\paragraph{Igualdad} Dos procesos estocásticos \(\x(t)\) y \(\y(t)\) son iguales si sus respectivas muestras \(\x(t,\,\zeta)\) y \(\y(t,\,\zeta)\) son iguales para todo \(\zeta\). Análogamente, la igualdad \(\z(t)=\x(t)+\y(t)\) significa que \(\z(t,\,\zeta)=\x(t,\,\zeta)+\y(t,\,\zeta)\) para todo \(\zeta\). Derivadas, integrales, o cualquier otra operación que involucra procesos aleatorios, se definen de forma similar como la operación correspondiente sobre cada muestra. Como en el caso de la definición de límite explicado en la sección \ref{sec:convergence_modes}, estas definiciones pueden flexibilizarse. A continuación se define la igualdad en el sentido cuadrático medio (MS). Dos procesos \(\x(t)\) y \(\y(t)\) se dicen iguales en el sentido MS si y solo si
 \begin{equation}\label{eq:process_equality_ms_sense_definition}
  E\{|\x(t)-\y(t)|^2\}=0
 \end{equation}
@@ -12042,7 +12065,7 @@ para todo \(t\). La igualdad en el sentido cuadrático medio conduce a las sigui
 
 \subsection{Estadística de procesos estocásticos}
 
-Un proceso estocástico consiste en un cantidad infinita no contable de variables aleatorias, una por cada \(t\). Para un valor de \(t\) específico, \(\x(t)\) es una variable aleatoria con distribución de probabilidad 
+Un proceso estocástico consiste en una cantidad infinita no contable de variables aleatorias, una por cada \(t\). Para un valor de \(t\) específico, \(\x(t)\) es una variable aleatoria con distribución de probabilidad 
 \[
  F(x,\,t)=P\{\x(t)\leq x\}.
 \]
@@ -12097,7 +12120,7 @@ Para la caracterización estadística completa de un proceso aleatorio se requie
 \[
  \s=\int_a^b\x(t)\,dt
 \]
-de un proceso estocástico \(\x(t)\) es una variable aleatoria \(\s\) y su valor \(\s(\zeta)\) para un resultado específico \(\zeta\) es el área bajo la curva \(\x(t,\,\zeta)\) en el intervalo \((a,\,b)\) (ver además la sección \ref{}). Interpretando la integral como una integral de Riemann, por la linealidad del valor esperado, se cumple que 
+de un proceso estocástico \(\x(t)\) es una variable aleatoria \(\s\) y su valor \(\s(\zeta)\) para un resultado específico \(\zeta\) es el área bajo la curva \(\x(t,\,\zeta)\) en el intervalo \((a,\,b)\). Interpretando la integral como una integral de Riemann, por la linealidad del valor esperado, se cumple que 
 \begin{equation}\label{eq:integrated_process_mean}
  \eta_s=E\{\s\}=\int_a^bE\{\x(t)\}\,dt=\int_a^b\eta(t)\,dt.
 \end{equation}
@@ -12126,11 +12149,11 @@ El \emph{proceso complejo} \(\z(t)=\x(t)+j\y(t)\) se especifica en términos de 
 \subsubsection{Correlación y covarianza} 
 
 La autocorrelación de un proceso \(\x(t)\) real o complejo, es por definición la media del producto \(\x(t_1)\x^*(t_2)\). Esta función se denota como \(R(t_1,\,t_2)\), \(R_x(t_1,\,t_2)\) o \(R_{xx}(t_1,\,t_2)\). Así,
-\[
- R_{xx}(t_1,\,t_2)=E\{\x(t_1)\x^*(t_2)\},
-\]
-donde el término conjugado corresponde a la segunda variable en \(R_{xx}(t_1,\,t_2)\). Por lo tanto, se cumple que 
 \begin{equation}\label{eq:autocorrelation_process_definition}
+ R_{xx}(t_1,\,t_2)=E\{\x(t_1)\x^*(t_2)\}, 
+\end{equation}
+donde el término conjugado corresponde a la segunda variable en \(R_{xx}(t_1,\,t_2)\). Por lo tanto, se cumple que 
+\begin{equation}
  R(t_2,\,t_1)=E\{\x(t_2)\x^*(t_1)\}=R^*(t_1,\,t_2).
 \end{equation}
 Además,
@@ -12147,6 +12170,38 @@ Esto es consecuencia de la identidad
 \]
 Mas adelante se mostrará que lo recíproco también se cumple: dada un función definida positiva \(R(t_1,\,t_2)\), es posible encontrar un proceso con autocorrelación  \(R(t_1,\,t_2)\).
 
+\paragraph{Ejemplo (9-7)} 
+
+\begin{enumerate}[(a)]
+ \item Si \(\x(t)=\abf e^{j\omega t}\), su autocorrelación es 
+ \[
+  R(t_1,\,t_2)=E\{\abf e^{j\omega t_1}\abf^* e^{-j\omega t_2}\}=E\{|\abf|^2\}e^{j\omega(t_1-t_2)}.
+ \]
+ \item Supóngase que las variables aleatorias \(\abf_i\) son no correlacionadas, de media nula y varianza \(\sigma_i^2\). Si
+ \[
+  \x(t)=\sum_i\abf_ie^{j\omega_it},
+ \]
+ de la definición de la autocorrelación de la ecuación \ref{eq:autocorrelation_process_definition}, se tiene que 
+ \[
+  R(t_1,\,t_2)=E\{\x(t)\x^*(t)\}=\sum_i\sum_kE\{\abf_i\abf^*_k\}e^{j\omega_it_1}e^{-j\omega_kt_2},
+ \]
+ y considerando que por las hipótesis de las variables aleatorias se cumple que
+ \[
+  E\{\abf_i\abf^*_k\}=\left\{
+  \def\arraystretch{1.4}
+  \begin{array}{ll}
+   E\{\abf_i\}E\{\abf^*_k\}=0 & \textrm{si }i\neq k\\
+   E\{|\abf_i|^2\}=\sigma_i^2 & \textrm{si }i=k,
+  \end{array}
+  \right.
+ \]
+ se concluye que 
+ \begin{equation}\label{eq:autocorrelation_exponential_process_random_amplitude}
+  R(t_1,\,t_2)=\sum_i\sigma_i^2e^{j\omega(t_1-t_2)}.
+ \end{equation}
+\end{enumerate}
+
+
 La autocovarianza \(C(t_1,\,t_2)\) de un proceso \(\x(t)\) es la covarianza entre las variables aleatorias \(\x(t_1)\) y \(\x(t_2)\),
 \begin{equation}\label{eq:autocovariance_process_definition}
  C(t_1,\,t_2)=R(t_1,\,t_2)-\eta(t_1)\eta^*(t_2).
@@ -12159,7 +12214,7 @@ es el \emph{coeficiente de correlación} del proceso \(\x(t)\) (ver la ecuación
 \[
  \tilde{\x}(t)=\x(t)-\eta(t),
 \]
-y por lo tanto, es un función definida positiva. Además, el coeficiente \(r(t_1,\,t_2)\) de \(\x(t)\) es la autocovarianza del proceso normalizado \(\x(t)/C(t,\,t)\), y por lo tanto, también es una función definida positiva. Además, cumple que 
+y por lo tanto, es una función definida positiva. Además, el coeficiente \(r(t_1,\,t_2)\) de \(\x(t)\) es la autocovarianza del proceso normalizado \(\x(t)/C(t,\,t)\), y por lo tanto, también es una función definida positiva. Además, cumple que 
 \[
  |r(t_1,\,t_2)|\leq1
  \qquad\qquad\textrm{y}\qquad\qquad
@@ -12286,6 +12341,13 @@ Dos procesos \(\x(t)\) y \(\y(t)\) se dicen conjuntamente WSS si cada uno es WSS
  \qquad\qquad\textrm{y}\qquad\qquad
  C_{xy}(\tau)=R_{xy}(\tau)-\eta_x\eta^*_y.
 \]
+Observar que se cumple que \(R_{xy}(-\tau)=R^*_{yx}(\tau)\), ya que 
+\[
+ R_{xy}(-\tau)=E\{\x(t-\tau)\y^*(t)\}=E\{\x(t')\y^*(t'+\tau)\}=\left[E\{\y(t'+\tau)\x^*(t')\}\right]^*=R^*_{yx}(\tau).
+\]
+
+
+
 Si \(\x(t)\) es ruido blanco WSS, se cumple que (ver la ecuación \ref{eq:white_noise_covariance})
 \begin{equation}\label{eq:white_noise_wss_covariance}
  C(\tau)=q\delta(\tau).
@@ -12355,14 +12417,14 @@ es necesaria para ambas formas de estacionaridad. Se asume que esta condición s
 
 \noindent\emph{Estacionaridad en sentido amplio.} El proceso \(\x(t)\) es WSS si y solo si las variables aleatorias \(\abf\) y \(\bbf\) son no correlacionadas y con igual varianza, es decir,
 \begin{equation}\label{eq:example_9_13_wss_conditions}
- E\{\abf\bbf\}=E\{\abf\}\{\bbf\}=0
+ E\{\abf\bbf\}=E\{\abf\}E\{\bbf\}=0
   \qquad\qquad\textrm{y}\qquad\qquad
  E\{\abf^2\}=E\{\bbf^2\}=\sigma^2.
 \end{equation}
-Si esto se cumple, se cumple que 
-\[
- R(\tau)=\sigma^2\cos\omega t.
-\]
+Bajo estas hipótesis, se cumple que 
+\begin{equation}\label{eq:example_9_13_autocorrelation_wss}
+ R(\tau)=\sigma^2\cos\omega\tau.
+\end{equation}
 Para probarlo, se parte considerando que si \(\x(t)\) es WSS, se cumple que 
 \[
  E\{\x^2(0)\}=E\{\x^2(\pi/2\omega)\}=R(0).
@@ -12482,9 +12544,9 @@ se concluye que \(f_{ab}(a,\,b)=f_{y_1y_2}(y_1,\,y_2)\), es decir, las variables
  \x(t)=a\cos(\omega t+\varphi).
 \]
 Se mostrará que el proceso \(\x(t)\) es WSS de media nula y autocorrelación
-\[
+\begin{equation}\label{eq:autocorrelation_sinusoidal_process_random_frequency_phase}
  R(\tau)=\frac{a^2}{2}E\{\cos\omega t\}=\frac{a^2}{2}\operatorname{Re}\Phi_\omega(\tau),
-\]
+\end{equation}
 donde
 \[
  \Phi_\omega(\tau)=E\{e^{j\omega\tau}\}=E\{\cos\omega\tau\}+jE\{\sin\omega\tau\}
@@ -12530,9 +12592,10 @@ Notar que la autocorrelación es independiente de \(t\), por lo que el proceso e
  \z(t)=ae^{j(\omega t+\varphi)}
 \]
 es WSS con media nula y autocorrelación 
-\[
+\begin{equation}\label{eq:autocorrelation_exponential_process_random_frequency_phase}
  R(\tau)=E\{\z(t+\tau)\z^*(t)\}=a^2E\{e^{j\omega\tau}\}=a^2\Phi_\omega(\tau).
-\]
+\end{equation}
+
 
 \subsubsection{Proceso centrado}
 
@@ -12584,7 +12647,7 @@ para todo \(t\). En el siguiente teorema se examinan las propiedades de la autoc
 \end{equation}
 para todo entero \(m\) y \(n\).
 
-\noindent\emph{Prueba:} Como se cumple que (ver la ecuación \ref{eq:covariance_rho_relation_deduction}),
+\noindent\emph{Prueba}: como se cumple que (ver la ecuación \ref{eq:covariance_rho_relation_deduction}),
 \[
  E^2\{\z\w\}\leq E\{\z^2\}E\{\w^2\},
 \]
@@ -12635,7 +12698,7 @@ Dado un proceso estocástico \(\x(t)\), se asigna a cada una de sus muestras \(\
 \]
 cuyas muestras son funciones \(\y(t,\,\zeta_i)\). Este proceso puede considerarse como la salida de un \emph{sistema} cuya entrada es \(\x(t)\). El sistema queda completamente especificado en términos del operador \(T\), es decir, de la regla de correspondencia entre la entrada \(\x(t)\) y la salida \(\y(t)\).
 
-El sistema es \emph{determinístico} si opera solo en la variable \(t\) considerando a \(\zeta\) como un parámetro. Esto significa que si dos muestras \(\x(t,\,\zeta_1)\) y \(\x(t,\,\zeta_2)\) de la entrada son idénticas en \(t\), las correspondientes muestras de salida \(\y(t,\,\zeta_1)\) y \(\y(t,\,\zeta_2)\) también son idénticas en \(t\). El sistema se dice \emph{estocástico} si \(T\) opera en ambas variables \(t\) y \(\zeta\). Esto significa que pueden existir dos resultados \(\zeta_1\) y \(\zeta_2\) tal que \(\x(t,\,\zeta_1)=\x(t,\,\zeta_2)\) en \(t\) pero \(\y(t,\,\zeta_1)=\y(t,\,\zeta_2)\). Si el sistema es especificado en términos de elementos físicos o mediante una ecuación, es determinístico (estocástico) si los elementos o los coeficientes de la ecuación son determinísticos (estocásticos). En este texto se considerarán únicamente sistemas determinísticos.
+El sistema es \emph{determinístico} si opera solo en la variable \(t\) considerando a \(\zeta\) como un parámetro. Esto significa que si dos muestras \(\x(t,\,\zeta_1)\) y \(\x(t,\,\zeta_2)\) de la entrada son idénticas en \(t\), las correspondientes muestras de salida \(\y(t,\,\zeta_1)\) y \(\y(t,\,\zeta_2)\) también son idénticas en \(t\). El sistema se dice \emph{estocástico} si \(T\) opera en ambas variables \(t\) y \(\zeta\). Esto significa que pueden existir dos resultados \(\zeta_1\) y \(\zeta_2\) tal que \(\x(t,\,\zeta_1)=\x(t,\,\zeta_2)\) en \(t\) pero \(\y(t,\,\zeta_1)\neq\y(t,\,\zeta_2)\). Si el sistema es especificado en términos de elementos físicos o mediante una ecuación, es determinístico (estocástico) si los elementos o los coeficientes de la ecuación son determinísticos (estocásticos). En este texto se considerarán únicamente sistemas determinísticos.
 
 En principio, la estadística del proceso de salida puede determinarse en términos de la estadística de la entrada, pero en general suele ser un problema difícil. Se consideran a continuación dos casos importantes.
 
@@ -12672,21 +12735,1734 @@ De la estacionaridad de \(\x(t)\), el numerador es invariante a un desplazamient
 
 Observaciones:
 \begin{enumerate}
- \item Si \(\x(t)\) es estacionario de orden N, \(\y(t)\) es estacionario de orden N.
+ \item Si \(\x(t)\) es estacionario de orden \(N\), \(\y(t)\) es estacionario de orden N.
  \item Si \(\x(t)\) es estacionario en un intervalo, \(\y(t)\) es estacionario en el mismo intervalo.
- \item Si \(\x(t)\) es WSS, \(\y(t)\) puede no ser WSS.
+ \item Si \(\x(t)\) es WSS, \(\y(t)\) puede no ser WSS. Esto se mostrará a continuación con un ejemplo del detector de ley cuadrática.
 \end{enumerate}
 
+\subsubsection{Detector de ley cuadrática}
 
+Un detector de ley cuadrática es un sistema sin memoria cuya salida es
+\[
+ \y(t)=\x^2(t).
+\]
+Se determinará las densidades de primer y segundo orden.
 
+Para determinar la densidad de primer orden \(f_y(y;\,t)\) se emplea la ecuación \ref{eq:functions_of_rv_fundamental_theorem} con 
+\[
+ y=g(x)=x^2.
+\]
+Si \(y<0\), el sistema no tiene soluciones y \(f_y(y;\,t)=0\). Si \(y>0\), el sistema tiene las soluciones
+\[
+ x_1=\sqrt{y}
+ \qquad\qquad\textrm{y}\qquad\qquad
+ x_2=-\sqrt{y},
+\]
+y como \(g'(x)=2x\), se tiene que \(g'(x_1)=2\sqrt{y}\) y \(g'(x_2)=-2\sqrt{y}\) y por lo tanto
+\[
+ f_y(y;\,t)=\frac{1}{2\sqrt{y}}\left[f_x(\sqrt{y};\,t)+f_x(-\sqrt{y};\,t)\right],\qquad y>0.
+\]
 
+Para determinar la densidad de segundo orden \(f_y(y_1,\,y_2;\,t_1,\,t_2)\) se emplea la ecuación \ref{eq:joint_density_two_funcions_two_rv}, donde la transformación es
+\begin{align*}
+  y_1&=g(x_1)=x_1^2\\
+  y_2&=h(x_2)=x_2^2. 
+\end{align*}
+El sistema tiene las cuatro soluciones \((x_{1_1},\,x_{2_1})=(\sqrt{y_1},\,\sqrt{y_2})\), \((x_{1_2},\,x_{2_2})=(\sqrt{y_1},\,-\sqrt{y_2})\), \((x_{1_3},\,x_{2_3})=(-\sqrt{y_1},\,\sqrt{y_2})\) y \((x_{1_4},\,x_{2_4})=(-\sqrt{y_1},\,-\sqrt{y_2})\). La matriz jacobiana de la transformación es
+\[
+ J(x_{1_i},\,x_{2_i})=
+ \begin{bmatrix}
+    2x_1 & 0 \\
+    0 & 2x_2
+ \end{bmatrix}_{\substack{x_1=x_{1_i}\\x_2=x_{2_i}}}=
+ \begin{bmatrix}
+    \pm2\sqrt{y_1} & 0\\
+    0 & \pm2\sqrt{y_2}
+ \end{bmatrix}
+ \quad\qquad\Rightarrow\quad\qquad 
+ |\det J(x_{1_i},\,x_{2_i})|=4\sqrt{y_1y_2}.
+\]
+Se concluye que la densidad de segundo orden es
+\[
+ f_y(y_1,\,y_2;\,t_1,\,t_2)=\frac{1}{4\sqrt{y_1y_2}}\sum f_x(\pm\sqrt{y_1},\,\pm\sqrt{y_2};\,t_1,\,t_2),
+\]
+donde la sumatoria tiene cuatro términos.
 
+Observar que si \(\x(t)\) es SSS, se cumple que \(f_x(x;\,t)=f_x(x)\) es independiente de \(t\) y \(f_x(x_1,\,x_2;\,t_1,\,t_2)=f_x(x_1,\,x_2;\tau)\) depende únicamente de \(\tau=t_1-t_2\). Por lo tanto, \(f_y(y)\) es independiente de \(t\) y \(f_y(y_1,\,y_2;\,\tau)\) depende solo de \(\tau=t_1-t_2\), por lo que la salida \(\y(t)\) del detector de ley cuadrática también es SSS.
 
+\paragraph{Ejemplo} En el siguiente ejemplo se muestra que si la entrada a un sistema sin memoria es WSS, la salida puede no ser WSS. Sea la entrada del detector de ley cuadrática el proceso
+\[
+ \x(t)=\abf\cos\omega t+\bbf\sin\omega t
+\]
+con \(\abf\) y \(\bbf\) son variables aleatorias i.i.d. de media nula. Bajo estas hipótesis, el proceso \(\x(t)\) es WSS, como se mostró previamente (ver la ecuación \ref{eq:example_9_13_autocorrelation}). La salida es
+\[
+ \y(t)=\x^2(t).
+\]
+Para establecer si este proceso es WSS, se parte calculando la media, que es 
+\begin{align*}
+ E\{\y(t)\}=E\{\x^2(t)\}&=E\{\abf^2\cos^2\omega t+\bbf^2\sin^2\omega t+2\abf\bbf\cos\omega t\sin\omega t\}\\
+ &\overset{(a)}{=}E\{\abf^2\}\cos^2\omega t+E\{\bbf^2\}\sin^2\omega t+2E\{\abf\}E\{\bbf\}\cos\omega t\sin\omega t\\
+ &\overset{(b)}{=}E\{\abf^2\},
+\end{align*}
+donde en \((a)\) se consideró que las variables aleatorias \(\abf\) y \(\bbf\) son independientes y en \((b)\) que son i.i.d y por lo tanto, \(E\{\abf^2\}=E\{\bbf^2\}\), y además que tienen media nula. Se obtuvo que la media es constante, acorde con un proceso WSS. Prosiguiendo, la autocorrelación de la salida es
+\begin{align*}
+ R_y(t+\tau,\,t)&=E\{\y(t+\tau)\y(t)\}\\
+  &=E\{\x^2(t+\tau)\x^2(t)\}\\
+  &=E\{[\abf\cos\omega(t+\tau)+\bbf\sin\omega(t+\tau)]^2[\abf\cos\omega t+\bbf\sin\omega t]^2\}\\
+  &=E\{[\abf^2\cos^2\omega(t+\tau)+\bbf^2\sin^2\omega(t+\tau)+2\abf\bbf\cos\omega(t+\tau)\sin\omega(t+\tau)]\\
+  &\qquad\times[\abf^2\cos^2\omega t+\bbf^2\sin^2\omega t+2\abf\bbf\cos\omega t\sin\omega t]\}\\
+  &=E\{\abf^4\}\cos^2\omega(t+\tau)\cos^2\omega t+E\{\abf^2\}E\{\bbf^2\}\cos^2\omega(t+\tau)\sin^2\omega t\\
+  &\qquad+2E\{\abf^3\}E\{\bbf\}\cos^2\omega(t+\tau)\cos\omega t\sin\omega t
+   +E\{\bbf^2\}E\{\abf^2\}\sin^2\omega(t+\tau)\cos^2\omega t\\
+  &\qquad+E\{\bbf^4\}\sin^2\omega(t+\tau)\sin^2\omega t 
+   +2E\{\abf\}E\{\bbf^3\}\sin^2\omega(t+\tau)\cos\omega t\sin\omega t\\
+  &\qquad+2E\{\abf^3\}E\{\bbf\}\cos\omega(t+\tau)\sin\omega(t+\tau)\cos^2\omega t\\ 
+  &\qquad+2E\{\abf\}E\{\bbf^3\}\cos\omega(t+\tau)\sin\omega(t+\tau)\sin^2\omega t\\ 
+  &\qquad+4E\{\abf^2\}E\{\bbf^2\}\cos\omega(t+\tau)\sin\omega(t+\tau)\cos\omega t\sin\omega t. 
+\end{align*}
+Considerando que \(E\{\abf\}=E\{\bbf\}=0\), que \(E\{\abf^n\}=E\{\bbf^n\}\) por ser \(\abf\) y \(\bbf\) idénticamente distribuidas y empleando las identidades trigonométricas 
+\[
+ \cos^{2}\theta=\frac{1+\cos2\theta}{2},
+ \qquad\qquad
+ \sin^{2}\theta=\frac{1-\cos2\theta}{2},
+ \qquad\qquad
+ \cos\theta\sin\theta=\frac{\sin2\theta}{2},
+\]
+resulta en
+\begin{align*}
+ R_y(t+\tau,\,t)&=E\{\abf^4\}\left(\frac{1+\cos2\omega(t+\tau)}{2}\right)\left(\frac{1+\cos2\omega t}{2}\right)
+  +E^2\{\abf^2\}\left(\frac{1+\cos2\omega(t+\tau)}{2}\right)\left(\frac{1-\cos2\omega t}{2}\right)\\
+ &+E^2\{\abf^2\}\left(\frac{1-\cos2\omega(t+\tau)}{2}\right)\left(\frac{1+\cos2\omega t}{2}\right)+E\{\abf^4\}\left(\frac{1-\cos2\omega(t+\tau)}{2}\right)\left(\frac{1-\cos2\omega t}{2}\right)\\
+ &+4E^2\{\abf^2\}\frac{\sin2\omega(t+\tau)}{2}\frac{\sin2\omega t}{2}\\
+ &=\frac{1}{4}E\{\abf^4\}\left\{[1+\cos2\omega(t+\tau)][1+\cos2\omega t]+[1-\cos2\omega(t+\tau)][1-\cos2\omega t]\right\}\\
+ &\qquad+\frac{1}{4}E^2\{\abf^2\}\left\{[1+\cos2\omega(t+\tau)][1-\cos2\omega t]+[1-\cos2\omega(t+\tau)][1+\cos2\omega t]\right\}\\
+ &\qquad+E^2\{\abf^2\}\sin2\omega(t+\tau)\sin2\omega t\\
+ &=\frac{1}{4}E\{\abf^4\}\{[1+\cos2\omega t+\cos2\omega(t+\tau)+\cos2\omega(t+\tau)\cos2\omega t]\\
+ &\qquad+[1-\cos2\omega t-\cos2\omega(t+\tau)+\cos2\omega(t+\tau)\cos2\omega t]\}\\
+ &+\frac{1}{4}E^2\{\abf^2\}\{[1-\cos2\omega t+\cos2\omega(t+\tau)-\cos2\omega(t+\tau)\cos2\omega t]\\
+ &\qquad+[1+\cos2\omega t-\cos2\omega(t+\tau)-\cos2\omega(t+\tau)\cos2\omega t]\}\\
+ &+E^2\{\abf^2\}\sin2\omega(t+\tau)\sin2\omega t\\
+ &=\frac{1}{2}E\{\abf^4\}[1+\cos2\omega(t+\tau)\cos2\omega t]
+  +\frac{1}{2}E^2\{\abf^2\}[1-\cos2\omega(t+\tau)\cos2\omega t]\\
+ &\qquad+E^2\{\abf^2\}\sin2\omega(t+\tau)\sin2\omega t,
+\end{align*}
+es decir,
+\[
+ R_y(t+\tau,\,t)=\frac{E\{\abf^4\}+E^2\{\abf^2\}}{2}+\frac{E\{\abf^4\}-E^2\{\abf^2\}}{2}\cos2\omega(t+\tau)\cos2\omega t+E^2\{\abf^2\}\sin2\omega(t+\tau)\sin2\omega t.
+\]
+Considerando que 
+\[
+ 2\cos\theta\cos\varphi=\cos(\theta-\varphi)+\cos(\theta+\varphi)
+ \qquad\textrm{y}\qquad
+ 2\sin\theta\sin\varphi=\cos(\theta-\varphi)-\cos(\theta+\varphi),
+\]
+se obtiene que 
+\begin{align*}
+ R_y(t+\tau,\,t)&=\frac{E\{\abf^4\}+E^2\{\abf^2\}}{2}+\frac{E\{\abf^4\}-E^2\{\abf^2\}}{4}\left[\cos2\omega\tau+\cos2\omega(2t+\tau)\right]\\
+ &\qquad+\frac{E^2\{\abf^2\}}{2}\left[\cos2\omega\tau-\cos2\omega(2t+\tau)\right]\\
+ &=\frac{E\{\abf^4\}+E^2\{\abf^2\}}{2}+\frac{E\{\abf^4\}+E^2\{\abf^2\}}{4}\cos2\omega\tau
+  +\frac{E\{\abf^4\}-3E^2\{\abf^2\}}{4}\cos2\omega(2t+\tau).
+\end{align*}
+es decir,
+\[
+ R_y(t+\tau,\,t)=\frac{E\{\abf^4\}+E^2\{\abf^2\}}{4}\left(2+\cos2\omega\tau\right)+\frac{E\{\abf^4\}-3E^2\{\abf^2\}}{4}\cos2\omega(2t+\tau).
+\]
+Se concluye que la autocorrelación depende de \(t\) a menos que \(E\{\abf^4\}=3E^2\{\abf^2\}\), y por lo tanto, el proceso no es WSS.
 
+\paragraph{Ejemplo (9-15)} Supóngase que \(\x(t)\) es un proceso normal estacionario con media nula y autocorrelación \(R_x(\tau)\). En este caso, \(\x(t)\) es normal con varianza \(R_x(0)\), es decir,
+\[
+ f_x(x)=\frac{1}{\sqrt{2\pi R_x(0)}}e^{-x^2/2R_x(0)}.
+\]
+Si \(\y(t)=\x^2(t)\), se cumple que \(E\{\y(t)\}=R_x(0)\). Además, de la ecuación \ref{eq:rv_y_equal_x_square_density_even}, se tiene que
+\[
+ f_y(y)=\frac{1}{\sqrt{2\pi R_x(0)y}}e^{-y/2R_x(0)}U(y).
+\]
+Se mostrará que 
+\[
+ R_y(\tau)=R_x^2(0)+2R_x^2(\tau).
+\]
+Considerando que las variables aleatorias \(\x(t+\tau)\) y \(\x(t)\) son conjuntamente normales, esto surge inmediatamente de la ecuación \ref{eq:moment22_rv_jointly_normal}, ya que
+\[
+ E\{\x^2(t+\tau)\x^2(t)\}=E\{\x^2(t+\tau)\}E\{\x^2(t)\}+2E^2\{\x(t+\tau)\x(t)\}.
+\]
+Notar que en particular, con \(\tau=0\), se cumple que 
+\[
+ E\{\y^2(t)\}=R_y(0)=3R_x(0)
+\]
+y
+\[
+ \sigma_y^2=E\{\y^2(t)\}-E^2\{\y(t)\}=2R_x^2(0).
+\]
+
+\subsubsection{Limitador duro (hard limiter)} Se considera el sistema sin memoria con 
+\begin{equation}\label{eq:hard_limiter_transfer_function}
+ g(x)=
+ \left\{ 
+ \begin{array}{rl}
+  1 & x>0\\
+  -1 & x<0
+ \end{array}
+ \right.
+\end{equation}
+La salida \(\y(t)\) toma los valores \(\pm1\) con probabilidades
+\[
+ \begin{array}{rcccl}
+  P\{\y(t)=1\}&=&P\{\x(t)>0\}&=&1-F_x(0)\\
+  P\{\y(t)=-1\}&=&P\{\x(t)<0\}&=&F_x(0)
+ \end{array}
+\]
+El producto \(\y(t+\tau)\y(t)\) es 1 si \(\x(t+\tau)\x(t)>0\) y -1 en caso contrario. Por lo tanto,
+\begin{equation}\label{eq:hard_limiter_output_autocorrelation}
+  R_y(\tau)=P\{\x(t+\tau)\x(t)>0\}-P\{\x(t+\tau)\x(t)<0\}.
+\end{equation}
+Esto indica que en el plano de las variables aleatorias \(\x(t+\tau)\) y \(\x(t)\), \(R_y(\tau)\) es la probabilidad total en el primer y tercer cuadrante menos la probabilidad total en el segundo y cuarto cuadrante.
+
+\paragraph{Ejemplo (9-16)} Se mostrará que si \(\x(t)\) es un proceso normal estacionario de media nula, la autocorrelación de la salida del limitador es
+\[
+ R_y(\tau)=\frac{2}{\pi}\arcsin\frac{R_x(\tau)}{R_x(0)}
+\]
+Este resultado se conoce como la \emph{ley del arcoseno}. 
+
+\noindent \emph{Prueba}: Las variables aleatorias \(\x(t+\tau)\) y \(\x(t)\) son conjuntamente normales, de media nula, varianza \(R_x(0)\) y coeficiente de correlación \(R_x(\tau)/R_x(0)\) (ver la ecuación \ref{eq:correlation_coefficient_function_definition}). Por lo tanto, de la ecuación \ref{eq:bivariate_normal_quadrants_mass_probability},
+\[
+ \begin{aligned}
+  P\{\x(t+\tau)\x(t)>0\}&=\frac{1}{2}+\frac{\alpha}{\pi}\\
+  P\{\x(t+\tau)\x(t)<0\}&=\frac{1}{2}-\frac{\alpha}{\pi}
+ \end{aligned}
+ \qquad\qquad\textrm{con}\qquad\qquad
+ \sin\alpha=\frac{R_x(\tau)}{R_x(0)},
+\]
+donde se tuvo en cuenta que \(\sin\alpha=r\), se cumple que \(\cos\alpha=\pm\sqrt{1-r^2}\) y por lo tanto, \(\tan\alpha=\pm r/\sqrt{1-r^2}\). Sustituyendo estos resultados en la ecuación \ref{eq:hard_limiter_output_autocorrelation} se obtiene que
+\[
+ R_y(\tau)=\frac{1}{2}+\frac{\alpha}{\pi}-\left(\frac{1}{2}-\frac{\alpha}{\pi}\right)=\frac{2\alpha}{\pi},
+\]
+que es lo que se quería mostrar.
+
+\paragraph{Ejemplo (9-17): teorema de Bussgang} Empleando el teorema de Price, se mostrará que si la entrada a un sistema sin memoria \(y=g(x)\) es un proceso \(\x(t)\) normal de media nula, la correlación cruzada entre \(\x(t)\) y la salida resultante \(\y(t)=g[\x(t)]\) es proporcional a \(R_{xx}(\tau)\). Concretamente, se cumple que 
+\begin{equation}\label{eq:bussgang_theorem}
+ R_{xy}(\tau)=KR_{xx}(\tau)
+ \qquad\qquad\textrm{con}\qquad\qquad
+ K=E\{g'[\x(t)]\}.
+\end{equation}
+
+\noindent \emph{Prueba}: Para un valor de \(\tau\) específico, las variables aleatorias \(\x=\x(t)\) y \(\z=\x(t+\tau)\) son conjuntamente normales con media nula y covarianza \(\mu=E\{\x\z\}=R_{xx}(\tau)\). Con 
+\[
+ I=E\{\z g(\x)\}=E\{\x(t+\tau)\y(y)\}=R_{xy}(\tau),
+\]
+del teorema de Price, dado por la ecuación \ref{eq:price_theorem}, se cumple que
+\[
+ \frac{\partial I}{\partial\mu}=E\left\{\frac{\partial^{2}[\z g(\x)]}{\partial\x\partial\z}\right\}=E\{g'[\x(t)]\}=K.
+\]
+Integrando esta ecuación respecto a \(\mu\), se obtiene \(I=K\mu\), que es lo que se quería mostrar.
+
+\noindent\emph{Casos particulares}:
+\begin{enumerate}
+ \item Limitador duro: supóngase que \(g(x)=\operatorname{sig}x\) como en la ecuación \ref{eq:hard_limiter_transfer_function}. En este caso, \(g'(x)=2\delta(x)\), y por lo tanto,
+ \[
+  K=E\{2\delta(\x)\}=2\int_{-\infty}^\infty\delta(x)f(x)\,dx=2f(0),
+ \]
+ donde
+ \[
+  f(x)=\frac{1}{\sqrt{2\pi R_{xx}(0)}}\exp\left[-\frac{x^2}{2R_{xx}(0)}\right].
+ \]
+ Sustituyendo este resultado en la ecuación \ref{eq:bussgang_theorem}, se obtiene que 
+ \[
+  R_{xy}(\tau)=R_{xx}(\tau)\sqrt{\frac{2}{\pi R_{xx}(0)}},
+  \qquad\qquad\textrm{con}\qquad\qquad
+  \y(t)=\operatorname{sig}\x(t).
+ \]
+ \item Limitador: supóngase que \(\y(t)\) es la salida del limitador
+ \[
+ g(x)=
+  \left\{ 
+  \begin{array}{rl}
+   x & |x|<c\\
+   c & |x|>c
+  \end{array}
+  \right.
+  \qquad\qquad\Rightarrow\qquad\qquad 
+  g'(x)=
+  \left\{ 
+  \begin{array}{rl}
+   1 & |x|<c\\
+   0 & |x|>c.
+  \end{array}
+  \right.
+ \]
+ En este caso,
+ \[
+  K=\int_{-c}^cf(x)\,dx=G\left(\frac{c}{\sqrt{R_{xx}(0)}}\right)-G\left(-\frac{c}{\sqrt{R_{xx}(0)}}\right)=2G\left(\frac{c}{\sqrt{R_{xx}(0)}}\right)-1,
+ \]
+ donde \(G(x)\) es la distribución normal estándar, y se empleó que \(G(-x)=1-G(x)\). 
+\end{enumerate}
 
 
 \subsection{Sistemas lineales}
 
+La notación
+\begin{equation}\label{eq:lti_output_operational}
+ \y(t)=L[\x(t)]
+\end{equation}
+indica que \(\y(t)\) es la salida de un \emph{sistema lineal} con entrada \(\x(t)\). Esto significa que 
+\begin{equation}\label{eq:lineal_definition_operational}
+ L[\abf_1\x_1(t)+\abf_2\x_2(t)]=\abf_1L[\x_1(t)]+\abf_2L[\x_2(t)]
+\end{equation}
+para todo \(\abf_1\), \(\abf_2\), \(\x_1(t)\), \(\x_2(t)\). Esta es la definición familiar de linealidad, y se cumple también si los coeficientes \(\abf_1\) y \(\abf_2\) son variables aleatorias, ya que se asumió que el sistema es determinístico y por lo tanto opera sobre la variable \(t\). 
+
+\paragraph{Invarianza temporal} Un sistema se dice \emph{invariante en el tiempo} si la respuesta a la entrada \(\x(t+c)\) es \(\y(t+c)\). Se asumirá que todos los sistemas lineales en consideración son invariantes en el tiempo.
+
+Es bien conocido el hecho de que la salida de un sistema lineal es una convolución, es decir,
+\begin{equation}\label{eq:lti_convolution}
+  \y(t)=\x(t)*h(t)=\int_{-\infty}^\infty \x(t-\alpha)h(\alpha)\,d\alpha,
+\end{equation}
+donde
+\[
+ h(t)=L[\delta(t)]
+\]
+es la \emph{respuesta al impulso}. La mayoría de los sistemas se especificarán mediante la operación de convolución de la ecuación \ref{eq:lti_convolution}. Sin embargo, se comenzará empleando la notación operacional de la ecuación \ref{eq:lti_output_operational} para enfatizar el hecho de que muchos resultados basados en el siguiente teorema también son válidos para operadores lineales arbitrarios que involucran una o mas variables. 
+
+Las siguientes observaciones son consecuencia inmediata de las propiedades de linealidad e invarianza temporal de un sistema:
+\begin{itemize}
+ \item \emph{Proceso normal}: si \(\x(t)\) es un proceso normal, \(\y(t)\) es un proceso normal. Esto es consecuencia de la propiedad de que una transformación lineal de variables aleatorias normales conduce a una variable aleatoria normal y puede justificarse aproximando la integral \ref{eq:lti_convolution} mediante una suma:
+ \[
+  y(t_i)\approx\sum_{k}\x(t_i-\alpha_k)h(\alpha_k)\Delta(\alpha).
+ \]
+ \item \emph{Estacionaridad}: si \(\x(t)\) es SSS, se cumple que \(\y(t)\) también es SSS. Efectivamente, como \(\y(t+c)=L[\x(t+c)]\) para todo \(c\), se concluye que si \(\x(t)\) y \(\x(t+c)\) tienen las mismas propiedades estadísticas, lo mismo ocurre con \(\y(t)\) y \(\y(t+c)\). También se cumple que si \(\x(t)\) es WSS, los procesos \(\x(t)\) y \(\y(t)\) son conjuntamente WSS. 
+\end{itemize}
+
+\subsubsection{Teorema fundamental}
+
+Para cualquier sistema lineal, se cumple que 
+\begin{equation}\label{eq:lti_output_mean}
+ E\{L[\x(t)]\}=L[E\{\x(t)\}].
+\end{equation}
+En otras palabras, la media \(\eta_y(t)\) de la salida \(\y(t)\) es la respuesta del sistema a la media \(\eta_x(t)\) de la entrada \(\x(t)\),
+\[
+ \eta_y(t)=L[\eta_x(t)],
+\]
+como se muestra en la figura \ref{fig:linear_systems_response_diagram}.
+Esto es una simple extensión de la linealidad de la esperanza a operaciones lineales arbitrarias. En el contexto de la ecuación \ref{eq:lti_convolution}, se justifica como
+\[
+ E\{\y(t)\}=\int_{-\infty}^\infty E\{\x(t-\alpha)\}h(\alpha)\,d\alpha=\eta_x(t)*h(t).
+\]
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=0.9\columnwidth]{figuras/linear_systems_response_diagram.pdf}
+\caption{\label{fig:linear_systems_response_diagram} Relación entre la estadística de la entrada y la salida de un sistema lineal.}
+\end{center}
+\end{figure}
+\paragraph{Interpretación en frecuencia} En el ensayo \(i\)-ésimo, la entrada al sistema es la función \(\x(t,\,\zeta_i)\), y produce la salida \(\y(t,\,\zeta_i)=L[\x(t,\,\zeta_i)]\). Para \(n\) grande,
+\begin{align*}
+ E\{\y(t)\}&\approx\frac{\y(t,\,\zeta_1)+\dots+\y(t,\,\zeta_n)}{n}\\
+  &=\frac{L[\x(t,\,\zeta_1)]+\dots+L[\x(t,\,\zeta_n)]}{n}\\
+  &=L\left[\frac{\x(t,\,\zeta_1)+\dots+\x(t,\,\zeta_n)}{n}\right]\\
+  &\approx L[E\{\x(t)\}],
+\end{align*}
+acorde a la ecuación \ref{eq:lti_output_mean}.
+
+\subsubsection{Autocorrelación de la salida}
+
+El teorema de la ecuación \ref{eq:lti_output_mean} puede emplearse para expresar los momentos conjuntos de cualquier orden de la salida \(\y(t)\) en términos de los correspondientes momentos de la entrada. Los casos particulares explicados a continuación son de fundamental importancia en el estudio de sistemas lineales con entradas estocásticas.
+
+Se quiere expresar la autocorrelación \(R_{yy}(t_1,\,t_2)\) de la salida \(\y(t)\) de un sistema lineal en función de la autocorrelación \(R_{xx}(t_1,\,t_2)\) de la entrada \(\x(t)\). Como indica el siguiente teorema, es mas fácil primero calcular la correlación cruzada \(R_{xy}(t_1,\,t_2)\) entre \(\x(t)\) y \(\y(t)\).
+
+\noindent\emph{Teorema}:
+\begin{enumerate}[1.]
+ \item La correlación cruzada \(R_{xy}(t_1,\,t_2)\) entre \(\x(t)\) y \(\y(t)\) es
+ \begin{equation}\label{eq:lti_output_crosscorrelation_operational}
+  R_{xy}(t_1,\,t_2)=L_2[R_{xx}(t_1,\,t_2)].
+ \end{equation}
+ En la notación empleada, \(L_2\) significa que el sistema opera sobre la variable \(t_2\), considerando a \(t_1\) como un parámetro. Recurriendo a la ecuación \ref{eq:lti_convolution}, esto es
+ \begin{equation}\label{eq:lti_output_crosscorrelation}
+  R_{xy}(t_1,\,t_2)=\int_{-\infty}^\infty R_{xx}(t_1,\,t_2-\alpha)h(\alpha)\,d\alpha.
+ \end{equation}
+ \item La autocorrelación de la salida en términos de la correlación cruzada es
+ \begin{equation}\label{eq:lti_output_autocorrelation_operational}
+  R_{yy}(t_1,\,t_2)=L_1[R_{xy}(t_1,\,t_2)].
+ \end{equation}
+ En este caso, el sistema opera en \(t_1\), es decir,
+ \begin{equation}\label{eq:lti_output_autocorrelation}
+  R_{yy}(t_1,\,t_2)=\int_{-\infty}^\infty R_{xy}(t_1-\alpha,\,t_2)h(\alpha)\,d\alpha.
+ \end{equation}
+\end{enumerate}
+\emph{Prueba}: se observa que
+\[
+ R_{xy}(t_1,\,t_2)=E\{\x(t_1)\y(t_2)\}\overset{(a)}{=}E\{\x(t_1)L_2[\x(t_2)]\}\overset{(b)}{=}L_2[E\{\x(t_1)\x(t_2)\}]=L_2[R_{xx}(t_1,\,t_2)],
+\]
+donde en \((a)\) se empleó la ecuación \ref{eq:lti_output_operational} y en \((b)\) las propiedades de linealidad del sistema y de la esperanza, dadas por las ecuaciones \ref{eq:lineal_definition_operational} y \ref{eq:lti_output_mean}. El resultado también puede mostrarse especificando al sistema mediante la operación de convolución de la ecuación \ref{eq:lti_convolution},
+\begin{align*}
+ R_{xy}(t_1,\,t_2)&=E\left\{\x(t_1)\y(t_2)\right\}\\
+  &=E\left\{\x(t_1)\int_{-\infty}^\infty\x(t_2-\alpha)h(\alpha)\,d\alpha\right\}\\
+  &=\int_{-\infty}^\infty E\{\x(t_1)\x(t_2-\alpha)\}h(\alpha)\,d\alpha\\
+  &=\int_{-\infty}^\infty R_{xx}(t_1,\,t_2-\alpha)h(\alpha)\,d\alpha
+\end{align*}
+Análogamente, para obtener la expresión de la autocorrelación de la salida, se observa que 
+\[
+ R_{yy}(t_1,\,t_2)=E\{\y(t_1)\y(t_2)\}=E\{L_1[\x(t_1)]\y(t_2)\}=L_1[E\{\x(t_1)\y(t_2)\}]=L_1[R_{xy}(t_1,\,t_2)],
+\]
+o expresando el sistema explícitamente mediante la operación de convolución, se ve que
+\begin{align*}
+ R_{yy}(t_1,\,t_2)&=E\left\{\y(t_1)\y(t_2)\right\}\\
+  &=E\left\{\left[\int_{-\infty}^\infty\x(t_1-\alpha)h(\alpha)\,d\alpha\right]\y(t_2)\right\}\\
+  &=\int_{-\infty}^\infty E\{\x(t_1-\alpha)\y(t_2)\}h(\alpha)\,d\alpha\\
+  &=\int_{-\infty}^\infty R_{xy}(t_1-\alpha,\,t_2)h(\alpha)\,d\alpha,
+\end{align*}
+acorde a la ecuación \ref{eq:lti_output_autocorrelation}.
+
+El resultado de este teorema se muestra en la figura \ref{fig:linear_systems_response_diagram}. Si \(R_{xx}(t_1,\,t_2)\) es la entrada al sistema y el sistema opera sobre \(t_2\), la salida es \(R_{xy}(t_1,\,t_2)\), y si la entrada es \(R_{xy}(t_1,\,t_2)\) y el sistema opera sobre \(t_1\), la salida es \(R_{yy}(t_1,\,t_2)\). Finalmente, sustituyendo la ecuación \ref{eq:lti_output_crosscorrelation} en la ecuación \ref{eq:lti_output_autocorrelation} se obtiene que 
+\[
+ R_{yy}(t_1,\,t_2)=\int_{-\infty}^\infty\int_{-\infty}^\infty R_{xy}(t_1-\alpha,\,t_2-\beta)h(\alpha)h(\beta)\,d\alpha\,d\beta,
+\]
+que es la expresión de \(R_{yy}(t_1,\,t_2)\) directamente en términos de \(R_{xx}(t_1,\,t_2)\).
+
+\paragraph{Ejemplo (9-18)} Un proceso estacionario \(\vbf(t)\) con autocorrelación \(R_{vv}(\tau)=q\delta(\tau)\) (ruido blanco) se aplica en \(t=0\) a un sistema con respuesta al impulso
+\[
+ h(t)=e^{ct}U(t).
+\]
+Se calculará la autocorrelación de la salida.
+
+Como el proceso se aplica en \(t=0\), la entrada al sistema es
+\[
+ \x(t)=\vbf(t)U(t).
+\]
+Por lo tanto, todas las correlaciones son nulas si \(t_1<0\) o \(t_2<0\), y para \(t_1>0\) y \(t_2>0\), se cumple que 
+\[
+ R_{xx}(t_1,\,t_2)=E\{\vbf(t_1)\vbf(t_2)\}=q\delta(t_1-t_2).
+\]
+De esta forma, para todo \(t_1\) y \(t_2\) se tiene que
+\[
+ R_{xx}(t_1,\,t_2)=q\delta(t_1-t_2)U(t_1)U(t_2).
+\]
+Aplicando el resultado de la ecuación \ref{eq:lti_output_crosscorrelation}, se ve que 
+\begin{align*}
+ R_{xy}(t_1,\,t_2)&=\int_{-\infty}^\infty R_{xx}(t_1,\,t_2-\alpha)h(\alpha)\,d\alpha\\
+  &=\int_{-\infty}^\infty q\delta(t_1-(t_2-\alpha))U(t_1)U(t_2-\alpha)e^{-c\alpha}U(\alpha)\,d\alpha\\
+  &=qU(t_1)\int_{-\infty}^\infty\delta(\alpha-(t_2-t_1))U(t_2-\alpha)e^{-c\alpha}U(\alpha)\,d\alpha\\
+  &=qU(t_1)\int_{-\infty}^\infty\delta(\alpha-(t_2-t_1))U(t_1)e^{-c(t_2-t_1)}U(t_2-t_1)\,d\alpha,
+\end{align*}
+donde en la última igualdad se empleó que \(f(x)\delta(x-x_0)=f(x_0)\delta(x-x_0)\). Considerando que la delta de Dirac integra a 1, se concluye que 
+\begin{equation}\label{eq:example_9_18_crosscorrelation}
+ R_{xy}(t_1,\,t_2)=qe^{-c(t_2-t_1)}U(t_2-t_1)U(t_1).
+\end{equation}
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=0.95\columnwidth]{figuras/example_9_18_1.pdf}
+\caption{\label{fig:example_9_18_1} Correlación cruzada \(R_{xy}(t_1,\,t_2)\) como función de \(t_1\) y de \(t_2\).}
+\end{center}
+\end{figure}
+En la figura \ref{fig:example_9_18_1} se muestra \(R_{xy}(t_1,\,t_2)\) como función de \(t_1\) y de \(t_2\). Para obtener la autocorrelación de la salida, se sustituye la ecuación \ref{eq:example_9_18_crosscorrelation} en la ecuación \ref{eq:lti_output_autocorrelation},
+\begin{align}\label{eq:example_9_18_correlation_tmp}
+ R_{yy}(t_1,\,t_2)&=\int_{-\infty}^\infty R_{xy}(t_1-\alpha,\,t_2)h(\alpha)\,d\alpha\nonumber\\
+  &=\int_{-\infty}^\infty qe^{-c(t_2-(t_1-\alpha))}U(t_2-(t_1-\alpha))U(t_1-\alpha)e^{-c\alpha}U(\alpha)\,d\alpha\nonumber\\
+  &=qe^{-c(t_2-t_1)}\int_{-\infty}^\infty e^{-2c\alpha}U(t_2-(t_1-\alpha))U(t_1-\alpha)U(\alpha)\,d\alpha.
+\end{align}
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=0.95\columnwidth]{figuras/example_9_18_2.pdf}
+\caption{\label{fig:example_9_18_2} \(R_{xy}(t_1-\alpha,\,t_2)\) como función de \(\alpha\) en el caso en que \(0<t_1<t_2\) y \(0<t_2<t_1\).}
+\end{center}
+\end{figure}
+Como se muestra en la figura \ref{fig:example_9_18_2}, hay que distinguir dos casos:
+\begin{itemize}
+ \item \(t_1<t_2\). En este caso, el límite inferior de la integral de la ecuación \ref{eq:example_9_18_correlation_tmp} está determinado por \(U(\alpha)\), y por lo tanto es 0, y el límite superior está determinado por \(R_{xy}(t_1-\alpha,\,t_2)\), que como se muestra en la figura \ref{fig:example_9_18_2} es \(t_1\). Por lo tanto, 
+ \begin{align*}
+  R_{yy}(t_1,\,t_2)&=qe^{-c(t_2-t_1)}\int_{0}^{t_1} e^{-2c\alpha}\,d\alpha
+  =qe^{-c(t_2-t_1)}\left(-\frac{1}{2c}\right)e^{-2c\alpha}\bigg|_{0}^{t_1}
+  =-\frac{q}{2c}e^{-c(t_2-t_1)}\left(e^{-2ct_1}-1\right)
+ \end{align*}
+ resultando en
+ \[
+  R_{yy}(t_1,\,t_2)=\frac{q}{2c}e^{-c(t_2-t_1)}\left(1-e^{-2ct_1}\right),
+  \qquad\qquad\textrm{para }0<t_1<t_2.
+ \]
+ \item \(t_1>t_2\). En este caso, los límites de la integral de la ecuación \ref{eq:example_9_18_correlation_tmp} están determinados por \(R_{xy}(t_1-\alpha,\,t_2)\), como se muestra en la figura \ref{fig:example_9_18_2}. Por lo tanto,
+ \begin{align*}
+  R_{yy}(t_1,\,t_2)&=qe^{-c(t_2-t_1)}\int_{t_1-t_2}^{t_1} e^{-2c\alpha}\,d\alpha\\
+   &=-\frac{q}{2c}e^{-c(t_2-t_1)}\left(e^{-2ct_1}-e^{-2c(t_1-t_2)}\right)\\
+   &=-\frac{q}{2c}e^{-c(t_2-t_1)}e^{-2c(t_1-t_2)}\left(e^{-2ct_1}e^{2c(t_1-t_2)}-1\right)\\
+   &=-\frac{q}{2c}e^{-c(t_1-t_2)}\left(e^{-2ct_2}-1\right)
+ \end{align*}
+ resultando en
+ \[
+  R_{yy}(t_1,\,t_2)=\frac{q}{2c}e^{-c(t_1-t_2)}\left(1-e^{-2ct_2}\right),
+  \qquad\qquad\textrm{para }0<t_2<t_1.
+ \]
+\end{itemize}
+Observar que 
+\[
+ E\{\y^2(t)\}=R_{yy}(t,\,t)=\frac{q}{2c}\left(1-e^{-2ct}\right)=q\int_0^th^2(\alpha)\,d\alpha.
+\]
+
+\paragraph{Procesos complejos} El resultado de las ecuaciones \ref{eq:lti_output_crosscorrelation}
+y \ref{eq:lti_output_autocorrelation} puede extenderse a procesos y sistemas \(h(t)\) con valores complejos. Realizando el razonamiento análogo al caso real, se obtiene que 
+\begin{equation}\label{eq:lti_output_correlations_complex}
+ \begin{aligned}
+  R_{xy}(t_1,\,t_2)&=R_{xx}(t_1,\,t_2)*h^*(t_2)\\
+  R_{yy}(t_1,\,t_2)&=R_{xy}(t_1,\,t_2)*h(t_1).
+ \end{aligned}
+\end{equation}
+
+\paragraph{Teorema (9-3): respuesta a ruido blanco} Se determinará la potencia promedio \(E\{|\y(t)|^2\}\) de la salida de un sistema cuando la entrada es ruido blanco. El resultado es un caso particular de las ecuaciones \ref{eq:lti_output_correlations_complex}, pero debido a su importancia, se establece como un teorema.  
+
+\noindent Si la entrada a un sistema lineal es ruido blanco con autocorrelación
+\[
+ R_{xx}(t_1,\,t_2)=q(t_1)\delta(t_1-t_2),
+\]
+la potencia de la salida es
+\begin{equation}\label{eq:lti_output_power_white_noise}
+ E\{|\y(t)|^2\}=q(t)*|h(t)|^2=\int_{-\infty}^\infty q(t-\alpha)|h(\alpha)|^2\,d\alpha. 
+\end{equation}
+\emph{Prueba}: de las ecuaciones \ref{eq:lti_output_correlations_complex}, se deduce que 
+\[
+ R_{xy}(t_1,\,t_2)=\int_{-\infty}^\infty q(t_1)\delta(t_1-(t_2-\alpha))h^*(\alpha)\,d\alpha
+ =q(t_1)h^*(t_2-t_1),
+\]
+y además
+\[
+ R_{yy}(t_1,\,t_2)=\int_{-\infty}^\infty q(t_1-\alpha)h^*(t_2-(t_1-\alpha))h(\alpha)\,d\alpha.
+\]
+Evaluando este resultado en \(t_1=t_2=t\), se obtiene la ecuación \ref{eq:lti_output_power_white_noise}.
+
+En el caso particular en que \(\x(t)\) es ruido blanco estacionario, se cumple que \(q(t)=q\), y la ecuación \ref{eq:lti_output_power_white_noise} queda
+\[
+ E\{\y^2(t)\}=qE,\qquad\qquad\textrm{donde}\qquad\qquad E=\int_{-\infty}^\infty|h(t)|^2\,dt
+\]
+es la energía de \(h(t)\).
+
+\paragraph{Diferenciadores} Un diferenciador es un sistema lineal cuya salida es la derivada de la entrada, es decir,
+\[
+ L[\x(t)]=\x'(t).
+\]
+A partir de los resultados precedentes, se calculará la media y la autocorrelación de la salida \(\x'(t)\). De la ecuación \ref{eq:lti_output_mean}, se tiene que 
+\[
+ \eta_{x'}(t)=E\{\x'(t)\}=E\{L[\x(t)]\}=L[E\{\x(t)\}]=L[\eta_x(t)]=\eta'_x(t).
+\]
+De forma similar, de la ecuación \ref{eq:lti_output_crosscorrelation_operational},
+\[
+ R_{xx'}(t_1,\,t_2)=L_2[R_{xx}(t_1,\,t_2)]=\frac{\partial R_{xx}(t_1,\,t_2)}{\partial t_2}
+\]
+ya que en este caso, \(L_2\) significa diferenciación respecto a \(t_2\). Finalmente, de la ecuación \ref{eq:lti_output_autocorrelation_operational},
+\[
+ R_{x'x'}(t_1,\,t_2)=L_1[R_{xx'}(t_1,\,t_2)]=\frac{\partial R_{xx'}(t_1,\,t_2)}{\partial t_1}.
+\]
+Combinando los resultados, se obtiene que 
+\[
+ R_{x'x'}(t_1,\,t_2)=\frac{\partial^2R_{xx}(t_1,\,t_2)}{\partial t_1\partial t_2}.
+\]
+Si el proceso \(\x(t)\) es WSS, su media \(\eta_x(t)\) es constante, y por lo tanto,
+\[
+ \eta_{x'}=E\{\x'(t)\}=0.
+\]
+Adicionalmente, como \(R_{xx}(t_1,\,t_2)=R_{xx}(\tau)\), con \(\tau=t_1-t_2\), se cumple que 
+\[
+ \frac{\partial R_{xx}(t_1-t_2)}{\partial t_2}=\frac{dR_{xx}(\tau)}{d\tau}\frac{\partial\tau}{\partial t_2}=-\frac{dR_{xx}(\tau)}{d\tau}
+\]
+y
+\[
+ \frac{\partial^2R_{xx}(t_1-t_2)}{\partial t_1\partial t_2}=\frac{\partial}{\partial t_1}\left[-\frac{dR_{xx}(\tau)}{d\tau}\right]=-\frac{d^2R_{xx}(\tau)}{d^2\tau}\frac{\partial\tau}{\partial t_1}=-\frac{d^2R_{xx}(\tau)}{d^2\tau}.
+\]
+De esta forma,
+\[
+ R_{xx'}(\tau)=-R'_{xx}(\tau)
+ \qquad\qquad\textrm{y}\qquad\qquad
+ R_{x'x'}(\tau)=-R''_{xx}(\tau). 
+\]
+
+\paragraph{Momentos generales} Los momentos de cualquier orden de la salida \(\y(t)\) de un sistema lineal pueden expresarse en función de los momentos correspondientes de la entrada \(\x(t)\). Como ilustración, se determinará el momento de tercer orden 
+\[
+ R_{yyy}(t_1,\,t_2,\,t_3)=E\{\y(t_1)\y(t_2)\y(t_3)\}
+\]
+de \(\y(t)\) en términos del momento de tercer orden \(R_{xxx}(t_1,\,t_2,\,t_3)\) de \(\x(t)\). Para hacerlo, procediendo como se hizo para obtener la ecuación \ref{eq:lti_output_crosscorrelation_operational}, se observa que 
+\begin{align*}
+ E\{\x(t_1)\x(t_2)\y(t_3)\}&=E\{\x(t_1)\x(t_2)L_3[\x(t_3)]\}\\
+  &=L_3[E\{\x(t_1)\x(t_2)\x(t_3)\}]\\
+  &=L_3[R_{xxx}(t_1,\,t_2,\,t_3)]\\
+  &=\int_{-\infty}^\infty R_{xxx}(t_1,\,t_2,\,t_3-\gamma)h(\gamma)\,d\gamma.
+\end{align*}
+De la misma forma,
+\begin{align*}
+ E\{\x(t_1)\y(t_2)\y(t_3)\}&=L_2[E\{\x(t_1)\x(t_2)\y(t_3)\}]\\
+  &=\int_{-\infty}^\infty R_{xxy}(t_1,\,t_2-\beta,\,t_3)h(\beta)\,d\beta,
+\end{align*}
+y
+\begin{align*}
+ E\{\y(t_1)\y(t_2)\y(t_3)\}&=L_1[E\{\x(t_1)\y(t_2)\y(t_3)\}]\\
+  &=\int_{-\infty}^\infty R_{xyy}(t_1-\alpha,\,t_2,\,t_3)h(\alpha)\,d\alpha.
+\end{align*}
+Observar que el cálculo de \(R_{yyy}(t_1,\,t_2,\,t_3)\) para valores específicos de \(t_1\), \(t_2\) y \(t_3\), se necesita conocer la función \(R_{xxx}(t_1,\,t_2,\,t_3)\) para todo \(t_1\), \(t_2\) y \(t_3\).
+
+\subsubsection{Procesos vectoriales y sistemas multiterminales}
+
+A continuación se consideran sistemas con \(n\) entradas \(\x_i(t)\) y \(r\) salidas \(\y_j(t)\). Se introducirán las nociones de autocorrelación y correlación cruzada para procesos vectoriales.
+
+Se comenzará con una revisión de la notación matricial convencional. La expresión \(A=[a_{ij}]\) representa a una matriz con elementos \(a_{ij}\). Las notaciones
+\[
+ A^t=[a_{ji}],\qquad\qquad A^*=[a^*_{ij}]\qquad\qquad\textrm{y}\qquad\qquad A^{\dagger}=[a^*_{ji}]
+\]
+significan respectivamente la matriz transpuesta, conjugada y transpuesta conjugada de \(A\). Un vector columna se denotará como \(A=[a_i]\). La distinción de \(A\) como vector o matriz deberá entenderse según el contexto. Si \(A=[a_i]\) y \(B=[b_j]\) son vectores con \(m\) elementos, el producto \(A^tB=a_1b_1+\dots+a_mb_m\) es un escalar y el producto \(AB^t=[a_ib_j]\) es una matriz \(m\times m\) con elementos \(a_ib_j\). 
+
+Un proceso vectorial \(\X(t)=[\x_i(t)]\) es un vector cuyos elementos son procesos estocásticos. La media \(\eta(t)=E\{\X(t)\}=[\eta_i(t)]\) de \(\X(t)\) es un vector con elementos \(\eta_i(t)=E\{\x_i(t)\}\). La autocorrelación \(R(t_1,\,t_2)\) o \(R_{xx}(t_1,\,t_2)\) de un proceso vectorial \(\X(t)\) es la matriz \(m\times m\)
+\[
+ R(t_1,\,t_2)=E\{\X(t_1)\X^{\dagger}(t_2)\}
+\]
+con elementos \(E\{\x_i(t_1)\x^*_j(t_2)\}\). De forma similar, la matriz de correlación cruzada de los procesos vectoriales 
+\[
+ \X(t)=[\x_i(t)],\qquad i=1,\,\dots,\,m\qquad\textrm{y}\qquad\Y(t)=[\y_j(t)],\qquad j=1,\,\dots,\,r,
+\]
+se define como
+\[
+ R_{xy}(t_1,\,t_2)=E\{\X(t_1)\Y^\dagger(t_2)\},
+\]
+y tiene dimensiones \(m\times r\).
+
+Un sistema multidimensional con \(m\) entradas \(\x_i(t)\) y \(r\) salidas \(\y_j(t)\) es una regla para asignar a un vector \(\X(t)\) de tamaño \(m\) un vector \(\Y(t)\) de tamaño \(r\). Si el sistema es lineal e invariante en el tiempo, queda especificado por la matriz respuesta al impulso. Esta es una matriz \(r\times m\)
+\[
+ H(t)=[h_{ji}(t)],\qquad\qquad i=1,\,\dots,\,m,\qquad j=1,\,\dots,\/r.
+\]
+cuyo elemento \(h_{ji}(t)\) es la respuesta de la salida \(j\)-ésima cuando la entrada \(i\)-ésima es \(\delta(t)\) y el resto de las entradas son nulas. De esto y de la linealidad del sistema, surge que la respuesta \(\y_j(t)\) a una entrada arbitraria \(\X(t)=[\x_i(t)]\) es
+\[
+ \y_j(t)=\int_{-\infty}^\infty h_{j1}(\alpha)\x_1(t-\alpha)\,d\alpha+\cdots+\int_{-\infty}^\infty h_{jm}(\alpha)\x_m(t-\alpha)\,d\alpha.
+\]
+De esta forma,
+\begin{equation}\label{eq:lti_convolution_vector}
+ \Y(t)=\int_{-\infty}^\infty H(\alpha)\X(t-\alpha)\,d\alpha,
+\end{equation}
+donde \(\X(t)\) y \(\Y(t)\) son vectores columna de tamaño \(m\) y \(r\) respectivamente y \(H(t)\) es una matriz \(r\times m\). Se empleará este resultado para determinar la autocorrelación \(R_{yy}(t_1,\,t_2)\) de \(\Y(t)\). Premultiplicando por \(\X(t_1)\) la ecuación \ref{eq:lti_convolution_vector} transpuesta conjugada con \(t=t_2\), se tiene que 
+\[
+ \X(t_1)\Y^\dagger(t_2)=\int_{-\infty}^\infty\X(t_1)\X^\dagger(t_2-\alpha)H^\dagger(\alpha)\,d\alpha,
+\]
+donde se empleó la identidad matricial \((AB)^t=B^tA^t\). Tomando esperanza, se concluye que 
+\begin{equation}\label{eq:lti_output_crosscorrelation_vector}
+ R_{xy}(t_1,\,t_2)=\int_{-\infty}^\infty R_{xx}(t_1,\,t_2-\alpha)H^\dagger(\alpha)\,d\alpha.
+\end{equation}
+De forma similar, postmultiplicando la ecuación \ref{eq:lti_convolution_vector} con \(t=t_1\) por \(\Y^\dagger(t_2)\), se obtiene que
+\begin{equation}\label{eq:lti_output_autocorrelation_vector}
+ R_{yy}(t_1,\,t_2)=\int_{-\infty}^\infty H(\alpha)R_{xy}(t_1-\alpha,\,t_2)\,d\alpha.
+\end{equation}
+Estas ecuaciones son las análogas a las ecuaciones \ref{eq:lti_output_crosscorrelation} y \ref{eq:lti_output_autocorrelation} del caso escalar.
+
+\paragraph{Ejemplo (9-20)} En la figura \ref{fig:example_9_11_two_linear_systems} se muestran dos sistemas con entradas \(\x_1(t)\) y \(\x_2(t)\) y salidas
+\[
+ \y_1(t)=\int_{-\infty}^\infty h_1(\alpha)\x_1(t-\alpha)\,d\alpha
+ \qquad\qquad\textrm{y}\qquad\qquad
+ \y_2(t)=\int_{-\infty}^\infty h_2(\alpha)\x_2(t-\alpha)\,d\alpha.
+\]
+Estas señales pueden considerarse como los elementos del vector de salida \(\Y^t(t)=[\y_1(t),\,\y_2(t)]\) de un sistema \(2\times2\) con vector de entrada \(\X^t(t)=[\x_1(t),\,\x_2(t)]\) y matriz respuesta al impulso 
+\[
+ H(t)=
+ \begin{bmatrix}
+  h_1(t) & 0\\
+  0 & h_2(t)
+ \end{bmatrix}.
+\]
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=0.9\columnwidth]{figuras/example_9_11_two_linear_systems.pdf}
+\caption{\label{fig:example_9_11_two_linear_systems} Relación estadística de las entradas y salidas de dos sistemas lineales.}
+\end{center}
+\end{figure}
+Teniendo en cuenta estas consideraciones, se calculará la correlación cruzada entre las salidas \(\y_1(t)\) y \(\y_2(t)\) aplicando la ecuación \ref{eq:lti_output_crosscorrelation_vector}. La matriz del lado izquierdo de la ecuación \ref{eq:lti_output_crosscorrelation_vector} es
+\begin{align*}
+ R_{xy}(t_1,\,t_2)=E\{\X(t_1)\Y^\dagger(t_2)\}=
+ E\left\{
+ \begin{bmatrix}
+  \x_1(t_1)\\ \x_2(t_1)
+ \end{bmatrix}
+ \begin{bmatrix}
+  \y^*_1(t_2)& \y^*_2(t_2)
+ \end{bmatrix}\right\}
+ &=
+ E\left\{
+ \begin{bmatrix}
+  \x_1(t_1)\y^*_1(t_2) & \x_1(t_1)\y^*_2(t_2)\\
+  \x_2(t_1)\y^*_1(t_2) & \x_2(t_1)\y^*_2(t_2)
+ \end{bmatrix}\right\}\\
+ &=
+ \begin{bmatrix}
+  R_{x_1y_1}(t_1,\,t_2) & R_{x_1y_2}(t_1,\,t_2)\\
+  R_{x_2y_1}(t_1,\,t_2) & R_{x_2y_2}(t_1,\,t_2)
+ \end{bmatrix}.
+\end{align*}
+Para calcular la matriz del lado derecho de la ecuación \ref{eq:lti_output_crosscorrelation_vector} se observa que, igual que antes,
+\begin{align*}
+ R_{xx}(t_1,\,t_2)=
+ E\left\{
+ \begin{bmatrix}
+  \x_1(t_1)\x^*_1(t_2) & \x_1(t_1)\x^*_2(t_2)\\
+  \x_2(t_1)\x^*_1(t_2) & \x_2(t_1)\x^*_2(t_2)
+ \end{bmatrix}\right\}=
+ \begin{bmatrix}
+  R_{x_1x_1}(t_1,\,t_2) & R_{x_1x_2}(t_1,\,t_2)\\
+  R_{x_2x_1}(t_1,\,t_2) & R_{x_2x_2}(t_1,\,t_2)
+ \end{bmatrix},
+\end{align*}
+y por lo tanto
+\begin{align*}
+ R_{xx}(t_1,\,t_2-\alpha)H^\dagger(\alpha)
+ &=
+ \begin{bmatrix}
+  R_{x_1x_1}(t_1,\,t_2-\alpha) & R_{x_1x_2}(t_1,\,t_2-\alpha)\\
+  R_{x_2x_1}(t_1,\,t_2-\alpha) & R_{x_2x_2}(t_1,\,t_2-\alpha)
+ \end{bmatrix}
+ \begin{bmatrix}
+  h^*_1(\alpha) & 0\\
+  0 & h^*_2(\alpha)
+ \end{bmatrix}\\
+ &=
+ \begin{bmatrix}
+  R_{x_1x_1}(t_1,\,t_2-\alpha)h^*_1(\alpha) & R_{x_1x_2}(t_1,\,t_2-\alpha)h^*_2(\alpha)\\
+  R_{x_2x_1}(t_1,\,t_2-\alpha)h^*_1(\alpha) & R_{x_2x_2}(t_1,\,t_2-\alpha)h^*_2(\alpha)
+ \end{bmatrix}.
+\end{align*}
+Igualando los elementos en la posición \((1,\,2)\) de ambas matrices se obtiene que 
+\[
+ R_{x_1y_2}(t_1,\,t_2)=\int_{-\infty}^\infty R_{x_1x_2}(t_1,\,t_2-\alpha)h^*_2(\alpha)\,d\alpha.
+\]
+Siguiendo el mismo razonamiento aplicando la ecuación \ref{eq:lti_output_autocorrelation_vector}, la matriz del lado izquierdo es
+\[
+ R_{yy}(t_1,\,t_2)=
+ E\left\{
+ \begin{bmatrix}
+  \y_1(t_1)\y^*_1(t_2) & \y_1(t_1)\y^*_2(t_2)\\
+  \y_2(t_1)\y^*_1(t_2) & \y_2(t_1)\y^*_2(t_2)
+ \end{bmatrix}\right\}
+ =
+ \begin{bmatrix}
+  R_{y_1y_1}(t_1,\,t_2) & R_{y_1y_2}(t_1,\,t_2)\\
+  R_{y_2y_1}(t_1,\,t_2) & R_{y_2y_2}(t_1,\,t_2)
+ \end{bmatrix},
+\]
+y para obtener la matriz del lado derecho, se observa que 
+\begin{align*}
+ H(\alpha)R_{xx}(t_1,\,t_2-\alpha)
+ &=
+ \begin{bmatrix}
+  h_1(\alpha) & 0\\
+  0 & h_2(\alpha)
+ \end{bmatrix}
+ \begin{bmatrix}
+  R_{x_1y_1}(t_1-\alpha,\,t_2) & R_{x_1y_2}(t_1-\alpha,\,t_2)\\
+  R_{x_2y_1}(t_1-\alpha,\,t_2) & R_{x_2y_2}(t_1-\alpha,\,t_2)
+ \end{bmatrix}\\
+ &=
+ \begin{bmatrix}
+  h_1(\alpha)R_{x_1y_1}(t_1-\alpha,\,t_2) & h_1(\alpha)R_{x_1y_2}(t_1-\alpha,\,t_2)\\
+  h_2(\alpha)R_{x_2y_1}(t_1-\alpha,\,t_2) & h_2(\alpha)R_{x_2y_2}(t_1-\alpha,\,t_2)
+ \end{bmatrix}.
+\end{align*}
+Nuevamente, igualando los elementos de la posición \((1,\,2)\), se obtiene que 
+\[
+ R_{y_1y_2}(t_1,\,t_2)=\int_{-\infty}^\infty h_1(\alpha)R_{x_1y_2}(t_1-\alpha,\,t_2)\,d\alpha.
+\]
+Por lo tanto, como se muestra en la figura \ref{fig:example_9_11_two_linear_systems}, para encontrar \(R_{x_1y_2}(t_1,\,t_2)\) se emplea \(R_{x_1x_2}(t_1,\,t_2)\) como entrada al sistema conjugado \(h^*_2(t)\) de \(h_2(t)\) operando en la variable \(t_2\). Para encontrar \(R_{y_1y_2}(t_1,\,t_2)\), se emplea \(R_{x_1y_2}(t_1,\,t_2)\) como entrada al sistema \(h_1(t)\) operando en la variable \(t_1\). Finalmente, combinando los resultados se obtiene que 
+\[
+ R_{y_1y_2}(t_1,\,t_2)=\int_{-\infty}^\infty\int_{-\infty}^\infty R_{x_1x_2}(t_1-\alpha,\,t_2-\beta)h_1(\alpha)h^*_2(\beta)\,d\alpha d\beta.
+\]
+
+\section{La potencia espectral}
+
+En la teoría de señales, el espectro está vinculado a transformadas de Fourier. Para señales determinísticas, se emplean para representar a una función como superposición de exponenciales. En el caso de señales aleatorias, la noción de espectro tiene dos interpretaciones. La primera involucra transformaciones de promedios, por lo que es esencialmente determinística. La segunda conduce a la representación de procesos como superposición de exponenciales con coeficientes aleatorios. En esta sección se introduce la primera representación. Se considerarán únicamente procesos estacionarios. Para procesos no estacionarios, la noción de espectro es de interés limitado.  
+
+\subsection{Definiciones}
+
+La \emph{potencia espectral} o \emph{densidad espectral} de un proceso \(\x(t)\) WSS, real o complejo, es la transformada de Fourier \(S(\omega)\) de su autocorrelación \(R(\tau)=E\{\x(t+\tau)\x^*(t)\}\):
+\[
+ S(\omega)=\int_{-\infty}^\infty R(\tau)e^{-j\omega\tau}\,d\tau.
+\]
+Como \(R(-\tau)=R^*(\tau)\), se cumple que \(S(\omega)\) es una función real de \(\omega\). El estudio de las propiedades de la transformada de Fourier de tiempo continuo puede encontrarse por ejemplo en el capítulo 4 de \cite{oppenheim96signals}, y en el apéndice \ref{ap:fourier_transforms} se incluye la deducción de algunas propiedades y pares de transformadas que serán empleados a lo largo de este documento. De la ecuación de la transformada inversa de Fourier, se cumple que 
+\[
+ R(\tau)=\frac{1}{2\pi}\int_{-\infty}^\infty S(\omega)e^{j\omega\tau}\,d\omega.
+\]
+
+Si \(\x(t)\) es un proceso real, \(R(\tau)\) es real y par, y por lo tanto, \(S(\omega)\) también es real y par. En ese caso,
+\begin{align*}
+ S(\omega)&=\int_{-\infty}^\infty R(\tau)\cos\omega\tau\,d\tau=2\int_0^\infty R(\tau)\cos\omega\tau\\
+ R(\tau)&=\frac{1}{2\pi}\int_{-\infty}^\infty S(\omega)\cos\omega\tau\,d\tau=\frac{1}{\pi}\int_0^\infty S(\omega)\cos\omega\tau\,d\tau.
+\end{align*}
+La \emph{potencia espectral cruzada} entre dos procesos \(\x(t)\) y \(\y(t)\) es la transformada de Fourier \(S_{xy}(\omega)\) de la correlación cruzada \(R_{xy}(\tau)=E\{\x(t+\tau)\y^*(t)\}\):
+\[
+ S_{xy}(\omega)=\int_{-\infty}^\infty R_{xy}(\tau)e^{-j\omega\tau}\,d\tau
+ \qquad\qquad\textrm{y}\qquad\qquad 
+ R_{xy}(\tau)=\frac{1}{2\pi}\int_{-\infty}^\infty S_{xy}(\omega)e^{j\omega\tau}\,d\omega.
+\]
+La función \(S_{xy}(\omega)\) es en general compleja, incluso en el caso en que ambos procesos son reales. En cualquier caso, se cumple que 
+\begin{equation}\label{eq:lti_output_psd_complex_conjugate}
+ S_{xy}(\omega)=S^*_{yx}(\omega),
+\end{equation}
+ya que \(R_{xy}(-\tau)=E\{\x(t-\tau)\y^*(t)\}=R^*_{yx}(\tau)\).
+
+Para muchos procesos, \(R(\tau)\to\eta^2\), donde \(\eta=E\{\x(t)\}\). Si \(\eta\neq0\), \(S(\omega)\) contiene un impulso en \(\omega=0\). En estos casos, conviene expresar las propiedades espectrales de \(\x(t)\) en términos de la transformada de Fourier \(S^c(\omega)\) de su autocovarianza \(C(\tau)\). Como \(R(\tau)=C(\tau)+\eta^2\), se cumple que 
+\[
+ S(\omega)=S^c(\omega)+2\pi\eta^2\delta(\omega).
+\]
+La función \(S^c(\omega)\) se llama \emph{covarianza espectral} de \(\x(t)\).
+
+Se mostrará a continuación que dada una función positiva arbitraria \(S(\omega)\), se puede encontrar un proceso \(\x(t)\) con potencia espectral \(S(\omega)\).
+\begin{enumerate}[(a)]
+ \item Considérese el proceso 
+ \[
+  \x(t)=ae^{j(\omega t-\phi)}
+ \]
+ donde \(a\) es una constante real, \(\omega\) es una variable aleatoria con densidad de probabilidad \(f_\omega(\omega)\) y \(\phi\) es una variable aleatoria independiente de \(\omega\) con densidad uniforme en el intervalo \((0,\,2\pi)\). Como se mostró previamente (ver la ecuación \ref{eq:autocorrelation_exponential_process_random_frequency_phase}), este proceso es WSS con media nula y autocorrelación 
+ \[
+  R_x(\tau)=a^2E\{e^{j\omega\tau}\}=a^2\int_{-\infty}^\infty f_\omega(\omega)e^{j\omega\tau}\,d\omega.
+ \]
+ Aplicando la transformada de Fourier observando que la integral es \(2\pi\) veces la transformada de Fourier inversa de \(f_\omega(\omega)\), se obtiene que la potencia espectral de \(\x(t)\) es
+ \begin{equation}\label{eq:power_spectrum_exponential_process_random_frequency_phase}
+  S_x(\omega)=2\pi a^2f_\omega(\omega).
+ \end{equation}
+ Por lo tanto, si se construye la variable aleatoria \(\omega\) con densidad de probabilidad 
+ \[
+  f_\omega(\omega)=\frac{S(\omega)}{2\pi a^2}
+  \qquad\qquad\textrm{donde}\qquad\qquad
+  a^2=\frac{1}{2\pi}\int_{-\infty}^\infty S(\omega)\,d\omega=R(0),
+ \]
+ \(f_\omega(\omega)\) es una densidad de probabilidad válida por ser positiva e integrar a 1, y \(S_x(\omega)=S(\omega)\), como se buscaba.
+ \item Se mostrará que si \(S(-\omega)=S(\omega)\), se puede encontrar un proceso real con potencia espectral \(S(\omega)\). Para esto, se construye el proceso
+ \[
+  \y(t)=a\cos(\omega t+\phi).
+ \]
+ En este caso, como indica la ecuación \ref{eq:autocorrelation_sinusoidal_process_random_frequency_phase}, la autocorrelación es
+ \begin{equation}\label{eq:autocorrelation_sinusoidal_process_random_frequency_phase_tmp}
+  R_y(\tau)=\frac{a^2}{2}E\{\cos\omega t\}=\frac{a^2}{2}\int_{-\infty}^\infty f_\omega(\omega)\cos\omega\tau\,d\omega.
+ \end{equation}
+ Por lo tanto, tomando
+ \[
+  f_\omega(\omega)=\frac{S(\omega)}{\pi a^2}
+  \qquad\qquad\textrm{donde}\qquad\qquad
+  a^2=\frac{1}{\pi}\int_{-\infty}^\infty S(\omega)\,d\omega,
+ \]
+ se obtiene que \(f_\omega(\omega)\) es una densidad de probabilidad válida por ser positiva e integrar a 1, y además, se observa que sustituyendo \(f_\omega(\omega)\) en la ecuación \ref{eq:autocorrelation_sinusoidal_process_random_frequency_phase_tmp}, se cumple que 
+ \[
+  R_y(\tau)=\frac{1}{2\pi}\int_{-\infty}^\infty S(\omega)\cos\omega\tau\,d\omega,
+ \]
+ y entonces, \(S_y(\omega)=S(\omega)\), como se pretendía.
+\end{enumerate}
+
+\paragraph{Ejemplo (9-24): efecto Doppler} Un oscilador armónico ubicado en el punto \(P\) del eje \(x\) se mueve en la dirección del eje \(x\) con velocidad \(\vbf\), como se muestra en la figura \ref{fig:example_9_24}. La señal emitida es \(e^{j\omega_0t}\), y la señal recibida por un observador ubicado en el punto \(O\) es 
+\[
+ \s(t)=ae^{j\omega_0(t-\mathbf{r}/c)},
+\]
+donde \(c\) es la velocidad de propagación y \(\mathbf{r}=r_0+\vbf t\) es la posición del emisor. Se asume que \(\vbf\) es una variable aleatoria con densidad de probabilidad \(f_v(v)\). Como
+\[
+ \omega_0\left(t-\frac{\mathbf{r}}{c}\right)=\omega_0\left(t-\frac{r_0+\vbf t}{c}\right)
+ =\omega_0\left(1-\frac{\vbf}{c}\right)t-\frac{\omega_0r_0}{c},
+\]
+la señal recibida es
+\[
+ \s(t)=ae^{j(\omega t-\varphi)}\qquad\qquad\textrm{con}\qquad\qquad 
+ \omega=\omega_0\left(1-\frac{\vbf}{c}\right)\qquad\qquad\textrm{y}\qquad\qquad 
+ \varphi=\frac{\omega_0r_0}{c},
+\]
+y su densidad espectral está dada por la ecuación \ref{eq:power_spectrum_exponential_process_random_frequency_phase}. Teniendo en cuenta que 
+\[
+ \omega=-\frac{\omega_0}{c}\vbf+\omega_0=a\vbf+b,
+\]
+la densidad de probabilidad de \(\omega\) en términos de la densidad de probabilidad de \(\vbf\) está dada por la ecuación \ref{eq:y_equals_ax_plus_b_density} y es 
+\[
+ f_\omega(\omega)=\frac{1}{|a|}f_v\left(\frac{\omega-b}{a}\right)
+ =\frac{1}{\omega_0/c}f_v\left(\frac{\omega-\omega_0}{-\omega_0/c}\right)
+ =\frac{c}{\omega_0}f_v\left[\left(1-\frac{\omega}{\omega_0}\right)c\right].
+\]
+De esta forma, la densidad espectral de la señal recibida resulta en 
+\[
+ S(\omega)=2\pi a^2f_\omega(\omega)=\frac{2\pi a^2c}{\omega_0}f_v\left[\left(1-\frac{\omega}{\omega_0}\right)c\right].
+\]
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=1\columnwidth]{figuras/example_9_24.pdf}
+\caption{\label{fig:example_9_24} Efecto Doppler. El emisor se encuentra en el punto \(P\) y se mueve con velocidad \(\vbf\) y el receptor se encuentra en el punto \(O\). Se muestra además el espectro de la señal emitida y de la señal recibida.}
+\end{center}
+\end{figure}
+Observar que si \(\vbf=0\), se cumple que (ver la ecuación \ref{eq:fourier_transform_sum_of_harmonic_exponentials})
+\[
+ \s(t)=ae^{j(\omega_0t-\varphi)},\qquad\qquad
+ R(\tau)=a^2e^{j\omega_0t}\qquad\qquad\textrm{y}\qquad\qquad
+ S(\omega)=2\pi a^2\delta(\omega-\omega_0),
+\]
+igualando al espectro de la señal emitida. Se concluye que el movimiento produce el ensanchamiento del espectro, como se muestra en la figura \ref{fig:example_9_24}.
+
+\paragraph{Espectros de líneas}
+
+\begin{enumerate}[(a)]
+ \item Como se mostró previamente, el proceso 
+ \[
+  \x(t)=\sum_i\mathbf{c}_ie^{j\omega_it}
+ \]
+ es WSS si las variables aleatorias \(\mathbf{c}_i\) son no correlacionadas y de media nula. En ese caso, la autocorrelación está dada por la ecuación \ref{eq:autocorrelation_exponential_process_random_amplitude}, y de la ecuación \ref{eq:fourier_transform_sum_of_harmonic_exponentials} se tiene que 
+ \[
+  R(\tau)=\sum_i\sigma_i^2e^{j\omega\tau}
+  \qquad\qquad\textrm{y}\qquad\qquad 
+  S(\omega)=2\pi\sum_i\sigma_i^2\delta(\omega-\omega_i),
+ \]
+ donde \(\sigma_i^2=E\{\mathbf{c}_i^2\}\). De esta forma, \(S(\omega)\) consiste en líneas. Dichos procesos son predecibles, es decir, el valor actual queda unívocamente determinado a partir de su pasado.
+ \item De forma similar, el proceso 
+ \[
+  \y(t)=\sum_i(\abf_i\cos\omega_it+\bbf_i\sin\omega_it)
+ \]
+ es WSS si las variables aleatorias \(\abf_i\) y \(\bbf_i\) son no correlacionadas, de media nula y con \(E\{\abf_i^2\}=E\{\bbf_i^2\}=\sigma_i^2\). La autocorrelación del proceso se deduce a partir de la ecuación \ref{eq:example_9_13_autocorrelation_wss}, y la potencia espectral se obtiene a partir del par de transformadas de la ecuación \ref{eq:fourier_transform_cosine}, y son respectivamente
+ \[
+  R(\tau)=\sum_i\sigma_i^2\cos\omega_i\tau
+  \qquad\qquad\textrm{y}\qquad\qquad
+  S(\omega)=\pi\sum_i\sigma_i^2\left[\delta(\omega-\omega_i)+\delta(\omega+\omega_i)\right].
+ \]
+\end{enumerate}
+
+\subsection{Sistemas lineales}
+
+Se expresará la autocorrelación \(R_{yy}(\tau)\) y la potencia espectral \(S_{yy}(\omega)\) de la respuesta
+\begin{equation}\label{eq:lti_convolution2}
+ \y(t)=\int_{-\infty}^\infty\x(t-\alpha)h(\alpha)\,d\alpha
+\end{equation}
+de un sistema lineal en términos de la autocorrelación \(R_{xx}(\tau)\) y la potencia espectral \(S_{xx}(\omega)\) de la entrada \(\x(t)\).
+
+\paragraph{Teorema} Se cumple que 
+\begin{gather}
+ R_{xy}(\tau)=R_{xx}(\tau)*h^*(-\tau) \qquad R_{yy}(\tau)=R_{xy}(\tau)*h(\tau)\label{eq:lti_output_autocorrelation2} \\
+ S_{xy}(\omega)=S_{xx}(\omega)H^*(\omega) \qquad\quad  S_{yy}(\tau)=S_{xy}(\omega)H(\omega) \label{eq:lti_output_psd}
+\end{gather}
+\noindent\emph{Prueba}: se parte multiplicando la ecuación \ref{eq:lti_convolution2} conjugada por \(\x(t+\tau)\) y tomando esperanza, 
+\begin{align*}
+ E\{\x(t+\tau)\y^*(t)\}&=\int_{-\infty}^\infty E\{\x(t+\tau)\x^*(t-\alpha)\}h^*(\alpha)\,d\alpha\\
+  &\overset{(a)}{=}\int_{-\infty}^\infty E\{\x(t'+\tau+\alpha)\x^*(t')\}h^*(\alpha)\,d\alpha\\
+  &=\int_{-\infty}^\infty R_{xx}(\tau+\alpha)h^*(\alpha)\,d\alpha\\
+  &\overset{(b)}{=}\int_{-\infty}^\infty R_{xx}(\tau-\beta)h^*(-\beta)\,d\beta,
+\end{align*}
+donde en \((a)\) se realizó el cambio de variable \(t'=t-\alpha\), lo cual se puede hacer por ser \(\x(t)\) un proceso WSS, y en \((b)\) se realizó el cambio de variable de integración \(\beta=-\alpha\), concluyendo la primera parte de la prueba. Procediendo de forma similar pero ahora multiplicando la ecuación \ref{eq:lti_convolution2} por \(\y^*(t-\tau)\), se tiene que 
+\begin{align*}
+ E\{\y(t)\y^*(t-\tau)\}&=\int_{-\infty}^\infty E\{\x(t-\alpha)\y^*(t-\tau)\}h(\alpha)\,d\alpha\\
+  &=\int_{-\infty}^\infty E\{\x(t+\tau-\alpha)\y^*(t)\}h(\alpha)\,d\alpha\\
+  &=\int_{-\infty}^\infty R_{xy}(\tau-\alpha)h(\alpha)\,d\alpha.
+\end{align*}
+Las ecuaciones \ref{eq:lti_output_psd} se obtienen a partir de las ecuaciones \ref{eq:lti_output_autocorrelation2} mediante el teorema de la convolución de la transformada de Fourier. 
+
+\paragraph{Corolario} Combinando las dos ecuaciones en \ref{eq:lti_output_autocorrelation2} y en \ref{eq:lti_output_psd} se obtiene que 
+\begin{gather}
+ R_{yy}(\tau)=R_{xx}(\tau)*h(\tau)*h^*(-\tau)=R_{xx}(\tau)*\rho(\tau)\label{eq:lti_output_autocorrelation_in_terms_input_autocorrelation}\\
+ S_{yy}(\omega)=S_{xx}(\omega)H(\omega)H^*(\omega)=S_{xx}(\omega)|H(\omega)|^2,\label{eq:lti_output_psd_in_terms_input_psd}
+\end{gather}
+donde
+\[
+ \rho(\tau)=h(\tau)*h^*(-\tau)=\int_{-\infty}^\infty h(t+\tau)h^*(t)\,dt
+ \quad\longleftrightarrow\quad
+ S_{xx}(\omega)|H(\omega)|^2.
+\]
+
+\paragraph{Ejemplo (9-25)} 
+\begin{enumerate}[(a)]
+\item \emph{Filtro de media móvil}: 
+\begin{equation}\label{eq:moving_average_output}
+ \y(t)=\frac{1}{2T}\int_{t-T}^{t+T}\x(\alpha)\,d\alpha
+\end{equation}
+es el promedio del proceso \(\x(t)\) en el intervalo \((t-T,\,t+T)\). Observar que \(\y(t)\) es la salida de un sistema con entrada \(\x(t)\) y respuesta al impulso el pulso rectangular
+\begin{equation}\label{eq:moving_average_impulse_response}
+\def\arraystretch{1.4}
+ h(t)=\left\{
+ \begin{array}{ll}
+  \dfrac{1}{2T}, & -T<|t|<T\\
+  0, & |t|>T.
+ \end{array}\right. 
+\end{equation}
+Efectivamente,
+\[
+ \y(t)=\x(t)*h(t)\overset{(a)}{=}\int_{-\infty}^\infty \x(\alpha)h(t-\alpha)\,d\alpha\overset{(b)}{=}\frac{1}{2T}\int_{t-T}^{t+T}\x(\alpha)\,d\alpha,
+\]
+donde en \((a)\) se empleó la definición de la convolución dada por la ecuación \ref{eq:lti_convolution} y además se tuvo en cuenta que es una operación conmutativa, y en \((b)\) se consideró que 
+\[
+\def\arraystretch{1.4}
+ h(t-\alpha)=\left\{
+ \begin{array}{ll}
+  \dfrac{1}{2T}, & t-T<\alpha<t+T\\
+  0, & \textrm{en otro caso},
+ \end{array}\right.
+\]
+como se muestra en la figura \ref{fig:example_9_25_rectangular_pulses}.
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=0.93\columnwidth]{figuras/example_9_25_rectangular_pulses.pdf}
+\caption{\label{fig:example_9_25_rectangular_pulses} Respuesta al impulso \(h(t)\) y \(h(t-\alpha)\), donde la variable es \(\alpha\).}
+\end{center}
+\end{figure}
+La función del sistema es (ver la ecuación \ref{eq:fourier_transform_rectangular_pulse})
+\begin{equation}\label{eq:moving_average_transfer_function}
+ H(\omega)=\frac{1}{2T}\int_{-T}^Te^{-j\omega\tau}\,d\tau=\frac{\sin\omega T}{\omega T}.
+\end{equation}
+Además,
+\[
+ \rho(\tau)=h(\tau)*h^*(-\tau)=\frac{1}{2T}\left(1-\frac{|\tau|}{2T}\right)\qquad\textrm{para }-2T<t<2T,
+\]
+es un triángulo de altura \(1/(2T)\) y soporte en el intervalo \((-2T,\,2T)\), y la potencia espectral de la salida es
+\[
+ S_{yy}(\omega)=S_{xx}(\omega)|H(\omega)|^2=S_{xx}(\omega)\frac{\sin^2\omega T}{\omega^2T^2},
+\]
+y se muestran en la figura \ref{fig:example_9_25_transfer}. Como se aprecia en la figura, \(H(\omega)\) toma valores significativos solo en torno a un intervalo de largo del orden de \(1/T\) centrado en el origen. Por lo tanto, el filtro de media móvil suprime los componentes de alta frecuencia de la entrada. Se concluye que se trata de un filtro pasabajos simple.
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=0.93\columnwidth]{figuras/example_9_25_transfer.pdf}
+\caption{\label{fig:example_9_25_transfer} Filtro de media móvil. Se muestra la respuesta al impulso \(h(t)\), la función de transferencia \(H(\omega)\), \(\rho(t)=h(t)*h^*(-t)\) y su transformada de Fourier \(|H(\omega)|^2\).}
+\end{center}
+\end{figure}
+Finalmente, de la ecuación \ref{eq:lti_output_autocorrelation_in_terms_input_autocorrelation}, la autocorrelación de la salida es
+\[
+ R_{yy}(\tau)=\frac{1}{2T}\int_{-T}^T\left(1-\frac{|\tau|}{2T}\right)R_{xx}(\tau-\alpha)\,d\alpha.
+\]
+ \item \emph{Filtro pasa altos}: considérese el proceso
+ \[
+  \z(t)=\x(t)-\y(t),
+ \]
+donde \(\y(t)\) es la salida del filtro de media móvil dado por la ecuación \ref{eq:moving_average_output}. Teniendo en cuenta que \(\z(t)\) se puede escribir como
+\[
+ \z(t)=\x(t)*\delta(t)-\x(t)*h(t)=\x(t)*[\delta(t)-h(t)]
+\]
+donde \(h(t)\) está dado por la ecuación \ref{eq:moving_average_impulse_response}, \(\z(t)\) puede considerarse como la salida de un sistema lineal con entrada \(\x(t)\) y respuesta al impulso 
+\[
+ h'(t)=\delta(t)-h(t).
+\]
+La función de transferencia del sistema se obtiene aplicando la transformada de Fourier y es (ver la ecuación \ref{eq:moving_average_transfer_function})
+\[
+ H'(\omega)=1-\frac{\sin\omega T}{\omega T}.
+\]
+\begin{figure}[!htb]
+  \begin{minipage}[c]{0.54\textwidth}
+    \includegraphics[width=\textwidth]{figuras/example_9_25_high_pass.pdf}
+  \end{minipage}\hfill
+  \begin{minipage}[c]{0.36\textwidth}
+    \caption{
+       Función de transferencia \(H'(\omega)\) del filtro pasa altos construido a partir del filtro de media móvil. 
+    } \label{fig:example_9_25_high_pass}
+  \end{minipage}
+\end{figure}
+Como se muestra en la figura \ref{fig:example_9_25_high_pass}, esta función es cercana a 0 en un entorno de largo del orden de \(1/T\) centrado en el origen, y se aproxima a 1 al aumentar la frecuencia. Por lo tanto, actúa como un filtro pasa altos, suprimiendo las bajas frecuencias de la entrada.
+\end{enumerate}
+
+\paragraph{Ejemplo (9-26): derivadas} La derivada \(\x'(t)\) de un proceso \(\x(t)\) puede considerarse como la salida de un sistema lineal con entrada \(\x(t)\) y función de transferencia \(H(\omega)=j\omega\). Esto es por la propiedad de diferenciación de la transformada de Fourier dada por la ecuación \ref{eq:fourier_transform_differentiation_t_property}, que indica que 
+\[
+ \textrm{si}\qquad\qquad y(t)=\frac{dx(t)}{dt}\qquad\qquad\textrm{se cumple que}\qquad\qquad Y(\omega)=j\omega X(\omega)=H(\omega)X(\omega).
+\]
+De esto y de la ecuación \ref{eq:lti_output_psd}, se obtiene que 
+\[
+ S_{xx'}(\omega)=-j\omega S_{xx}(\omega)\qquad\textrm{y}\qquad
+ S_{x'x'}(\omega)=\omega^2S_{xx}(\omega).
+\]
+Considerando que al aplicar la transformada de Fourier inversa se tiene que 
+\[
+ -\frac{dR_{xx}(\tau)}{d\tau}\quad\longleftrightarrow\quad-j\omega S_{xx}(\omega)
+ \qquad\textrm{y}\qquad
+ -\frac{d^2R_{xx}(\tau)}{d\tau^2}\quad\longleftrightarrow\quad\omega^2S_{xx}(\omega)=-(j\omega)^2S_xx(\omega), 
+\]
+se concluye que 
+\[
+ R_{xx'}(\tau)=-\frac{dR_{xx}(\tau)}{d\tau}
+ \qquad\textrm{y}\qquad
+ R_{x'x'}(\tau)=-\frac{d^2R_{xx}(\tau)}{d\tau^2}.
+\]
+Mas en general, la derivada \(n\)-ésima \(\y(t)=\x^{(n)}(t)\) de \(\x(t)\) es la salida de un sistema lineal con entrada \(\x(t)\) y función de transferencia \((j\omega)^n\) (ver la ecuación \ref{eq:fourier_transform_differentiation_t_n_times}). Por lo tanto,
+\[
+ S_{yy}(\omega)=|j\omega|^{2n}S_{xx}(\omega)
+ \qquad\textrm{y}\qquad
+ R_{yy}(\tau)=(-1)^nR^{(2n)}(\tau),
+\]
+donde la segunda ecuación proviene de que \(|j\omega|^{2n}=(-1)^n(j\omega)^{2n}\).
+
+\paragraph{Ejemplo (9-27)}
+\begin{enumerate}[(a)]
+ \item La ecuación diferencial
+ \[
+  \y'(t)+c\y(t)=\x(t),\qquad\qquad\textrm{para todo }t,
+ \]
+ especifica un sistema lineal con entrada \(\x(t)\) y salida \(\y(t)\). La función de transferencia se obtiene aplicando la transformada de Fourier,
+ \[
+  j\omega Y(\omega)+cY(\omega)=X(\omega)
+  \qquad\qquad\textrm{y por lo tanto}\qquad\qquad 
+  H(\omega)=\frac{Y(\omega)}{X(\omega)}=\frac{1}{j\omega+c}.
+ \]
+ De la ecuación \ref{eq:lti_output_psd_in_terms_input_psd}, la potencia espectral de la salida es
+ \[
+  S_{yy}(\omega)=S_{xx}(\omega)|H(\omega)|^2=\frac{S_{xx}(\omega)}{\omega^2+c^2}.
+ \]
+ Si \(\x(t)\) es ruido blanco con \(R_{xx}(\tau)=q\delta(\tau)\), 
+ \[
+  S_{yy}(\omega)=\frac{q}{\omega^2+c^2}
+  \qquad\textrm{y}\qquad
+  R_{yy}(\tau)=\frac{q}{2c}e^{-c|\tau|},
+ \]
+ donde \(R_{yy}(\tau)\) se obtuvo del par de transformadas de Fourier dado por la ecuación
+ \ref{eq:fourier_transform_exponential_symmetric}.
+ \item Se considera ahora el sistema de segundo orden
+ \[
+  \y''(t)+b\y'(t)+c\y(t)=\x(t).
+ \]
+ Razonando igual que antes, se obtiene que la función de transferencia es
+ \[
+  H(\omega)=\frac{1}{(j\omega)^2+b(j\omega)+c}=\frac{1}{-\omega^2+jb\omega+c}
+ \]
+ y la potencia espectral de la salida es
+ \[
+  S_{yy}(\omega)=S_{xx}(\omega)|H(\omega)|^2=S_{xx}(\omega)H(\omega)H^*(\omega)
+  =\frac{S_{xx}(\omega)}{(-\omega^2+jb\omega+c)(-\omega^2-jb\omega+c)}.
+ \]
+ Se calculará la autocorrelación \(R_{yy}(\tau)\) de la salida cuando la entrada es ruido blanco con \(R_{xx}(\tau)=q\delta(\tau)\). De esta forma, la potencia espectral es
+ \[
+  S_{yy}(\omega)=\frac{q}{(-\omega^2+jb\omega+c)(-\omega^2-jb\omega+c)},
+ \]
+ y para obtener \(R_{yy}(\tau)\) hay que calcular su antitransformada de Fourier.
+ Considerando momentáneamente que \(q=1\) y tomando \(s=j\omega\), la potencia espectral se puede expandir en fracciones simples como 
+ \[
+  S_{yy}(s)=\frac{1}{(s^2+bs+c)(s^2-bs+c)}=\frac{As+B}{s^2+bs+c}+\frac{Cs+D}{s^2-bs+c}.
+ \]
+ Igualando los numeradores, se tiene que 
+ \[
+  s^3(A+C)+s^2(B-Ab+D+Cb)+s(Ac-Bb+Cc+Db)+(Bc+Dc)=1,
+ \]
+ lo que conduce al sistema de ecuaciones
+ \[
+  \left\{ 
+  \begin{array}{l}
+   A+C=0\\
+   B-Ab+D+Cb=0\\
+   Ac-Bb+Cc+Db=0\\
+   Bc+Dc=1
+  \end{array}\right.
+  \qquad\qquad\Rightarrow\qquad\qquad 
+  A=-C=\frac{1}{2bc}\qquad\textrm{y}\qquad B=D=\frac{1}{2c},
+ \]
+ concluyendo que 
+ \[
+  S_{yy}(s)=\frac{1}{2bc}\left(\frac{s+b}{s^2+bs+c}+\frac{-s+b}{s^2-bs+c}\right)
+ \]
+ o
+ \[
+  S_{yy}(\omega)=\frac{1}{2bc}\left(\frac{j\omega+b}{-\omega^2+jb\omega+c}+\frac{-j\omega+b}{-\omega^2-jb\omega+c}\right).
+ \]
+ Se observa que \(S_{yy}(\omega)\) tiene la forma \(P(\omega)+P(-\omega)\), y por lo tanto, por la propiedad de reversión temporal de la transformada de Fourier dada por la ecuación \ref{eq:fourier_transform_time_reversion}, la antitransformada de Fourier tiene la forma 
+ \begin{equation}\label{eq:example_9_27_r_yy}
+  R_{yy}(\tau)=p(\tau)+p(-\tau),
+ \end{equation}
+ donde \(p(\tau)\) es la antitranformada de Fourier de \(P(\omega)\). Esto implica que alcanza con calcular la antitransformada de Fourier de 
+ \[
+  P(\omega)=\frac{1}{2bc}\left(\frac{j\omega+b}{-\omega^2+jb\omega+c}\right).
+ \]
+Se observa además que esta expresión tiene la forma
+\[
+ P(\omega)=\frac{1}{2bc}\left[j\omega R(\omega)+bR(\omega)\right],
+ \qquad\qquad\textrm{donde}\qquad\qquad 
+ R(\omega)=\frac{1}{-\omega^2+jb\omega+c},
+\]
+y por lo tanto, si \(r(\tau)\) es la antitrasformada de Fourier de \(R(\omega)\), la antitransformada de Fourier de \(P(\omega)\) es
+\begin{equation}\label{eq:example_9_27_p_1}
+ p(\tau)=\frac{1}{2bc}\left[r'(\tau)+br(\tau)\right],
+\end{equation}
+donde se empleó la propiedad de diferenciación de la transformada de Fourier dada por la ecuación \ref{eq:fourier_transform_differentiation_t_property}. Se calculará entonces la antitransformada de Fourier de
+\[
+  R(\omega)=\frac{1}{(j\omega)^2+jb\omega+c},
+\]
+para lo cual se realizará un expansión en fracciones simples. Considerando que las raíces del denominador son
+\[
+ a_1=\frac{-b+\sqrt{b^2-4c}}{2}
+ \qquad\qquad\textrm{y}\qquad\qquad
+ a_2=\frac{-b-\sqrt{b^2-4c}}{2},
+\]
+se tiene que 
+\begin{equation}\label{eq:example_9_27_rw}
+ R(\omega)=\frac{1}{(j\omega-a_1)(j\omega-a_2)}.
+\end{equation}
+Hay que considerar los dos siguientes casos:
+\begin{enumerate}[1.]
+ \item \(b^2\neq4c\), lo que implica que las raíces cumplen que \(a_1\neq a_2\), y la expansión en fracciones simples es
+ \[
+  R(\omega)=\frac{1}{(j\omega-a_1)(j\omega-a_2)}=\frac{A}{j\omega-a_1}+\frac{B}{j\omega-a_2}.
+ \]
+ Para calcular \(A\) y \(B\) se igualan los numeradores,
+ \[
+  A(j\omega-a_2)+B(j\omega-a_1)=1
+  \qquad\Rightarrow\qquad 
+  (A+B)j\omega-(Aa_2+Ba_1)=1,
+ \]
+ obteniendo que 
+ \[
+  A=-B\qquad\qquad\textrm{y}\qquad\qquad-Aa_2-Ba_1=-Aa_2+Aa_1=A(a_1-a_2)=1,
+ \]
+ y considerando que 
+ \[
+  a_1-a_2=\left(-\frac{b}{2}+\frac{\sqrt{b^2-4c}}{2}\right)-\left(-\frac{b}{2}-\frac{\sqrt{b^2-4c}}{2}\right)=\sqrt{b^2-4c}
+ \]
+ resulta en que 
+ \[
+  A=-B=\frac{1}{\sqrt{b^2-4c}}.
+ \]
+ Se concluye que 
+ \[
+  R(\omega)=\frac{1}{\sqrt{b^2-4c}}\left(\frac{1}{j\omega-a_1}-\frac{1}{j\omega-a_2}\right),
+ \]
+ y de la ecuación \ref{eq:fourier_transform_exponential}, la antitransformada de Fourier es
+ \[
+  r(\tau)=\frac{1}{\sqrt{b^2-4c}}\left(e^{a_1\tau}-e^{a_2\tau}\right)u(\tau).
+ \]
+ Sustituyendo este resultado en la ecuación \ref{eq:example_9_27_p_1}, resulta en 
+ \[
+  p(\tau)=\frac{1}{2bc\sqrt{b^2-4c}}\left[a_1e^{a_1\tau}-a_2e^{a_2\tau}+b\left(e^{a_1\tau}-e^{a_2\tau}\right)\right]u(\tau),
+ \]
+ es decir,
+ \begin{equation}\label{eq:example_9_27_p_2}
+  p(\tau)=\frac{1}{2bc\sqrt{b^2-4c}}\left[(b+a_1)e^{a_1\tau}-(b+a_2)e^{a_2\tau}\right]u(\tau).
+ \end{equation}
+ Se considera primero el caso en que \(b^2>4c\), y por lo tanto, las raíces son distintas y reales, y se define
+ \[
+  \alpha=\frac{b}{2}\qquad\textrm{y}\qquad\gamma=\frac{\sqrt{b^2-4c}}{2}
+  \qquad\Rightarrow\qquad
+  \alpha^2-\gamma^2=\frac{b^2}{4}-\frac{b^2}{4}+\frac{4c}{4}=c.
+ \]
+ Con estas definiciones, se cumple que
+ \[
+  \def\arraystretch{2.2}
+  \begin{array}{ccccc}
+   a_1&=&-\dfrac{b}{2}+\dfrac{\sqrt{b^2-4c}}{2}&=&-\alpha+\gamma\\
+   a_2&=&-\dfrac{b}{2}-\dfrac{\sqrt{b^2-4c}}{2}&=&-\alpha-\gamma
+  \end{array}
+  \qquad\textrm{y}\qquad
+  \begin{array}{ccccc}
+   b+a_1&=&\dfrac{b}{2}+\dfrac{\sqrt{b^2-4c}}{2}&=&\alpha+\gamma\\
+   b+a_2&=&\dfrac{b}{2}-\dfrac{\sqrt{b^2-4c}}{2}&=&\alpha-\gamma
+  \end{array}.
+ \]
+ Sustituyendo estos resultados en la ecuación \ref{eq:example_9_27_p_2}, se obtiene que 
+ \[
+  p(\tau)=\frac{1}{4bc\gamma}\left[(\alpha+\gamma)e^{-(\alpha-\gamma)\tau}-(\alpha-\gamma)e^{-(\alpha+\gamma)\tau}\right]u(\tau).
+ \]
+ Finalmente, sustituyendo este resultado en la ecuación \ref{eq:example_9_27_r_yy} se concluye que 
+ \[
+  R_{yy}(\tau)=\frac{1}{4bc\gamma}\left[(\alpha+\gamma)e^{-(\alpha-\gamma)|\tau|}-(\alpha-\gamma)e^{-(\alpha+\gamma)|\tau|}\right].
+ \]
+ Se considera ahora el caso en que \(b^2<c\) y por lo tanto, las raíces son distintas y complejas, y se define
+ \[
+  \alpha=\frac{b}{2}\qquad\textrm{y}\qquad\beta=\frac{\sqrt{4c-b^2}}{2}
+  \qquad\Rightarrow\qquad
+  \alpha^2+\beta^2=\frac{b^2}{4}+\frac{4c}{4}-\frac{b^2}{4}=c.
+ \]
+  Con estas definiciones, se cumple que
+ \[
+  \def\arraystretch{2.2}
+  \begin{array}{ccccc}
+   a_1&=&-\dfrac{b}{2}+j\dfrac{\sqrt{4c-b^2}}{2}&=&-\alpha+j\beta\\
+   a_2&=&-\dfrac{b}{2}-j\dfrac{\sqrt{4c-b^2}}{2}&=&-\alpha-j\beta
+  \end{array}
+  \qquad\textrm{y}\qquad
+  \begin{array}{ccccc}
+   b+a_1&=&\dfrac{b}{2}+j\dfrac{\sqrt{4c-b^2}}{2}&=&\alpha+j\beta\\
+   b+a_2&=&\dfrac{b}{2}-j\dfrac{\sqrt{4c-b^2}}{2}&=&\alpha-j\beta
+  \end{array}.
+ \]
+ Sustituyendo estos resultados en la ecuación \ref{eq:example_9_27_p_2}, se obtiene que 
+ \begin{align*}
+  p(\tau)&=\frac{1}{2bc\sqrt{b^2-4c}}\left[(\alpha+j\beta)e^{(-\alpha+j\beta)\tau}-(\alpha-j\beta)e^{(-\alpha-j\beta)\tau}\right]u(\tau)\\
+   &=\frac{1}{2bc(2j\beta)}\left[(\alpha+j\beta)e^{-\alpha\tau}e^{j\beta\tau}-(\alpha-j\beta)e^{-\alpha\tau}e^{-j\beta\tau}\right]u(\tau)\\
+   &=\frac{1}{2bc(2j\beta)}e^{-\alpha\tau}\left[\alpha\left(e^{j\beta\tau}-e^{-j\beta\tau}\right)+j\beta\left(e^{j\beta\tau}+e^{-j\beta\tau}\right)\right]u(\tau)\\
+   &=\frac{1}{2bc}e^{-\alpha\tau}\left[\frac{\alpha}{\beta}\left(\frac{e^{j\beta\tau}-e^{-j\beta\tau}}{2j}\right)+\left(\frac{e^{j\beta\tau}+e^{-j\beta\tau}}{2}\right)\right]u(\tau),
+ \end{align*}
+ resultando en
+ \[
+  p(\tau)=\frac{1}{2bc}e^{-\alpha\tau}\left(\frac{\alpha}{\beta}\sin\beta\tau+\cos\beta\tau\right)u(\tau)
+ \]
+ Finalmente, sustituyendo este resultado en la ecuación \ref{eq:example_9_27_r_yy} se concluye que
+ \[
+  R_{yy}(\tau)=\frac{1}{2bc}e^{-\alpha|\tau|}\left(\frac{\alpha}{\beta}\sin\beta|\tau|+\cos\beta\tau\right).
+ \]
+ \item \(b^2=4c\), lo que implica que las raíces del denominador de la ecuación \ref{eq:example_9_27_rw} son iguales y valen \(a_1=a_2=-b/2\), por lo que ahora
+ \[
+  R(\omega)=\frac{1}{(j\omega+b/2)^2}.
+ \]
+ De la ecuación \ref{eq:fourier_transform_t_by_exponential}, se obtiene que la antitransformada de Fourier es
+ \[
+  r(\tau)=\tau e^{-b\tau/2}u(\tau),
+ \]
+ y sustituyendo este resultado en la ecuación \ref{eq:example_9_27_p_1} se tiene que
+\[
+ p(\tau)=\frac{1}{2bc}\left(e^{-b\tau/2}-\frac{b}{2}\tau e^{-b\tau/2}+b\tau e^{-b\tau/2}\right)u(\tau)=\frac{1}{2bc}e^{-b\tau/2}\left(1+\frac{b}{2}\tau\right)u(\tau).
+\]
+Finalmente, definiendo \(\alpha=b/2\) y empleando la ecuación \ref{eq:example_9_27_r_yy} se concluye que 
+\[
+ R_{yy}(\tau)=\frac{1}{2bc}e^{-\alpha|\tau|}\left(1+\alpha|\tau|\right).
+\]
+\end{enumerate}
+\end{enumerate}
+En resumen, la autocorrelación de la salida es
+\begin{itemize}
+ \item \(b^2<4c\):
+ \[
+  R_{yy}(\tau)=\frac{q}{2bc}e^{-\alpha|\tau|}\left(\frac{\alpha}{\beta}\sin\beta|\tau|+\cos\beta\tau\right),
+  \qquad\textrm{con}\qquad
+  \alpha=\frac{b}{2}\qquad\textrm{y}\qquad 
+  \alpha^2+\beta^2=c.
+ \]
+ \item \(b^2=4c\):
+ \[
+  R_{yy}(\tau)=\frac{q}{2bc}e^{-\alpha|\tau|}\left(1+\alpha|\tau|\right),
+  \qquad\textrm{con}\qquad
+  \alpha=\frac{b}{2}.
+ \]
+ \item \(b^2>4c\):
+ \[
+  R_{yy}(\tau)=\frac{q}{4bc\gamma}\left[(\alpha+\gamma)e^{-(\alpha-\gamma)|\tau|}-(\alpha-\gamma)e^{-(\alpha+\gamma)|\tau|}\right],
+  \qquad\textrm{con}\qquad
+  \alpha=\frac{b}{2}\qquad\textrm{y}\qquad 
+  \alpha^2-\gamma^2=c.
+ \]
+\end{itemize}
+Observar que en todos los casos se cumple que \(E\{\y^2(t)\}=R_{yy}(0)=q/2bc\). En la figura \ref{fig:example_9_27} se muestra la potencia espectral y la autocorrelación de la salida en los tres casos.
+\begin{figure}[!htb]
+\begin{center}
+\includegraphics[width=0.96\columnwidth]{figuras/example_9_27.pdf}
+\caption{\label{fig:example_9_27} Densidad espectral \(S_{yy}(\omega)\) y autocorrelación \(R_{yy}(\tau)\) de la salida para distintos valores de \(b\) y \(c\).}
+\end{center}
+\end{figure}
+
+\paragraph{Ejemplo (9-28): transformada de Hilbert} Un sistema con función de transferencia
+\[
+ H(\omega)=-j\operatorname{sig}\omega=
+ \left\{
+ \begin{array}{rl}
+  -j & \omega>0\\
+  j & \omega<0
+ \end{array}
+ \right.
+\]
+se llama \emph{filtro de cuadratura}. Como se deduce en el apéndice \ref{ap:fourier_transforms} en la ecuación \ref{eq:fourier_transform_hilbert_pair}, la correspondiente respuesta al impulso es
+\[
+ h(t)=\frac{1}{\pi t}.
+\]
+Observar que \(H(\omega)\) es un filtro pasa-todo, es decir, \(|H(\omega)|=1\), que produce un desplazamiento de fase de \(-\pi/2\), ya que \(-j=e^{-j\pi/2}\). Por lo tanto, la respuesta a \(\cos\omega t\) es \(\cos(\omega t-\pi/2)=\sin\omega t\) y la respuesta a \(\sin\omega t\) es \(\sin(\omega t-\pi/2)=-\cos\omega t\).
+
+La respuesta de un filtro de cuadratura a un proceso real \(\x(t)\) se denota \(\hat{\x}(t)\) y se llama \emph{transformada de Hilbert} de \(\x(t)\). De esta forma,
+\[
+ \hat{\x}(t)=\x(t)*\frac{1}{\pi t}=\frac{1}{\pi}\int_{-\infty}^\infty\frac{\x(\alpha)}{t-\alpha}\,d\alpha.
+\]
+De la ecuación \ref{eq:lti_output_psd}, se tiene que 
+\[
+ S_{x\hat{x}}(\omega)=S_{xx}(\omega)H^*(\omega)=jS_{xx}(\omega)\operatorname{sig}\omega=-S_{\hat{x}x}(\omega),
+\]
+donde la última igualdad proviene de la ecuación \ref{eq:lti_output_psd_complex_conjugate}. Además
+\[
+ S_{\hat{x}\hat{x}}(\omega)=S_{xx}(\omega)|H(\omega)|^2=S_{xx}(\omega).
+\]
+
+El proceso complejo 
+\[
+ \z(t)=\x(t)+j\hat{\x}(t)
+\]
+se llama \emph{señal analítica} asociada a \(\x(t)\). Como
+\[
+ \z(t)=\x(t)*\left[\delta(t)+j\frac{1}{\pi t}\right],
+\]
+\(\z(t)\) es la respuesta a la entrada \(\x(t)\) de un sistema con función de transferencia
+\[
+ 1+j(-j\operatorname{sig}\omega)=2U(\omega).
+\]
+Por lo tanto, de la ecuación \ref{eq:lti_output_psd_in_terms_input_psd},
+\[
+ S_{zz}(\omega)=4S_{xx}(\omega)U(\omega)=2S_{xx}(\omega)[1+\operatorname{sig}\omega]=2S_{xx}(\omega)+2jS_{\hat{x}x}(\omega)
+\]
+y
+\[
+ R_{zz}(\tau)=2R_{xx}(\tau)+2jR_{\hat{x}x}(\tau).
+\]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{subappendices}
+
+\section{Transformada de Fourier}\label{ap:fourier_transforms}
+
+La definición de la transformada de Fourier y la transformada inversa de Fourier es
+\begin{equation}\label{eq:fourier_transform_definition}
+ x(t)=\frac{1}{2\pi}\int_{-\infty}^\infty X(\omega)e^{j\omega t}\,d\omega
+ \quad\longleftrightarrow\quad
+ X(\omega)=\int_{-\infty}^\infty x(t)e^{-j\omega t}\,dt.
+\end{equation}
+En esta sección se deducen algunas propiedades y pares de transformadas de Fourier que serán empleadas en el documento. Lo incluido aquí está basado en el capítulo 4 de \cite{oppenheim96signals}.
+
+\subsection{Propiedades de la transformada de Fourier}
+
+\paragraph{Diferenciación} Sea \(x(t)\) una señal con transformada de Fourier \(X(\omega)\). Al diferenciar ambos lados de la ecuación de la transformada inversa (ecuación \ref{eq:fourier_transform_definition}) respecto al tiempo, se obtiene que 
+\[
+ \frac{dx(t)}{dt}=\frac{1}{2\pi}\int_{-\infty}^\infty j\omega X(\omega)e^{j\omega t}\,d\omega.
+\]
+Por lo tanto, se cumple que 
+\begin{equation}\label{eq:fourier_transform_differentiation_t_property}
+ \frac{dx(t)}{dt}\quad\longleftrightarrow\quad j\omega X(\omega).
+\end{equation}
+Mas en general, si se diferencia \(n\) veces, se obtiene que
+\begin{equation}\label{eq:fourier_transform_differentiation_t_n_times}
+ \frac{d^nx(t)}{dt^n}\quad\longleftrightarrow\quad (j\omega)^n X(\omega).
+\end{equation}
+
+Por otro lado, si se diferencia la transformada directa respecto a \(\omega\), se obtiene 
+\[
+ \frac{dX(\omega)}{d\omega}=\int_{-\infty}^\infty-jtx(t)e^{-j\omega t}\,dt,
+\]
+resultando en
+\begin{equation}\label{eq:fourier_transform_differentiation_omega}
+ -jtx(t)\quad\longleftrightarrow\quad\frac{dX(\omega)}{d\omega}.
+\end{equation}
+
+\paragraph{Escalamiento de tiempo y frecuencia} Sea \(x(t)\) una señal con transformada de Fourier \(X(\omega)\). Se mostrará que
+\begin{equation}\label{eq:fourier_transform_time_scaling}
+ x(at)\quad\longleftrightarrow\quad \frac{1}{|a|}X\left(\frac{\omega}{a}\right),
+\end{equation}
+donde \(a\) es una constante real. Efectivamente, sea \(Y(\omega)\) la tranformada de Fourier de \(x(at)\). De esta forma,
+\[
+\def\arraystretch{2.2}
+ Y(\omega)=\int_{-\infty}^\infty x(at)e^{-j\omega t}\,dt=
+ \left\{ 
+ \begin{array}{rl}
+  \displaystyle\frac{1}{a}\int_{-\infty}^\infty x(\tau)e^{-j(\omega/a)\tau}\,d\tau,&a>0\\
+  \displaystyle-\frac{1}{a}\int_{-\infty}^\infty x(\tau)e^{-j(\omega/a)\tau}\,d\tau,&a<0
+ \end{array}
+ \right.,
+\]
+donde en la última igualdad se realizó el cambio de variable \(\tau=at\). Esto corresponde a la ecuación \ref{eq:fourier_transform_time_scaling}. Notar que el resultado cuando \(a<0\) proviene de que 
+\[
+ \int_{-\infty}^{+\infty}x(at)e^{-j\omega t}\,dt=\frac{1}{a}\int_{+\infty}^{-\infty}x(\tau)e^{-j(\omega/a)\tau}\,d\tau=-\frac{1}{a}\int_{-\infty}^{+\infty}x(\tau)e^{-j(\omega/a)\tau}\,d\tau.
+\]
+Observar que con \(a=-1\) se obtiene que 
+\begin{equation}\label{eq:fourier_transform_time_reversion}
+ x(-t)\quad\longleftrightarrow\quad X(-\omega).
+\end{equation}
+
+\paragraph{Simetría} Sea \(x(t)\) una señal con transformada de Fourier \(X(\omega)\). Se mostrará que
+\begin{equation}\label{eq:fourier_transform_symmetry}
+ X(t)\quad\longleftrightarrow\quad 2\pi x(-\omega).
+\end{equation}
+De la ecuación \ref{eq:fourier_transform_definition} de la antitransformada de Fourier evaluada en \(-t\) y multiplicando ambos lados de la igualdad por \(2\pi\), se tiene que 
+\[
+ 2\pi x(-t)=\int_{-\infty}^\infty X(\omega)e^{-j\omega t}\,d\omega
+ \qquad\Rightarrow\qquad 
+ 2\pi x(-\omega)=\int_{-\infty}^\infty X(t)e^{-j\omega t}\,dt.
+\]
+Como el lado derecho de la igualdad es la transformada de Fourier de \(X(t)\), se concluye que se cumple la propiedad \ref{eq:fourier_transform_symmetry}.
+
+\paragraph{Funciones pares e impares} Sea \(x(t)\) una señal con transformada de Fourier \(X(\omega)\). De la definición de la transformada de Fourier (ecuación \ref{eq:fourier_transform_definition}), se cumple que 
+\[
+ X(\omega)=\int_{-\infty}^\infty x(t)\cos\omega t\,dt-j\int_{-\infty}^\infty x(t)\sin\omega t\,dt.
+\]
+Por lo tanto:
+\begin{itemize}
+ \item si \(x(t)\) es par, es decir, \(x(t)=x(-t)\), el integrando de la segunda integral es impar, por lo que la integral es nula, resultando en
+ \begin{equation}\label{eq:fourier_transform_even_function}
+  X(\omega)=\int_{-\infty}^\infty x(t)\cos\omega t\,dt=2\int_0^\infty x(t)\cos\omega t\,dt,
+ \end{equation}
+ donde la segunda igualdad proviene del hecho de que el integrando es par.
+ \item si \(x(t)\) es impar, es decir, \(x(t)=-x(-t)\), por argumentos análogos al caso anterior, se cumple que
+ \begin{equation}\label{eq:fourier_transform_odd_function}
+  X(\omega)=-j\int_{-\infty}^\infty x(t)\sin\omega t\,dt=-2j\int_0^\infty x(t)\sin\omega t\,dt.
+ \end{equation}
+\end{itemize}
+
+\subsection{Algunos pares de transformadas de Fourier}
+
+\paragraph{Transformada de Fourier de funciones periódicas} Se partirá mostrando el siguiente par de transformadas de Fourier: 
+\begin{equation}\label{eq:fourier_transform_sum_of_harmonic_exponentials}
+x(t)=\sum_{k=-\infty}^{\infty} a_ke^{jk\omega_0 t}
+ \quad\longleftrightarrow\quad
+X(\omega)=2\pi\sum_{k=-\infty}^{\infty}a_k\delta(\omega-k\omega_0).
+\end{equation}
+Efectivamente, aplicando la transformada inversa a \(X(\omega)\), se observa que   
+\begin{align*}
+x(t)&=\frac{1}{2\pi}\int_{-\infty}^{\infty}\left[2\pi\sum_{k=-\infty}^{\infty}a_k\delta(\omega-k\omega_0)\right]e^{j\omega t}d\omega\\
+&=\sum_{k=-\infty}^{\infty} a_k\left[\int_{-\infty}^{\infty}\delta(\omega-k\omega_0)e^{j\omega t}d\omega\right]\\
+&=\sum_{k=-\infty}^{\infty} a_ke^{jk\omega_0 t},
+\end{align*}
+concluyendo la prueba. Observar que \(x(t)\) corresponde a la serie de Fourier de una señal periódica de periodo \(T\) o de frecuencia angular \(\omega_0=2\pi/T\). Este resultado es general e indica que la transformada de Fourier de una señal periódica es un tren de impulsos armónico donde el área del impulso de frecuencia \(k\omega_0\) es \(a_k\), el coeficiente \(k\)-ésimo  de la serie de Fourier. 
+
+Como consecuencia, surge inmediatamente el par de transformadas
+\begin{equation}\label{eq:fourier_transform_complex_exponential}
+ e^{j\omega_0t}\quad\longleftrightarrow\quad 2\pi\delta\left(\omega-\omega_0\right).
+\end{equation}
+Además
+\begin{equation}\label{eq:fourier_transform_cosine}
+ x(t)=\cos\omega_0t\quad\longleftrightarrow\quad X(\omega)=\pi\delta\left(\omega-\omega_0\right)+\pi\delta\left(\omega+\omega_0\right).
+\end{equation}
+Esto es porque
+\[
+x(t)=\cos\omega_0t=\frac{1}{2}e^{j\omega_0t}+\frac{1}{2}e^{-j\omega_0t}.
+\]
+y por lo tanto, en la ecuación \ref{eq:fourier_transform_sum_of_harmonic_exponentials} \(a_1=1/2\), \(a_{-1}=1/2\) y \(a_k=0\) en otro caso. De forma análoga, se obtiene que
+\[
+ x(t)=\sin\omega_0t\quad\longleftrightarrow\quad X(\omega)=\frac{\pi}{j}\delta\left(\omega-\omega_0\right)-\frac{\pi}{j}\delta\left(\omega+\omega_0\right).
+\]
+Otra consecuencia de la ecuación \ref{eq:fourier_transform_sum_of_harmonic_exponentials} es que la transformada de un tren de impulsos periódico de período \(T\) o frecuencia angular \(\omega_0=2\pi/T\) es otro tren de impulsos de período \(\omega_0\). Concretamente,
+\[
+x(t)=\sum_{k=-\infty}^{\infty}\delta(t-kT)\quad\longleftrightarrow\quad X(\omega)=\frac{2\pi}{T}\sum_{k=-\infty}^{\infty}\delta\left(\omega-\frac{2\pi k}{T}\right).
+\]
+Para deducir este resultado, se parte recordando que los coeficientes \(a_k\) de la serie de Fourier de una señal periódica de periodo \(T\) están dados por
+\[
+a_k=\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}x(t)e^{-j2\pi k t/T}dt,
+\]
+y por lo tanto, los coeficientes de la serie de Fourier de 
+\[
+x(t)=\sum_{n=-\infty}^{\infty}\delta(t-nT)
+\]
+son
+\[
+a_k=\frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}\delta(t)e^{-j2\pi kt/T}dt
+=\frac{1}{T}.
+\]
+Sustituyendo este resultado en la ecuación \ref{eq:fourier_transform_sum_of_harmonic_exponentials} se obtiene que la transformada de Fourier es
+\[
+X(\omega)=\frac{2\pi}{T}\sum_{k=-\infty}^{\infty}\delta(\omega-k\omega_0)=\omega_0\sum_{k=-\infty}^{\infty}\delta(\omega-k\omega_0)\qquad\textrm{con}\qquad\omega_0=\frac{2\pi}{T},
+\]
+que es lo que se quería mostrar.
+
+\paragraph{Transformada de Fourier de pulso rectangular y triangular} Sea la señal \(x(t)\) con forma de pulso rectangular,
+\[
+ x(t)=\left\{
+ \begin{array}{ll}
+  1, & |t|<T\\
+  0, & |t|>T.
+ \end{array}\right.
+\]
+Aplicando la ecuación \ref{eq:fourier_transform_definition} de la transformada de Fourier, se obtiene que 
+\[
+ X(\omega)=\int_{-T}^Te^{-j\omega t}\,dt=-\frac{e^{-j\omega t}}{j\omega}\bigg|_{-T}^T=-\frac{1}{j\omega}\left(e^{-j\omega T}-e^{j\omega T}\right)=\frac{2}{\omega}\left(\frac{e^{j\omega T}-e^{-j\omega T}}{2j}\right),
+\]
+resultando en
+\begin{equation}\label{eq:fourier_transform_rectangular_pulse}
+ X(\omega)=2\frac{\sin\omega T}{\omega}.
+\end{equation}
+
+Considérese ahora el pulso triangular \(y(t)\) dado por la ecuación
+\[
+ y(t)=\left\{
+ \begin{array}{ll}
+  \dfrac{T-|t|}{T}, & -T<t<T\\
+  0, & |t|>T.
+ \end{array}\right.
+\]
+De esta forma, el pulso triangular tiene altura 1 y soporte en el intervalo \((-T,\,T)\). La transformada de Fourier puede calcularse aplicando la ecuación \ref{eq:fourier_transform_definition}, pero en su lugar, se calculará empleando el teorema de la convolución de la transformada de Fourier.
+Sea el pulso rectangular
+\[
+ z(t)=\left\{
+ \begin{array}{ll}
+  1/\sqrt{T}, & |t|<T/2\\
+  0, & |t|>T/2,
+ \end{array}\right.
+\]
+el cual tiene amplitud \(1/\sqrt{T}\) y soporte en el intervalo \((-T/2,\,T/2)\). Como \(y(t)=z(t)*z(t)\), a partir del teorema de la convolución se tiene que 
+\[
+ y(t)=z(t)*z(t)\quad\longleftrightarrow\quad Y(\omega)=Z^2(\omega),
+\]
+donde de la ecuación \ref{eq:fourier_transform_rectangular_pulse},
+\[
+ Z(\omega)=2\frac{\sin\omega T/2}{\omega\sqrt{T}}.
+\]
+Se concluye que 
+\begin{equation}\label{eq:fourier_transform_triangular_pulse}
+ Y(\omega)=4\frac{\sin^2\omega T/2}{\omega^2T}.
+\end{equation}
+
+\paragraph{Transformada de Fourier de funciones exponenciales} 
+\begin{itemize}
+ \item Se considera la señal
+\[
+ x(t)=e^{-at}u(t),\qquad\textrm{con }a>0.
+\]
+Aplicando la transformada de Fourier, se ve que
+\[
+ X(\omega)=\int_0^\infty e^{-at}e^{-j\omega t}\,dt=-\frac{1}{a+j\omega}e^{-(a+j\omega)t}\bigg|_0^\infty=\frac{1}{a+j\omega},
+\]
+concluyendo que 
+\begin{equation}\label{eq:fourier_transform_exponential}
+ e^{-at}u(t)\quad\longleftrightarrow\quad \frac{1}{a+j\omega}.
+\end{equation}
+\item Considérese ahora la señal
+\[
+ x(t)=e^{-a|t|}u(t),\qquad\textrm{con }a>0.
+\]
+La transformada de Fourier es
+\[
+ X(\omega)=\int_{-\infty}^\infty e^{-a|t|}e^{-j\omega t}\,dt=\int_{-\infty}^0e^{at}e^{-j\omega t}\,dt+\int_0^\infty e^{-at}e^{-j\omega t}\,dt=\frac{1}{a-j\omega}+\frac{1}{a+j\omega}=\frac{2a}{a^2+\omega^2},
+\]
+concluyendo que 
+\begin{equation}\label{eq:fourier_transform_exponential_symmetric}
+ e^{-a|t|}u(t)\quad\longleftrightarrow\quad \frac{2a}{a^2+\omega^2}. 
+\end{equation}
+\item Se mostrará el par de transformadas de Fourier
+\begin{equation}\label{eq:fourier_transform_t_by_exponential}
+ te^{-at}u(t)\quad\longleftrightarrow\quad\frac{1}{(a+j\omega)^2}.
+\end{equation}
+Aplicando la transformada de Fourier, se tiene que 
+\begin{align*}
+ X(\omega)&=\int_0^\infty te^{-at}e^{-j\omega t}\,dt\\
+  &=\int_0^\infty te^{-(a+j\omega)t}\,dt\\
+  &\overset{(a)}{=}-\frac{t}{a+j\omega}e^{-(a+j\omega)t}\bigg|_0^\infty+\frac{1}{a+j\omega}\int_0^\infty e^{-(a+j\omega)t}\,dt\\
+  &=-\frac{1}{(a+j\omega)^2}e^{-(a+j\omega)t}\bigg|_0^\infty\\
+  &=\frac{1}{(a+j\omega)^2},
+\end{align*}
+donde en \((a)\) se aplicó integración por partes, \(\int udv=uv-\int vdu\), con \(u=t\) y \(dv=e^{-(a+j\omega)t}dt\) y entonces \(du=dt\) y \(v=-e^{-(a+j\omega)t}/(a+j\omega)\). Otra forma de obtener el mismo resultado es observando que 
+\[
+ \frac{d}{d\omega}\left(\frac{1}{a+j\omega}\right)=\frac{-j}{(a+j\omega)^2}
+ \qquad\Rightarrow\qquad 
+ j\frac{d}{d\omega}\left(\frac{1}{a+j\omega}\right)=\frac{1}{(a+j\omega)^2}
+\]
+Aplicando la propiedad de diferenciación de la transformada de Fourier dada por la ecuación \ref{eq:fourier_transform_differentiation_omega}, se tiene que 
+\[
+ j\left[-jte^{-at}u(t)\right]=te^{-at}u(t)
+ \quad\longleftrightarrow\quad
+ j\frac{d}{d\omega}\left(\frac{1}{a+j\omega}\right)=\frac{1}{(a+j\omega)^2}.
+\]
+\end{itemize}
+
+\paragraph{Otros pares de transformadas de Fourier}
+\begin{itemize}
+ \item Se mostrará el par de transformadas de Fourier
+ \begin{equation}\label{eq:fourier_transform_hilbert_pair}
+  \frac{1}{\pi t}\quad\longleftrightarrow\quad -j\operatorname{sig}\omega
+  =\left\{
+  \begin{array}{rl}
+   -j & \omega>0\\
+   j & \omega<0
+  \end{array}
+  \right..  
+ \end{equation}
+ Este par de transformadas es relevante en el estudio de la transformada de Hilbert. Además, como involucra a la función signo, está relacionado a la transformada de Fourier del escalón de Heaviside, como se verá mas adelante.
+ 
+ Se calculará la transformada de Fourier de la función 
+ \[
+  x(t)=\frac{1}{t}.
+ \]
+ Como esta función es impar, su transformada de Fourier está dada por la ecuación \ref{eq:fourier_transform_odd_function}, y es
+ \begin{equation}\label{eq:fourier_transform_hilbert_pair_tmp2}
+  X(\omega)=-2j\int_0^\infty \frac{\sin\omega t}{t}\,dt.
+ \end{equation}
+ La deducción que se incluye a continuación está basada en \cite{891822}. Considerando que
+ \[
+  \int_0^\infty e^{-tx}\,dx=-\frac{1}{t}e^{-tx}\bigg|_0^\infty=\frac{1}{t},
+ \]
+ se cumple que 
+ \begin{align}
+  \int_0^\infty \frac{\sin\omega t}{t}\,dt&=\int_0^\infty\left(\int_0^\infty e^{-tx}\,dx\right)\sin\omega t\,dt\nonumber\\
+   &\overset{(a)}{=}\int_0^\infty\left(\int_0^\infty e^{-tx}\sin\omega t\,dx\right)\,dt\nonumber\\
+   &\overset{(b)}{=}\int_0^\infty\left(\int_0^\infty e^{-tx}\sin\omega t\,dt\right)\,dx,\label{eq:fourier_transform_hilbert_pair_tmp1}
+ \end{align}
+ donde en \((a)\) se consideró que \(\sin\omega t\) no depende de \(x\), la variable de integración de la integral entre paréntesis, y en \((b)\) se intercambió el orden de integración. La integral entre paréntesis se puede resolver por integración por partes,
+ \begin{align*}
+  \int_0^\infty e^{-tx}\sin\omega t\,dt&\overset{(a)}{=}-\frac{1}{x}e^{-tx}\sin\omega t\bigg|_0^\infty+\frac{\omega}{x}\int_0^\infty e^{-tx}\cos\omega t\,dt\\
+  &\overset{(b)}{=}\frac{\omega}{x}\left(-\frac{1}{x}e^{-tx}\cos\omega t\bigg|_0^\infty-\frac{\omega}{x}\int_0^\infty e^{-tx}\sin\omega t\,dt\right)\\
+  &=\frac{\omega}{x^2}-\frac{\omega^2}{x^2}\int_0^\infty e^{-tx}\sin\omega t\,dt,
+ \end{align*}
+ donde en \((a)\) se aplicó integración por partes, \(\int udv=uv-\int vdu\), con \(u=\sin\omega t\) y \(dv=e^{-tx}\,dt\) y entonces \(du=\omega\cos\omega t\,dt\) y \(v=-e^{-tx}/x\) y en \((b)\) se aplicó nuevamente integración por partes con \(u=\cos\omega t\) y \(dv=e^{-tx}\,dt\) y entonces \(du=-\omega\sin\omega t\,dt\) y \(v=-e^{-tx}/x\). Luego, despejando la integral, se obtiene que 
+ \[
+  \int_0^\infty e^{-tx}\sin\omega t\,dt=\dfrac{\dfrac{\omega}{x^2}}{\dfrac{\omega^2}{x^2}+1}=\frac{\omega}{\omega^2+x^2}=\frac{1}{\omega}\times\dfrac{1}{1+\left(\dfrac{x}{\omega}\right)^2}.
+ \]
+ Sustituyendo este resultado en la ecuación \ref{eq:fourier_transform_hilbert_pair_tmp1}, resulta en
+ \begin{equation}\label{eq:fourier_transform_hilbert_pair_sinc_integral}
+ \def\arraystretch{2.4}
+  \int_0^\infty \frac{\sin\omega t}{t}\,dt=\frac{1}{\omega}\int_0^\infty\dfrac{1}{1+\left(\dfrac{x}{\omega}\right)^2}\,dx
+  \overset{(a)}{=}
+  \left\{
+  \begin{array}{ll}
+   \displaystyle\int_0^\infty\frac{1}{1+u^2}\,du\overset{(b)}{=}\arctan u\bigg|_0^\infty=\frac{\pi}{2},&\omega>0\\
+   \displaystyle\int_0^{-\infty}\frac{1}{1+u^2}\,du\overset{(c)}{=}-\arctan u\bigg|_0^\infty=-\frac{\pi}{2},&\omega<0
+  \end{array}
+  \right.,
+ \end{equation}
+donde en \((a)\) se realizó el cambio de variable \(u=x/\omega\), observando que si \(\omega>0\), \(u=\infty\) si \(x=\infty\) y si \(\omega<0\), \(u=-\infty\) si \(x=\infty\), en \((b)\) se aplicó el resultado de la ecuación \ref{eq:normal_rv_arctan_derivative} y en \((c)\) se tuvo en cuenta que 
+\[
+ \int_0^{-\infty}\frac{1}{1+u^2}\,du=-\int_{-\infty}^0\frac{1}{1+u^2}\,du=-\int_0^{\infty}\frac{1}{1+u^2}\,du,
+\]
+donde la última igualdad es válida debido a que el integrando es una función par. Considerando que la ecuación \ref{eq:fourier_transform_hilbert_pair_sinc_integral} puede expresarse como
+\[
+ \int_0^\infty \frac{\sin\omega t}{t}\,dt=\frac{\pi}{2}\operatorname{sig}\omega,
+\]
+sustituyendo este resultado en la ecuación \ref{eq:fourier_transform_hilbert_pair_tmp2}, se obtiene que 
+\[
+ \frac{1}{t}\quad\longleftrightarrow\quad-j\pi\operatorname{sig}\omega,
+\]
+acorde con la ecuación \ref{eq:fourier_transform_hilbert_pair}.
+ 
+Otra forma un poco mas directa de obtener el resultado de la ecuación \ref{eq:fourier_transform_hilbert_pair} es aplicando propiedades de la transformada de Fourier. Se parte de
+\[
+ X(\omega)=-j\operatorname{sig}\omega,
+\]
+y se observa que 
+\[
+ \frac{dX(\omega)}{d\omega}=-2j\delta(\omega),
+\]
+donde se tuvo en cuenta que \(\operatorname{sig}'x=2\delta(x)\). La propiedad de diferenciación de la transformada de Fourier dada por la ecuación \ref{eq:fourier_transform_differentiation_omega} indica que si \(x(t)\) es la antitransformada de Fourier de \(X(\omega)\), \(-jtx(t)\) es la antitransformada de Fourier de \(X'(\omega)\). Pero la antitransformada de Fourier de \(X'(\omega)\) es
+\[
+ \frac{1}{2\pi}\int_{-\infty}^\infty\frac{dX(\omega)}{d\omega}e^{j\omega t}\,d\omega=\frac{1}{2\pi}\int_{-\infty}^\infty\left[-2j\delta(\omega)\right]e^{j\omega t}\,d\omega
+ =-\frac{j}{\pi}.
+\]
+Por lo tanto, se concluye que 
+\[
+ -jtx(t)=-\frac{j}{\pi}
+ \qquad\qquad\Rightarrow\qquad\qquad
+ x(t)=\frac{1}{\pi t}.
+\]
+\item Se mostrará el par de transformadas de Fourier
+ \begin{equation}\label{eq:fourier_transform_heaviside}
+  U(t)\quad\longleftrightarrow\quad\pi\delta(\omega)+\frac{1}{j\omega}.
+ \end{equation}
+ Se parte observando que la función escalón de Heaviside puede expresarse como
+ \[
+  U(t)=\frac{1}{2}+\frac{1}{2}\operatorname{sig}t.
+ \]
+ De la ecuación \ref{eq:fourier_transform_complex_exponential} con \(\omega_0=0\), se tiene que
+ \[
+  1\quad\longleftrightarrow\quad 2\pi\delta(\omega).
+ \]
+ Por otro lado, empleando la propiedad de simetría de la transformada de Fourier de la ecuación \ref{eq:fourier_transform_symmetry} al resultado de la ecuación \ref{eq:fourier_transform_hilbert_pair}, se tiene que 
+ \[
+  -j\operatorname{sig}t\quad\longleftrightarrow\quad \frac{2\pi}{\pi(-\omega)}=-\frac{2}{\omega}
+  \qquad\qquad\Rightarrow\qquad\qquad
+  \operatorname{sig}t\quad\longleftrightarrow\quad \frac{2}{j\omega}.
+ \]
+ Combinando estos resultados se obtiene el par de transformadas de la ecuación \ref{eq:fourier_transform_heaviside}.
+\end{itemize}
+
+
+
+\end{subappendices}
 
 
 
